@@ -44,6 +44,7 @@ int main()
     while (!pWindow->ShouldClose())
     {
         // Here draw
+        glClear(GL_COLOR_BUFFER_BIT);
         pMesh->Draw();
         pWindow->Render();
     }
