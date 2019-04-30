@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh::Mesh(GLfloat **vertices, int count)
+Mesh::Mesh(GLfloat **vertices, GLint *positions, int count)
 {
     // 3 because 3 dimensions
     _verticesCount = count * 3;
@@ -22,6 +22,13 @@ Mesh::Mesh(GLfloat **vertices, int count)
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     _vbosIds.push_back(vboId);
 
+    // Generate VBO to store indices
+    glGenBuffers(1, &vboId);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboId);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(GLint), positions, GL_STATIC_DRAW);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    _vbosIds.push_back(vboId);
+
     // Unbind the VAO
     glBindVertexArray(0);
 }
@@ -30,7 +37,11 @@ void Mesh::Draw()
 {
     glBindVertexArray(_vaoId);
     glEnableVertexAttribArray(0);
-    glDrawArrays(GL_TRIANGLES, 0, _verticesCount);
+    // last parameter is set to (0) because it represent the offset into the index buffer object
+    // OpenGL will use the buffer GL_ELEMENT_ARRAY_BUFFER of the VAO automatically
+    // see https://www.khronos.org/opengl/wiki/Vertex_Rendering#Basic_Drawing
+    glDrawElements(GL_TRIANGLES, _verticesCount, GL_UNSIGNED_INT, 0); //??
+    glDisableVertexAttribArray(0);
     glBindVertexArray(0);
 }
 

@@ -8,7 +8,7 @@
 class Mesh
 {
 public:
-    Mesh(GLfloat **vertices, int count);
+    Mesh(GLfloat **vertices, GLint *indices, int count);
 
     virtual ~Mesh();
 
