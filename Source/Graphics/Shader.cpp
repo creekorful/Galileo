@@ -1,0 +1,88 @@
+#include "Shader.h"
+
+bool Shader::Initialize(const std::string &vertexShader, const std::string &fragmentShader)
+{
+    GLuint vertexShaderId = LoadShader(vertexShader, GL_VERTEX_SHADER);
+    if (vertexShaderId == -1)
+    {
+        // todo log
+        fprintf(stderr, "Unable to load vertex shader");
+        return false;
+    }
+    GLuint fragmentShaderId = LoadShader(fragmentShader, GL_FRAGMENT_SHADER);
+    if (fragmentShaderId == -1)
+    {
+        // todo log
+        fprintf(stderr, "Unable to load fragment shader");
+        return false;
+    }
+
+    // Reached this point both shader has been compiled successfully
+    _programId = glCreateProgram();
+    if (_programId == 0)
+    {
+        // todo log
+        fprintf(stderr, "Unable to createProgram");
+        return false;
+    }
+
+    // Attach built shader to the program
+    glAttachShader(_programId, vertexShaderId);
+    glAttachShader(_programId, fragmentShaderId);
+
+    // todo bind attrib location dynamic
+    glBindAttribLocation(_programId, 0, "in_Position");
+
+    // finally link the program (build binary code)
+    glLinkProgram(_programId);
+
+    // todo check status
+
+    return true;
+}
+
+GLuint Shader::LoadShader(const std::string &shader, const GLenum &shaderType)
+{
+    GLuint shaderId = glCreateShader(shaderType);
+    const char *c_str = shader.c_str();
+
+    // Load shader source code
+    glShaderSource(shaderId, 1, &c_str, nullptr);
+
+    // Compile given shader
+    glCompileShader(shaderId);
+
+    // check compile status
+    GLint isCompiled;
+    glGetShaderiv(shaderId, GL_COMPILE_STATUS, &isCompiled);
+    if (isCompiled == GL_FALSE)
+    {
+        int maxLength;
+        glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &maxLength);
+        char *log = new char[maxLength];
+        glGetShaderInfoLog(shaderId, maxLength, &maxLength, log);
+        fprintf(stderr, log);
+        free(log);
+        return -1;
+    }
+
+    return shaderId;
+}
+
+void Shader::Bind()
+{
+    assert(_programId != 0);
+    glUseProgram(_programId);
+}
+
+void Shader::Unbind()
+{
+    assert(_programId != 0);
+    glUseProgram(0);
+}
+
+Shader::~Shader()
+{
+    assert(_programId != 0);
+    glDeleteProgram(_programId);
+}

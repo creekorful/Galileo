@@ -1,13 +1,11 @@
-#include <utility>
-
 #include "Window.h"
 
-bool Window::initialize(int width, int height, std::string &title)
+bool Window::Initialize(int width, int height, std::string &title)
 {
     // Initialize GLFW
     if (!glfwInit())
     {
-        fprintf(stderr, "Unable to initialize GLFW");
+        fprintf(stderr, "Unable to Initialize GLFW");
         return false;
     }
 
@@ -31,19 +29,19 @@ bool Window::initialize(int width, int height, std::string &title)
     return true;
 }
 
-bool Window::shouldClose()
+bool Window::ShouldClose()
 {
     return glfwWindowShouldClose(_pWindow);
 }
 
-void Window::render()
+void Window::Render()
 {
     glClear(GL_COLOR_BUFFER_BIT);
     glfwSwapBuffers(_pWindow);
     glfwPollEvents();
 }
 
-void Window::close()
+void Window::Close()
 {
     glfwTerminate();
 }
