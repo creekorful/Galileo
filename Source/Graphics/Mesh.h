@@ -8,7 +8,7 @@
 class Mesh
 {
 public:
-    explicit Mesh(GLfloat vertices[4][3]);
+    explicit Mesh(GLfloat vertices[7][3]);
 
     virtual ~Mesh();
 

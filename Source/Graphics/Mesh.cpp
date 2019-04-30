@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh::Mesh(GLfloat vertices[4][3])
+Mesh::Mesh(GLfloat vertices[7][3])
 {
     // Generate and bind VAO
     glGenVertexArrays(1, &_vaoId);
@@ -12,7 +12,7 @@ Mesh::Mesh(GLfloat vertices[4][3])
     glBindBuffer(GL_ARRAY_BUFFER, vboId);
 
     // Copy data to the buffers + specify coordinate data
-    glBufferData(GL_ARRAY_BUFFER, (3 * 4) * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, (3 * 7) * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     // Unbind the VBO + register it
@@ -27,8 +27,7 @@ void Mesh::Draw()
 {
     glBindVertexArray(_vaoId);
     glEnableVertexAttribArray(0);
-    glDrawArrays(GL_TRIANGLES, 0, (3 * 4));
-    assert(glGetError() == GL_NO_ERROR);
+    glDrawArrays(GL_TRIANGLES, 0, (3 * 7));
     glBindVertexArray(0);
 }
 

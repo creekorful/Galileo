@@ -14,10 +14,13 @@ int main()
     vertices[4] = new GLfloat[3]{0.0, 0.0, 0.0}; // bottom left
     vertices[5] = new GLfloat[3]{1.0, 1.0, 0.0}; // top right*/
 
-    float vertices[4][3] = {
+    float vertices[7][3] = {
             {1.0, 1.0, 0.0},
             {0.0, 0.0, 0.0},
             {0.0, 1.0, 0.0},
+            {1.0, 1.0, 0.0},
+            {1.0, 0.0, 0.0},
+            {0.0, 0.0, 0.0},
             {1.0, 1.0, 0.0}
     };
 
