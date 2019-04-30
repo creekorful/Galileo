@@ -3,4 +3,12 @@ project(Galileo)
 
 set(CMAKE_CXX_STANDARD 17)
 
+# Here find librairies
+find_package(glfw3 3.3 REQUIRED)
+find_package(OpenGL REQUIRED)
+
 add_executable(Galileo main.cpp)
+
+# link librairies
+target_link_libraries(Galileo glfw)
+target_link_libraries(Galileo ${OPENGL_gl_LIBRARY})
