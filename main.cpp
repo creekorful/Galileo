@@ -1,43 +1,19 @@
-#include <iostream>
-
-#include <GLFW/glfw3.h>
+#include "Source/Graphics/Window.h"
 
 int main()
 {
-    GLFWwindow *pWindow;
-
-    // Initialize GLFW
-    if (!glfwInit())
+    std::string title = "Hello world";
+    auto *pWindow = new Window();
+    if (!pWindow->initialize(650, 480, title))
     {
-        fprintf(stderr, "Unable to initialize GLFW");
-        return -1;
+        // todo
     }
 
-    // Configure OpenGL context
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-
-    // Create the window and his OpenGL context
-    pWindow = glfwCreateWindow(640, 480, "Hello world", nullptr, nullptr);
-    if (!pWindow)
+    while (!pWindow->shouldClose())
     {
-        fprintf(stderr, "Unable to create window");
-        glfwTerminate();
-        return -1;
+        pWindow->render();
     }
 
-    // Make window context current
-    glfwMakeContextCurrent(pWindow);
-
-    while (!glfwWindowShouldClose(pWindow))
-    {
-        glClear(GL_COLOR_BUFFER_BIT);
-        glfwSwapBuffers(pWindow);
-        glfwPollEvents();
-    }
-
-    glfwTerminate();
+    pWindow->close();
     return 0;
 }

@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 17)
 find_package(glfw3 3.3 REQUIRED)
 find_package(OpenGL REQUIRED)
 
-add_executable(Galileo main.cpp)
+add_executable(Galileo main.cpp Source/Graphics/Window.cpp Source/Graphics/Window.h)
 
 # link librairies
 target_link_libraries(Galileo glfw)
