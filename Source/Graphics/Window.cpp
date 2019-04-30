@@ -47,3 +47,10 @@ Window::~Window()
 {
     glfwTerminate();
 }
+
+Vector2i Window::size()
+{
+    Vector2i size;
+    glfwGetWindowSize(_pWindow, &size.x, &size.y);
+    return size;
+}

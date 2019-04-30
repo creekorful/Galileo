@@ -6,4 +6,6 @@
 #include <GLFW/glfw3.h>
 #include <OpenGL/gl3.h>
 
+#include "Math/BaseMath.h"
+
 #endif //GALILEO_COMMON_H

@@ -3,6 +3,8 @@
 #include "Source/Graphics/Shader.h"
 #include "Source/IO/Files.h"
 
+#define PROJECTION_MATRIX_UNIFORM "projectionMatrix"
+
 int main()
 {
     // position of the vertices
@@ -59,6 +61,7 @@ int main()
     std::string vertexShader = Files::Read("Shaders/vertex.vs");
     std::string fragmentShader = Files::Read("Shaders/fragment.fs");
 
+    // Load shader
     auto pShader = new Shader();
     if (!pShader->Initialize(vertexShader, fragmentShader))
     {
@@ -66,11 +69,22 @@ int main()
         return -1;
     }
 
+    // Create projection matrix
+    Vector2i windowSize = pWindow->size();
+    float aspectRatio = windowSize.x / windowSize.y;
+    Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix((float) BaseMath::toRadians(60.0f), aspectRatio, .01f, 1000.0f);
+
+    // Set projection matrix uniform
+    pShader->CreateUniform(PROJECTION_MATRIX_UNIFORM);
+
     glClearColor(0.0, 0.0, 0.0, 1.0);
 
     pShader->Bind();
     while (!pWindow->ShouldClose())
     {
+        // Update shader uniforms
+        pShader->SetUniform(PROJECTION_MATRIX_UNIFORM, projectionMatrix);
+
         // Here draw
         glClear(GL_COLOR_BUFFER_BIT);
         pMesh->Draw();

@@ -30,7 +30,7 @@ bool Shader::Initialize(const std::string &vertexShader, const std::string &frag
     glAttachShader(_programId, vertexShaderId);
     glAttachShader(_programId, fragmentShaderId);
 
-    // todo bind attrib location dynamically
+    // todo bind attrib location dynamically?
     glBindAttribLocation(_programId, 0, "in_Position");
 
     // finally link the program (build binary code)
@@ -94,4 +94,16 @@ Shader::~Shader()
 {
     assert(_programId != 0);
     glDeleteProgram(_programId);
+}
+
+void Shader::CreateUniform(const std::string &uniformName)
+{
+    GLint uniform = glGetUniformLocation(_programId, uniformName.c_str());
+    // todo check?
+    uniforms[uniformName] = uniform;
+}
+
+void Shader::SetUniform(const std::string &uniform, const Matrix4f &value)
+{
+    // todo
 }

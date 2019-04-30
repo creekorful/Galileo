@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "../Common.h"
+#include "../Math/Vector2i.h"
 
 /**
  * This class represent the active render window
@@ -34,6 +35,11 @@ public:
      * Render / update the window
      */
     void Render();
+
+    /**
+     * @return size of current window
+     */
+    Vector2i size();
 
 private:
     GLFWwindow *_pWindow;

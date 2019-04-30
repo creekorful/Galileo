@@ -18,7 +18,13 @@ set(SOURCES_FILES
         Source/IO/Files.cpp
         Source/IO/Files.h
         Source/Common.h
-        )
+        Source/Math/Matrix4f.cpp
+        Source/Math/Matrix4f.h
+        Source/Math/BaseMath.cpp
+        Source/Math/BaseMath.h
+        Source/Math/Vector2.h
+        Source/Math/Vector2i.cpp
+        Source/Math/Vector2i.h)
 
 add_executable(Galileo ${SOURCES_FILES})
 
