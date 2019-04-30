@@ -54,7 +54,7 @@ int main()
 
     delete pMesh;
     delete pShader;
+    delete pWindow;
 
-    pWindow->Close();
     return 0;
 }

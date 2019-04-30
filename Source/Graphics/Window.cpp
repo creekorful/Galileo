@@ -40,7 +40,7 @@ void Window::Render()
     glfwPollEvents();
 }
 
-void Window::Close()
+Window::~Window()
 {
     glfwTerminate();
 }

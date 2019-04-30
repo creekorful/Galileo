@@ -13,6 +13,8 @@ class Window
 {
 public:
 
+    virtual ~Window();
+
     /**
      * Initialize the GLFW window and OpenGL context
      *
@@ -32,11 +34,6 @@ public:
      * Render / update the window
      */
     void Render();
-
-    /**
-     * Gracefully close the window
-     */
-    void Close();
 
 private:
     GLFWwindow *_pWindow;
