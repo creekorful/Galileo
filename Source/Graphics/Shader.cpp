@@ -30,13 +30,22 @@ bool Shader::Initialize(const std::string &vertexShader, const std::string &frag
     glAttachShader(_programId, vertexShaderId);
     glAttachShader(_programId, fragmentShaderId);
 
-    // todo bind attrib location dynamic
+    // todo bind attrib location dynamically
     glBindAttribLocation(_programId, 0, "in_Position");
 
     // finally link the program (build binary code)
     glLinkProgram(_programId);
+    GLint isLinked;
+    glGetProgramiv(_programId, GL_LINK_STATUS, &isLinked);
+    if (isLinked == GL_FALSE)
+    {
+        fprintf(stderr, "Unable to link shader");
+        return false;
+    }
 
-    // todo check status
+    // Not needed anymore, can be deleted
+    glDeleteShader(vertexShaderId);
+    glDeleteShader(fragmentShaderId);
 
     return true;
 }

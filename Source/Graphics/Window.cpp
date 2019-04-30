@@ -36,7 +36,6 @@ bool Window::ShouldClose()
 
 void Window::Render()
 {
-    glClear(GL_COLOR_BUFFER_BIT);
     glfwSwapBuffers(_pWindow);
     glfwPollEvents();
 }

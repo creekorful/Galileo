@@ -8,7 +8,7 @@
 class Mesh
 {
 public:
-    explicit Mesh(GLfloat **vertices, int verticeCount);
+    explicit Mesh(GLfloat vertices[4][3]);
 
     virtual ~Mesh();
 
@@ -17,7 +17,6 @@ public:
 private:
     GLuint _vaoId;
     std::vector<GLuint> _vbosIds;
-    int _verticeCount;
 };
 
 
