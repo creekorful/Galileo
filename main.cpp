@@ -5,24 +5,14 @@
 
 int main()
 {
-/*    auto vertices = new GLfloat *[6];
+    auto vertices = new GLfloat *[7];
     vertices[0] = new GLfloat[3]{1.0, 1.0, 0.0}; // top right
     vertices[1] = new GLfloat[3]{0.0, 0.0, 0.0}; // bottom left
     vertices[2] = new GLfloat[3]{0.0, 1.0, 0.0}; // bottom right
     vertices[3] = new GLfloat[3]{1.0, 1.0, 0.0}; // top right
-    vertices[3] = new GLfloat[3]{1.0, 0.0, 0.0}; // top left
-    vertices[4] = new GLfloat[3]{0.0, 0.0, 0.0}; // bottom left
-    vertices[5] = new GLfloat[3]{1.0, 1.0, 0.0}; // top right*/
-
-    float vertices[7][3] = {
-            {1.0, 1.0, 0.0},
-            {0.0, 0.0, 0.0},
-            {0.0, 1.0, 0.0},
-            {1.0, 1.0, 0.0},
-            {1.0, 0.0, 0.0},
-            {0.0, 0.0, 0.0},
-            {1.0, 1.0, 0.0}
-    };
+    vertices[4] = new GLfloat[3]{1.0, 0.0, 0.0}; // top left
+    vertices[5] = new GLfloat[3]{0.0, 0.0, 0.0}; // bottom left
+    vertices[6] = new GLfloat[3]{1.0, 1.0, 0.0}; // top right
 
     std::string title = "Hello world";
     auto *pWindow = new Window();
@@ -35,7 +25,7 @@ int main()
     fprintf(stdout, "Window initialization successful");
 
     // Initialize object to be drawn
-    auto pMesh = new Mesh(vertices);
+    auto pMesh = new Mesh(vertices, 7);
 
     // Initialize shader
     std::string vertexShader = Files::Read("Shaders/vertex.vs");
