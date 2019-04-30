@@ -24,6 +24,9 @@ bool Window::Initialize(int width, int height, std::string &title)
         return false;
     }
 
+    // Enable special options
+    glEnable(GL_DEPTH_TEST);
+
     // Make window context current
     glfwMakeContextCurrent(_pWindow);
     return true;
