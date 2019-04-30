@@ -6,14 +6,40 @@
 int main()
 {
     // position of the vertices
-    auto vertices = new GLfloat *[4];
-    vertices[0] = new GLfloat[3]{0.0, 0.0, 0.0};
-    vertices[1] = new GLfloat[3]{0.0, 1.0, 0.0};
-    vertices[2] = new GLfloat[3]{1.0, 0.0, 0.0};
-    vertices[3] = new GLfloat[3]{1.0, 1.0, 0.0};
+    std::vector<GLfloat> vertices = {
+            // front
+            -1.0, -1.0, 1.0,
+            1.0, -1.0, 1.0,
+            1.0, 1.0, 1.0,
+            -1.0, 1.0, 1.0,
+            // back
+            -1.0, -1.0, -1.0,
+            1.0, -1.0, -1.0,
+            1.0, 1.0, -1.0,
+            -1.0, 1.0, -1.0
+    };
 
-    // drawing indices of the vertices
-    auto indices = new GLint[7]{3, 0, 1, 3, 2, 0, 3};
+    // drawing indices/order of the vertices
+    std::vector<GLint> indices = {
+            // front
+            0, 1, 2,
+            2, 3, 0,
+            // right
+            1, 5, 6,
+            6, 2, 1,
+            // back
+            7, 6, 5,
+            5, 4, 7,
+            // left
+            4, 0, 3,
+            3, 7, 4,
+            // bottom
+            4, 5, 1,
+            1, 0, 4,
+            // top
+            3, 2, 6,
+            6, 7, 3
+    };
 
 
     std::string title = "Hello world";
@@ -27,7 +53,7 @@ int main()
     fprintf(stdout, "Window initialization successful");
 
     // Initialize object to be drawn
-    auto pMesh = new Mesh(vertices, indices, 7);
+    auto pMesh = new Mesh(vertices, indices);
 
     // Initialize shader
     std::string vertexShader = Files::Read("Shaders/vertex.vs");

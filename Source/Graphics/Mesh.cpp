@@ -1,10 +1,7 @@
 #include "Mesh.h"
 
-Mesh::Mesh(GLfloat **vertices, GLint *positions, int count)
+Mesh::Mesh(std::vector<GLfloat> vertices, std::vector<GLint> indices)
 {
-    // 3 because 3 dimensions
-    _verticesCount = count * 3;
-
     // Generate and bind VAO
     glGenVertexArrays(1, &_vaoId);
     glBindVertexArray(_vaoId);
@@ -15,7 +12,7 @@ Mesh::Mesh(GLfloat **vertices, GLint *positions, int count)
     glBindBuffer(GL_ARRAY_BUFFER, vboId);
 
     // Copy data to the buffers + specify coordinate data
-    glBufferData(GL_ARRAY_BUFFER, _verticesCount * sizeof(GLfloat), vertices, GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     // Unbind the VBO + register it
@@ -25,7 +22,7 @@ Mesh::Mesh(GLfloat **vertices, GLint *positions, int count)
     // Generate VBO to store indices
     glGenBuffers(1, &vboId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboId);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(GLint), positions, GL_STATIC_DRAW);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLint), indices.data(), GL_STATIC_DRAW);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
     _vbosIds.push_back(vboId);
 
@@ -37,10 +34,14 @@ void Mesh::Draw()
 {
     glBindVertexArray(_vaoId);
     glEnableVertexAttribArray(0);
+
+    int size;
+    glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
+
     // last parameter is set to (0) because it represent the offset into the index buffer object
     // OpenGL will use the buffer GL_ELEMENT_ARRAY_BUFFER of the VAO automatically
     // see https://www.khronos.org/opengl/wiki/Vertex_Rendering#Basic_Drawing
-    glDrawElements(GL_TRIANGLES, _verticesCount, GL_UNSIGNED_INT, 0); //??
+    glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0); //??
     glDisableVertexAttribArray(0);
     glBindVertexArray(0);
 }
