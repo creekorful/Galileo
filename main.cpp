@@ -32,8 +32,8 @@ Shader* LoadShader()
 
 int main()
 {
-    auto* pWindow = new Window();
-    if (!pWindow->Initialize(640, 480, "Hello world ! :D"))
+    Window window;
+    if (!window.Initialize(640, 480, "Hello world ! :D"))
     {
         fprintf(stderr, "Unable to Initialize window");
         return -1;
@@ -45,11 +45,11 @@ int main()
     Mesh mesh = MeshFactory::BuildPlaneMesh();
 
     // Create gameObject
-    auto pGameObject = new GameObject(&mesh);
+    GameObject gameObject(&mesh);
 
     // Create matrices
     float fov = BaseMath::toRadians(60.f);
-    Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix(fov, pWindow->Size(), .01f, 1000.0f);
+    Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix(fov, window.Size(), .01f, 1000.0f);
 
     //Matrix4f viewMatrix;
 
@@ -65,7 +65,7 @@ int main()
     //pGameObject->Move(Vector3f(0, 0, -2.f));
 
     pShader->Bind();
-    while (!pWindow->ShouldClose())
+    while (!window.ShouldClose())
     {
         // Update view matrix
         //pGameObject->UpdateViewMatrix(&viewMatrix);
@@ -76,16 +76,13 @@ int main()
 
         // Here draw
         glClear(GL_COLOR_BUFFER_BIT);
-        pGameObject->Render();
-        pWindow->Render();
+        gameObject.Render();
+        window.Render();
     }
     pShader->Unbind();
 
     // Resources cleanup
     glBindVertexArray(0);
-
-    delete pGameObject;
-    delete pWindow;
 
     return 0;
 }
