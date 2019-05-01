@@ -87,7 +87,6 @@ Matrix4f Matrix4f::CreateProjectionMatrix(float fov, const Vector2i& screenSize,
     matrix4f.Set(2, 2, (-zNear - zFar) / (zNear - zFar));
     matrix4f.Set(2, 3, 2.0f * zFar * zNear / (zNear - zFar));
     matrix4f.Set(3, 2, 1.0f);
-    matrix4f.Set(3, 3, 0.0f);
 
     return matrix4f;
 }
