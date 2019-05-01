@@ -13,7 +13,7 @@ void GameObject::Render()
 void GameObject::UpdateViewMatrix(Matrix4f* matrix)
 {
     //matrix->Identity()->Translate(_position)->Rotate(_rotation)->Scale(_scale);
-    matrix->Identity();
+    matrix->Identity()->Translate(_position)->Transpose();
 }
 
 void GameObject::Move(const Vector3f& offset)

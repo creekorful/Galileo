@@ -61,11 +61,12 @@ int main()
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
 
-    //pGameObject->Move(Vector3f(0, 0, -2.f));
+    //gameObject.Move(Vector3f(0, 0, -200.f));
 
     pShader->Bind();
     while (!window.ShouldClose())
     {
+        gameObject.Move(Vector3f(0, 0, -0.02f));
         // Update view matrix
         gameObject.UpdateViewMatrix(&viewMatrix);
 
