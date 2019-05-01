@@ -31,34 +31,37 @@ Matrix4f* Matrix4f::Identity()
     return this;
 }
 
-void Matrix4f::Scale(float x, float y, float z)
+Matrix4f* Matrix4f::Scale(float x, float y, float z)
 {
     // todo
+    return this;
 }
 
-void Matrix4f::Scale(const Vector3f& vector)
+Matrix4f* Matrix4f::Scale(const Vector3f& vector)
 {
-    Scale(vector.x, vector.y, vector.z);
+    return Scale(vector.x, vector.y, vector.z);
 }
 
-void Matrix4f::Transform(float x, float y, float z)
+Matrix4f* Matrix4f::Translate(float x, float y, float z)
 {
-
+    // todo
+    return this;
 }
 
-void Matrix4f::Transform(const Vector3f& vector)
+Matrix4f* Matrix4f::Translate(const Vector3f& vector)
 {
-    Transform(vector.x, vector.y, vector.z);
+    return Translate(vector.x, vector.y, vector.z);
 }
 
-void Matrix4f::Rotate(float x, float y, float z)
+Matrix4f* Matrix4f::Rotate(float x, float y, float z)
 {
-
+    //todo
+    return this;
 }
 
-void Matrix4f::Rotate(const Vector3f& vector)
+Matrix4f* Matrix4f::Rotate(const Vector3f& vector)
 {
-    Rotate(vector.x, vector.y, vector.z);
+    return Rotate(vector.x, vector.y, vector.z);
 }
 
 Matrix4f Matrix4f::CreateProjectionMatrix(float fov, float aspectRatio, float zNear, float zFar)

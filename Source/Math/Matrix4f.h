@@ -20,17 +20,17 @@ public:
      */
     Matrix4f* Identity();
 
-    void Scale(float x, float y, float z);
+    Matrix4f* Scale(float x, float y, float z);
 
-    void Scale(const Vector3f& vector);
+    Matrix4f* Scale(const Vector3f& vector);
 
-    void Transform(float x, float y, float z);
+    Matrix4f* Translate(float x, float y, float z);
 
-    void Transform(const Vector3f& vector);
+    Matrix4f* Translate(const Vector3f& vector);
 
-    void Rotate(float x, float y, float z);
+    Matrix4f* Rotate(float x, float y, float z);
 
-    void Rotate(const Vector3f& vector);
+    Matrix4f* Rotate(const Vector3f& vector);
 
     float* First() const;
 

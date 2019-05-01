@@ -3,6 +3,7 @@
 
 #include "Graphics/Mesh.h"
 #include "Math/Vector3f.h"
+#include "Math/Matrix4f.h"
 
 class GameObject
 {
@@ -10,6 +11,8 @@ public:
     explicit GameObject(Mesh* mesh);
 
     void Render();
+
+    void UpdateViewMatrix(Matrix4f* matrix);
 
 private:
     Mesh* _mesh;

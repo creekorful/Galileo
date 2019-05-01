@@ -9,3 +9,8 @@ void GameObject::Render()
 {
     _mesh->Render();
 }
+
+void GameObject::UpdateViewMatrix(Matrix4f* matrix)
+{
+    matrix->Identity()->Translate(_position)->Rotate(_rotation)->Scale(_scale);
+}

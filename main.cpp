@@ -95,6 +95,9 @@ int main()
     pShader->Bind();
     while (!pWindow->ShouldClose())
     {
+        // Update view matrix
+        pGameObject->UpdateViewMatrix(&viewMatrix);
+
         // Update shader uniforms
         pShader->SetUniform(PROJECTION_MATRIX_UNIFORM, projectionMatrix);
         pShader->SetUniform(VIEW_MATRIX_UNIFORM, viewMatrix);
