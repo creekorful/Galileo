@@ -12,7 +12,7 @@ public:
 
     virtual ~Mesh();
 
-    void Draw();
+    void Render();
 
 private:
     GLuint _vaoId;

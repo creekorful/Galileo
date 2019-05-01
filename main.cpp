@@ -1,9 +1,10 @@
 #include "Source/Graphics/Window.h"
-#include "Source/Graphics/Mesh.h"
 #include "Source/Graphics/Shader.h"
+#include "Source/GameObject.h"
 #include "Source/IO/Files.h"
 
 #define PROJECTION_MATRIX_UNIFORM "projectionMatrix"
+#define VIEW_MATRIX_UNIFORM "viewMatrix"
 
 int main()
 {
@@ -45,7 +46,7 @@ int main()
 
 
     std::string title = "Hello world";
-    auto *pWindow = new Window();
+    auto* pWindow = new Window();
     if (!pWindow->Initialize(640, 480, title))
     {
         fprintf(stderr, "Unable to Initialize window");
@@ -69,13 +70,22 @@ int main()
         return -1;
     }
 
+    // Create gameObjects
+    auto pGameObject = new GameObject(pMesh);
+
     // Create projection matrix
     Vector2i windowSize = pWindow->size();
     double aspectRatio = windowSize.x / windowSize.y;
-    Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix((float) BaseMath::toRadians(30.0f), aspectRatio, 1.f, 1000.0f);
+    Matrix4f projectionMatrix =
+            Matrix4f::CreateProjectionMatrix((float) BaseMath::toRadians(60.0f), aspectRatio, 1.f, 1000.0f);
+    Matrix4f viewMatrix;
 
     // Set projection matrix uniform
     if (!pShader->CreateUniform(PROJECTION_MATRIX_UNIFORM))
+    {
+        fprintf(stderr, "Error while creating uniform");
+    }
+    if (!pShader->CreateUniform(VIEW_MATRIX_UNIFORM))
     {
         fprintf(stderr, "Error while creating uniform");
     }
@@ -87,10 +97,11 @@ int main()
     {
         // Update shader uniforms
         pShader->SetUniform(PROJECTION_MATRIX_UNIFORM, projectionMatrix);
+        pShader->SetUniform(VIEW_MATRIX_UNIFORM, viewMatrix);
 
         // Here draw
         glClear(GL_COLOR_BUFFER_BIT);
-        pMesh->Draw();
+        pGameObject->Render();
         pWindow->Render();
     }
     pShader->Unbind();
@@ -98,6 +109,7 @@ int main()
     // Resources cleanup
     glBindVertexArray(0);
 
+    delete pGameObject;
     delete pMesh;
     delete pShader;
     delete pWindow;

@@ -30,7 +30,7 @@ Mesh::Mesh(std::vector<GLfloat> vertices, std::vector<GLint> indices)
     glBindVertexArray(0);
 }
 
-void Mesh::Draw()
+void Mesh::Render()
 {
     glBindVertexArray(_vaoId);
     glEnableVertexAttribArray(0);
