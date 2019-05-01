@@ -1,5 +1,6 @@
 #include "Source/Graphics/Window.h"
 #include "Source/Graphics/Shader.h"
+#include "Source/Graphics/MeshFactory.h"
 #include "Source/GameObject.h"
 #include "Source/IO/Files.h"
 
@@ -8,43 +9,6 @@
 
 int main()
 {
-    // position of the vertices
-    std::vector<GLfloat> vertices = {
-            // front
-            -1.0, -1.0, 1.0,
-            1.0, -1.0, 1.0,
-            1.0, 1.0, 1.0,
-            -1.0, 1.0, 1.0,
-            // back
-            -1.0, -1.0, -1.0,
-            1.0, -1.0, -1.0,
-            1.0, 1.0, -1.0,
-            -1.0, 1.0, -1.0
-    };
-
-    // drawing indices/order of the vertices
-    std::vector<GLint> indices = {
-            // front
-            0, 1, 2,
-            2, 3, 0,
-            // right
-            1, 5, 6,
-            6, 2, 1,
-            // back
-            7, 6, 5,
-            5, 4, 7,
-            // left
-            4, 0, 3,
-            3, 7, 4,
-            // bottom
-            4, 5, 1,
-            1, 0, 4,
-            // top
-            3, 2, 6,
-            6, 7, 3
-    };
-
-
     std::string title = "Hello world";
     auto* pWindow = new Window();
     if (!pWindow->Initialize(640, 480, title))
@@ -55,8 +19,8 @@ int main()
 
     fprintf(stdout, "Window initialization successful");
 
-    // Initialize object to be drawn
-    auto pMesh = new Mesh(vertices, indices);
+    // Initialize mesh to be drawn
+    Mesh pMesh = MeshFactory::BuildPlaneMesh();
 
     // Initialize shader
     std::string vertexShader = Files::Read("Shaders/vertex.vs");
@@ -71,7 +35,7 @@ int main()
     }
 
     // Create gameObjects
-    auto pGameObject = new GameObject(pMesh);
+    auto pGameObject = new GameObject(&pMesh);
 
     // Create projection matrix
     Vector2i windowSize = pWindow->size();
@@ -113,7 +77,6 @@ int main()
     glBindVertexArray(0);
 
     delete pGameObject;
-    delete pMesh;
     delete pShader;
     delete pWindow;
 

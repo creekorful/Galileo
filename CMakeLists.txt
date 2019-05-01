@@ -29,7 +29,9 @@ set(SOURCES_FILES
         Source/Math/Vector3f.cpp
         Source/Math/Vector3f.h
         Source/GameObject.cpp
-        Source/GameObject.h)
+        Source/GameObject.h
+        Source/Graphics/MeshFactory.cpp
+        Source/Graphics/MeshFactory.h)
 
 add_executable(Galileo ${SOURCES_FILES})
 
