@@ -4,7 +4,7 @@
 #include <iostream>
 
 #include "../Common.h"
-#include "../Math/Vector2i.h"
+#include "../Math/Vector2.h"
 
 /**
  * This class represent the active render window
@@ -24,7 +24,7 @@ public:
      * @param title window title
      * @return true if initialization successful false otherwise
      */
-    bool Initialize(int width, int height, std::string &title);
+    bool Initialize(int width, int height, const std::string& title);
 
     /**
      * @return true if window should be closed
@@ -39,10 +39,10 @@ public:
     /**
      * @return size of current window
      */
-    Vector2i size();
+    Vector2i Size();
 
 private:
-    GLFWwindow *_pWindow;
+    GLFWwindow* _pWindow;
 };
 
 

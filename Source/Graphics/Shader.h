@@ -13,10 +13,23 @@ public:
 
     virtual ~Shader();
 
-    bool Initialize(const std::string &vertexShader, const std::string &fragmentShader);
+    /**
+     * Initialize shader program from given vertex and fragment shader code
+     *
+     * @param vertexShader vertex shader code
+     * @param fragmentShader fragment shader code
+     * @return true if shader initialized false otherwise
+     */
+    bool Initialize(const std::string& vertexShader, const std::string& fragmentShader);
 
+    /**
+     * Bind the shader for drawing
+     */
     void Bind();
 
+    /**
+     * Unbind current shader
+     */
     void Unbind();
 
     /**
@@ -27,7 +40,7 @@ public:
      * @param uniformName name of the uniform to be created
      * @return true if uniform has been created, false otherwise
      */
-    bool CreateUniform(const std::string &uniformName);
+    bool CreateUniform(const std::string& uniformName);
 
     /**
      * Set uniform matrix value
@@ -39,9 +52,16 @@ public:
 
 private:
     GLuint _programId;
-    std::map<std::string, GLint> uniforms;
+    std::map<std::string, GLint> _uniforms;
 
-    GLuint LoadShader(const std::string &shader, const GLenum &shaderType);
+    /**
+     * Load given shader and return his id
+     *
+     * @param shader shader code to load
+     * @param shaderType type of shader
+     * @return shader code id or -1 if error
+     */
+    GLuint LoadShader(const std::string& shader, const GLenum& shaderType);
 };
 
 

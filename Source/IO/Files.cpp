@@ -1,6 +1,6 @@
 #include "Files.h"
 
-std::string Files::Read(const std::string &path)
+std::string Files::Read(const std::string& path)
 {
     std::ifstream file;
     file.open(path);

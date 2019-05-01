@@ -10,12 +10,15 @@ public:
     T y;
 
     Vector2() = default;
+
     Vector2(T x, T y)
     {
         this->x = x;
         this->y = y;
     }
 };
+
+typedef Vector2<int> Vector2i;
 
 
 #endif //GALILEO_VECTOR2_H

@@ -17,6 +17,15 @@ public:
         this->y = y;
         this->z = z;
     }
+
+    void operator+=(const Vector3& other)
+    {
+        this->x += other.x;
+        this->y += other.y;
+        this->z += other.z;
+    }
 };
+
+typedef Vector3<float> Vector3f;
 
 #endif //GALILEO_VECTOR3_H

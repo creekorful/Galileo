@@ -2,7 +2,10 @@
 #define GALILEO_MATRIX4F_H
 
 #include "BaseMath.h"
-#include "Vector3f.h"
+#include "Vector3.h"
+#include "Vector2.h"
+
+#include <iostream>
 
 class Matrix4f
 {
@@ -11,6 +14,12 @@ public:
      * Create a matrix that is the identity matrix
      */
     Matrix4f();
+
+    /**
+     * Create matrix as a copy of provided one
+     * @param other matrix to be copied
+     */
+    Matrix4f(const Matrix4f& other);
 
     ~Matrix4f();
 
@@ -32,20 +41,28 @@ public:
 
     Matrix4f* Rotate(const Vector3f& vector);
 
+    /**
+     * Transpose current matrix
+     * @return this
+     */
+    Matrix4f* Transpose();
+
     float* First() const;
 
     void Set(unsigned short x, unsigned short y, float value);
+
+    void Dump() const;
 
     /**
      * Create a projection matrix from given args
      *
      * @param fov field of view
-     * @param aspectRatio the aspect ratio (width / height)
+     * @param screenSize the screen size
      * @param zNear z plane near distance
      * @param zFar z plane far distance
      * @return built matrix
      */
-    static Matrix4f CreateProjectionMatrix(float fov, float aspectRatio, float zNear, float zFar);
+    static Matrix4f CreateProjectionMatrix(float fov, const Vector2i& screenSize, float zNear, float zFar);
 
 private:
     float* _m;

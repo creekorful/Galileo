@@ -8,7 +8,7 @@
 class Files
 {
 public:
-    static std::string Read(const std::string &path);
+    static std::string Read(const std::string& path);
 };
 
 

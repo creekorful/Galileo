@@ -8,7 +8,7 @@
 class BaseMath
 {
 public:
-    static double toRadians(double angleDegree);
+    static float toRadians(float angleDegree);
 };
 
 

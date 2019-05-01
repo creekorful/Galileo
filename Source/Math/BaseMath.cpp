@@ -1,6 +1,6 @@
 #include "BaseMath.h"
 
-double BaseMath::toRadians(double angleDegree)
+float BaseMath::toRadians(float angleDegree)
 {
     return angleDegree / 180.0 * PI;
 }

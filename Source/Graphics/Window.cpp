@@ -1,6 +1,6 @@
 #include "Window.h"
 
-bool Window::Initialize(int width, int height, std::string &title)
+bool Window::Initialize(int width, int height, const std::string& title)
 {
     // Initialize GLFW
     if (!glfwInit())
@@ -48,7 +48,7 @@ Window::~Window()
     glfwTerminate();
 }
 
-Vector2i Window::size()
+Vector2i Window::Size()
 {
     Vector2i size;
     glfwGetWindowSize(_pWindow, &size.x, &size.y);

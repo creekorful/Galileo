@@ -23,15 +23,13 @@ set(SOURCES_FILES
         Source/Math/BaseMath.cpp
         Source/Math/BaseMath.h
         Source/Math/Vector2.h
-        Source/Math/Vector2i.cpp
-        Source/Math/Vector2i.h
         Source/Math/Vector3.h
-        Source/Math/Vector3f.cpp
-        Source/Math/Vector3f.h
         Source/GameObject.cpp
         Source/GameObject.h
         Source/Graphics/MeshFactory.cpp
-        Source/Graphics/MeshFactory.h Source/Graphics/ShaderFactory.cpp Source/Graphics/ShaderFactory.h)
+        Source/Graphics/MeshFactory.h
+        Source/Graphics/ShaderFactory.cpp
+        Source/Graphics/ShaderFactory.h)
 
 add_executable(Galileo ${SOURCES_FILES})
 

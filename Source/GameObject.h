@@ -2,7 +2,6 @@
 #define GALILEO_GAMEOBJECT_H
 
 #include "Graphics/Mesh.h"
-#include "Math/Vector3f.h"
 #include "Math/Matrix4f.h"
 
 class GameObject
@@ -13,6 +12,8 @@ public:
     void Render();
 
     void UpdateViewMatrix(Matrix4f* matrix);
+
+    void Move(const Vector3f& offset);
 
 private:
     Mesh* _mesh;

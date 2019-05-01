@@ -7,11 +7,33 @@
 #define PROJECTION_MATRIX_UNIFORM "projectionMatrix"
 #define VIEW_MATRIX_UNIFORM "viewMatrix"
 
+Shader* LoadShader()
+{
+    // Initialize shader
+    Shader* pShader = ShaderFactory::p().Load("simple");
+    if (pShader == nullptr)
+    {
+        return nullptr;
+    }
+
+    // Set projection matrix uniform
+    if (!pShader->CreateUniform(PROJECTION_MATRIX_UNIFORM))
+    {
+        fprintf(stderr, "Error while creating PROJECTION_MATRIX_UNIFORM");
+        return nullptr;
+    }
+    /*if (!pShader->CreateUniform(VIEW_MATRIX_UNIFORM))
+    {
+        fprintf(stderr, "Error while creating uniform");
+        return nullptr;
+    }*/
+    return pShader;
+}
+
 int main()
 {
-    std::string title = "Hello world";
     auto* pWindow = new Window();
-    if (!pWindow->Initialize(640, 480, title))
+    if (!pWindow->Initialize(640, 480, "Hello world ! :D"))
     {
         fprintf(stderr, "Unable to Initialize window");
         return -1;
@@ -22,44 +44,35 @@ int main()
     // Initialize mesh to be drawn
     Mesh mesh = MeshFactory::BuildPlaneMesh();
 
-    // Create gameObjects
+    // Create gameObject
     auto pGameObject = new GameObject(&mesh);
 
-    // Create projection matrix
-    Vector2i windowSize = pWindow->size();
-    double aspectRatio = windowSize.x / windowSize.y;
-    Matrix4f projectionMatrix =
-            Matrix4f::CreateProjectionMatrix((float) BaseMath::toRadians(60.0f), aspectRatio, 1.f, 1000.0f);
-    Matrix4f viewMatrix;
+    // Create matrices
+    float fov = BaseMath::toRadians(60.f);
+    Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix(fov, pWindow->Size(), .01f, 1000.0f);
 
-    // Initialize shader
-    Shader* pShader = ShaderFactory::p().Load("simple");
+    //Matrix4f viewMatrix;
+
+    Shader* pShader = LoadShader();
     if (pShader == nullptr)
     {
+        fprintf(stderr, "Unable to load shader");
         return -1;
     }
 
-    // Set projection matrix uniform
-    if (!pShader->CreateUniform(PROJECTION_MATRIX_UNIFORM))
-    {
-        fprintf(stderr, "Error while creating uniform");
-    }
-    if (!pShader->CreateUniform(VIEW_MATRIX_UNIFORM))
-    {
-        fprintf(stderr, "Error while creating uniform");
-    }
-
     glClearColor(0.0, 0.0, 0.0, 1.0);
+
+    //pGameObject->Move(Vector3f(0, 0, -2.f));
 
     pShader->Bind();
     while (!pWindow->ShouldClose())
     {
         // Update view matrix
-        pGameObject->UpdateViewMatrix(&viewMatrix);
+        //pGameObject->UpdateViewMatrix(&viewMatrix);
 
         // Update shader uniforms
         pShader->SetUniform(PROJECTION_MATRIX_UNIFORM, projectionMatrix);
-        pShader->SetUniform(VIEW_MATRIX_UNIFORM, viewMatrix);
+        //pShader->SetUniform(VIEW_MATRIX_UNIFORM, viewMatrix);
 
         // Here draw
         glClear(GL_COLOR_BUFFER_BIT);

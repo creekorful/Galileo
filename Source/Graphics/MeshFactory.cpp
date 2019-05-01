@@ -2,20 +2,18 @@
 
 Mesh MeshFactory::BuildPlaneMesh()
 {
-// position of the vertices
+    // position of the vertices
     std::vector<GLfloat> vertices = {
-            // front
-            -1.0, -1.0, 0.0,
-            1.0, -1.0, 0.0,
-            1.0, 1.0, 0.0,
-            -1.0, 1.0, 0.0,
+            -0.5f, 0.5f, 0.0f, // Top-left
+            0.5f, 0.5f, 0.0f, // Top-right
+            0.5f, -0.5f, 0.0f, // Bottom-right
+            -0.5f, -0.5f, 0.0f // Bottom-left
     };
 
     // drawing indices/order of the vertices
     std::vector<GLint> indices = {
-            // front
             0, 1, 2,
-            2, 3, 0,
+            2, 3, 0
     };
 
     return Mesh(vertices, indices);
