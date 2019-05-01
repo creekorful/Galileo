@@ -46,7 +46,7 @@ public:
     static Matrix4f CreateProjectionMatrix(float fov, float aspectRatio, float zNear, float zFar);
 
 private:
-    float** _m;
+    float* _m;
 };
 
 
