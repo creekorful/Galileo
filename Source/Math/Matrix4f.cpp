@@ -64,7 +64,7 @@ void Matrix4f::Rotate(const Vector3f& vector)
 
 Matrix4f Matrix4f::CreateProjectionMatrix(float fov, float aspectRatio, float zNear, float zFar)
 {
-    float h = (float) tanf(fov * 0.5f);
+    float h = tanf(fov * 0.5f);
 
     Matrix4f matrix4f;
 

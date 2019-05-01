@@ -46,7 +46,7 @@ int main()
 
     std::string title = "Hello world";
     auto *pWindow = new Window();
-    if (!pWindow->Initialize(650, 480, title))
+    if (!pWindow->Initialize(640, 480, title))
     {
         fprintf(stderr, "Unable to Initialize window");
         return -1;
@@ -72,7 +72,7 @@ int main()
     // Create projection matrix
     Vector2i windowSize = pWindow->size();
     float aspectRatio = windowSize.x / windowSize.y;
-    Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix((float) BaseMath::toRadians(60.0f), aspectRatio, .01f, 1000.0f);
+    Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix((float) BaseMath::toRadians(30.0f), aspectRatio, 1.f, 1000.0f);
 
     // Set projection matrix uniform
     pShader->CreateUniform(PROJECTION_MATRIX_UNIFORM);
