@@ -2,6 +2,7 @@
 #define GALILEO_MATRIX4F_H
 
 #include "BaseMath.h"
+#include "Vector3f.h"
 
 class Matrix4f
 {
@@ -10,6 +11,24 @@ public:
      * Create a matrix that is the identity matrix
      */
     Matrix4f();
+
+    ~Matrix4f();
+
+    Matrix4f* Identity();
+
+    void Scale(float x, float y, float z);
+
+    void Scale(const Vector3f& vector);
+
+    void Transform(float x, float y, float z);
+
+    void Transform(const Vector3f& vector);
+
+    void Rotate(float x, float y, float z);
+
+    void Rotate(const Vector3f& vector);
+
+    float* First() const;
 
     /**
      * Create a projection matrix from given args
@@ -23,10 +42,7 @@ public:
     static Matrix4f CreateProjectionMatrix(float fov, float aspectRatio, float zNear, float zFar);
 
 private:
-    float m00, m01, m02, m03;
-    float m10, m11, m12, m13;
-    float m20, m21, m22, m23;
-    float m30, m31, m32, m33;
+    float** _m;
 };
 
 

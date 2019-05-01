@@ -24,10 +24,12 @@ set(SOURCES_FILES
         Source/Math/BaseMath.h
         Source/Math/Vector2.h
         Source/Math/Vector2i.cpp
-        Source/Math/Vector2i.h)
+        Source/Math/Vector2i.h
+        Source/Math/Vector3.h
+        Source/Math/Vector3f.cpp
+        Source/Math/Vector3f.h)
 
 add_executable(Galileo ${SOURCES_FILES})
 
 # link librairies
-target_link_libraries(Galileo glfw)
-target_link_libraries(Galileo ${OPENGL_gl_LIBRARY})
+target_link_libraries(Galileo glfw ${OPENGL_gl_LIBRARY})

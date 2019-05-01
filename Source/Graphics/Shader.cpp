@@ -1,6 +1,6 @@
 #include "Shader.h"
 
-bool Shader::Initialize(const std::string &vertexShader, const std::string &fragmentShader)
+bool Shader::Initialize(const std::string& vertexShader, const std::string& fragmentShader)
 {
     GLuint vertexShaderId = LoadShader(vertexShader, GL_VERTEX_SHADER);
     if (vertexShaderId == -1)
@@ -50,10 +50,10 @@ bool Shader::Initialize(const std::string &vertexShader, const std::string &frag
     return true;
 }
 
-GLuint Shader::LoadShader(const std::string &shader, const GLenum &shaderType)
+GLuint Shader::LoadShader(const std::string& shader, const GLenum& shaderType)
 {
     GLuint shaderId = glCreateShader(shaderType);
-    const char *c_str = shader.c_str();
+    const char* c_str = shader.c_str();
 
     // Load shader source code
     glShaderSource(shaderId, 1, &c_str, nullptr);
@@ -68,7 +68,7 @@ GLuint Shader::LoadShader(const std::string &shader, const GLenum &shaderType)
     {
         int maxLength;
         glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &maxLength);
-        char *log = new char[maxLength];
+        char* log = new char[maxLength];
         glGetShaderInfoLog(shaderId, maxLength, &maxLength, log);
         fprintf(stderr, log);
         free(log);
@@ -96,14 +96,14 @@ Shader::~Shader()
     glDeleteProgram(_programId);
 }
 
-void Shader::CreateUniform(const std::string &uniformName)
+void Shader::CreateUniform(const std::string& uniformName)
 {
     GLint uniform = glGetUniformLocation(_programId, uniformName.c_str());
     // todo check?
     uniforms[uniformName] = uniform;
 }
 
-void Shader::SetUniform(const std::string &uniform, const Matrix4f &value)
+void Shader::SetUniform(const std::string& uniform, const Matrix4f& value)
 {
-    // todo
+    glUniformMatrix4fv(uniforms[uniform], 16, false, value.First());
 }
