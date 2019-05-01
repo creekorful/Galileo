@@ -31,7 +31,7 @@ set(SOURCES_FILES
         Source/GameObject.cpp
         Source/GameObject.h
         Source/Graphics/MeshFactory.cpp
-        Source/Graphics/MeshFactory.h)
+        Source/Graphics/MeshFactory.h Source/Graphics/ShaderFactory.cpp Source/Graphics/ShaderFactory.h)
 
 add_executable(Galileo ${SOURCES_FILES})
 

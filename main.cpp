@@ -1,5 +1,5 @@
 #include "Source/Graphics/Window.h"
-#include "Source/Graphics/Shader.h"
+#include "Source/Graphics/ShaderFactory.h"
 #include "Source/Graphics/MeshFactory.h"
 #include "Source/GameObject.h"
 #include "Source/IO/Files.h"
@@ -20,22 +20,17 @@ int main()
     fprintf(stdout, "Window initialization successful");
 
     // Initialize mesh to be drawn
-    Mesh pMesh = MeshFactory::BuildPlaneMesh();
+    Mesh mesh = MeshFactory::BuildPlaneMesh();
 
     // Initialize shader
-    std::string vertexShader = Files::Read("Shaders/vertex.vs");
-    std::string fragmentShader = Files::Read("Shaders/fragment.fs");
-
-    // Load shader
-    auto pShader = new Shader();
-    if (!pShader->Initialize(vertexShader, fragmentShader))
+    Shader* pShader = ShaderFactory::p().Load("simple");
+    if (pShader == nullptr)
     {
-        fprintf(stderr, "Unable to initialise shader");
         return -1;
     }
 
     // Create gameObjects
-    auto pGameObject = new GameObject(&pMesh);
+    auto pGameObject = new GameObject(&mesh);
 
     // Create projection matrix
     Vector2i windowSize = pWindow->size();
@@ -77,7 +72,6 @@ int main()
     glBindVertexArray(0);
 
     delete pGameObject;
-    delete pShader;
     delete pWindow;
 
     return 0;

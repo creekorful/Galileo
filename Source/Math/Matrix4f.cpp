@@ -14,7 +14,7 @@ Matrix4f::~Matrix4f()
 
 Matrix4f* Matrix4f::Identity()
 {
-    delete[] _m;
+    //delete[] _m;
 
     // set all values
     _m = new float[16];
