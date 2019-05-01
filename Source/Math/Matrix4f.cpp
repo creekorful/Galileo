@@ -1,5 +1,7 @@
 #include "Matrix4f.h"
 
+#include <iostream>
+
 Matrix4f::Matrix4f()
 {
     Identity();
@@ -12,6 +14,8 @@ Matrix4f::~Matrix4f()
 
 Matrix4f* Matrix4f::Identity()
 {
+    delete[] _m;
+
     // set all values
     _m = new float* [4];
     for (int i = 0; i < 4; i++)
@@ -74,6 +78,7 @@ Matrix4f Matrix4f::CreateProjectionMatrix(float fov, float aspectRatio, float zN
     matrix4f._m[2][2] = (-zNear - zFar) / (zNear - zFar);
     matrix4f._m[2][3] = 2.0f * zFar * zNear / (zNear - zFar);
     matrix4f._m[3][2] = 1.0f;
+    matrix4f._m[3][3] = 0.0f;
 
     return matrix4f;
 }

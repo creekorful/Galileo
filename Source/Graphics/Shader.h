@@ -25,8 +25,9 @@ public:
      * should be used when need to set value from code
      *
      * @param uniformName name of the uniform to be created
+     * @return true if uniform has been created, false otherwise
      */
-    void CreateUniform(const std::string &uniformName);
+    bool CreateUniform(const std::string &uniformName);
 
     /**
      * Set uniform matrix value

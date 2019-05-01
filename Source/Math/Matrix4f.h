@@ -14,6 +14,10 @@ public:
 
     ~Matrix4f();
 
+    /**
+     * Reset current matrix as identity one
+     * @return this
+     */
     Matrix4f* Identity();
 
     void Scale(float x, float y, float z);

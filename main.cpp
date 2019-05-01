@@ -71,11 +71,14 @@ int main()
 
     // Create projection matrix
     Vector2i windowSize = pWindow->size();
-    float aspectRatio = windowSize.x / windowSize.y;
+    double aspectRatio = windowSize.x / windowSize.y;
     Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix((float) BaseMath::toRadians(30.0f), aspectRatio, 1.f, 1000.0f);
 
     // Set projection matrix uniform
-    pShader->CreateUniform(PROJECTION_MATRIX_UNIFORM);
+    if (!pShader->CreateUniform(PROJECTION_MATRIX_UNIFORM))
+    {
+        fprintf(stderr, "Error while creating uniform");
+    }
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
 

@@ -96,14 +96,21 @@ Shader::~Shader()
     glDeleteProgram(_programId);
 }
 
-void Shader::CreateUniform(const std::string& uniformName)
+bool Shader::CreateUniform(const std::string& uniformName)
 {
     GLint uniform = glGetUniformLocation(_programId, uniformName.c_str());
-    // todo check?
-    uniforms[uniformName] = uniform;
+
+    if (uniform != -1)
+    {
+        // todo check?
+        uniforms[uniformName] = uniform;
+        return true;
+    }
+
+    return false;
 }
 
 void Shader::SetUniform(const std::string& uniform, const Matrix4f& value)
 {
-    glUniformMatrix4fv(uniforms[uniform], 1, false, value.First());
+    glUniformMatrix4fv(uniforms[uniform], 1, GL_FALSE, value.First());
 }
