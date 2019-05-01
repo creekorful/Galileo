@@ -22,11 +22,11 @@ Shader* LoadShader()
         fprintf(stderr, "Error while creating PROJECTION_MATRIX_UNIFORM");
         return nullptr;
     }
-    /*if (!pShader->CreateUniform(VIEW_MATRIX_UNIFORM))
+    if (!pShader->CreateUniform(VIEW_MATRIX_UNIFORM))
     {
         fprintf(stderr, "Error while creating uniform");
         return nullptr;
-    }*/
+    }
     return pShader;
 }
 
@@ -50,8 +50,7 @@ int main()
     // Create matrices
     float fov = BaseMath::toRadians(60.f);
     Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix(fov, window.Size(), .01f, 1000.0f);
-
-    //Matrix4f viewMatrix;
+    Matrix4f viewMatrix;
 
     Shader* pShader = LoadShader();
     if (pShader == nullptr)
@@ -68,11 +67,11 @@ int main()
     while (!window.ShouldClose())
     {
         // Update view matrix
-        //pGameObject->UpdateViewMatrix(&viewMatrix);
+        gameObject.UpdateViewMatrix(&viewMatrix);
 
         // Update shader uniforms
         pShader->SetUniform(PROJECTION_MATRIX_UNIFORM, projectionMatrix);
-        //pShader->SetUniform(VIEW_MATRIX_UNIFORM, viewMatrix);
+        pShader->SetUniform(VIEW_MATRIX_UNIFORM, viewMatrix);
 
         // Here draw
         glClear(GL_COLOR_BUFFER_BIT);
