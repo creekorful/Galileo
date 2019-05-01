@@ -22,13 +22,6 @@ int main()
     // Initialize mesh to be drawn
     Mesh mesh = MeshFactory::BuildPlaneMesh();
 
-    // Initialize shader
-    Shader* pShader = ShaderFactory::p().Load("simple");
-    if (pShader == nullptr)
-    {
-        return -1;
-    }
-
     // Create gameObjects
     auto pGameObject = new GameObject(&mesh);
 
@@ -38,6 +31,13 @@ int main()
     Matrix4f projectionMatrix =
             Matrix4f::CreateProjectionMatrix((float) BaseMath::toRadians(60.0f), aspectRatio, 1.f, 1000.0f);
     Matrix4f viewMatrix;
+
+    // Initialize shader
+    Shader* pShader = ShaderFactory::p().Load("simple");
+    if (pShader == nullptr)
+    {
+        return -1;
+    }
 
     // Set projection matrix uniform
     if (!pShader->CreateUniform(PROJECTION_MATRIX_UNIFORM))

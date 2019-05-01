@@ -23,10 +23,10 @@ Matrix4f* Matrix4f::Identity()
         _m[i] = 0.0f;
     }
 
-    _m[0] = 1.0f; // 0, 0
-    _m[4 + 1] = 1.0f; // 1, 1
-    _m[(4 * 2) + 2] = 1.0f; // 2, 2
-    _m[(4 * 3) + 3] = 1.0f; // 3, 3
+    Set(0, 0, 1.0f);
+    Set(1, 1, 1.0f);
+    Set(2, 2, 1.0f);
+    Set(3, 3, 1.0f);
 
     return this;
 }
@@ -71,12 +71,12 @@ Matrix4f Matrix4f::CreateProjectionMatrix(float fov, float aspectRatio, float zN
     Matrix4f matrix4f;
 
     // https://jeux.developpez.com/tutoriels/OpenGL-ogldev/tutoriel-12-projection-perspective/
-    matrix4f._m[0] = 1.0f / (h * aspectRatio); // 0, 0
-    matrix4f._m[4 + 1] = 1.0f / h; // 1, 1
-    matrix4f._m[(4 * 2) + 2] = (-zNear - zFar) / (zNear - zFar); // 2, 2
-    matrix4f._m[(4 * 2) + 3] = 2.0f * zFar * zNear / (zNear - zFar); // 2, 3
-    matrix4f._m[(4 * 3) + 2] = 1.0f; // 3, 2
-    matrix4f._m[(4 * 3) + 3] = 0.0f; // 3, 3
+    matrix4f.Set(0, 0, 1.0f / (h * aspectRatio));
+    matrix4f.Set(1, 1, 1.0f / h);
+    matrix4f.Set(2, 2, (-zNear - zFar) / (zNear - zFar));
+    matrix4f.Set(2, 3, 2.0f * zFar * zNear / (zNear - zFar));
+    matrix4f.Set(3, 2, 1.0f);
+    matrix4f.Set(3, 3, 0.0f);
 
     return matrix4f;
 }
@@ -84,4 +84,9 @@ Matrix4f Matrix4f::CreateProjectionMatrix(float fov, float aspectRatio, float zN
 float* Matrix4f::First() const
 {
     return &_m[0];
+}
+
+void Matrix4f::Set(unsigned short x, unsigned short y, float value)
+{
+    _m[x * 4 + y] = value;
 }

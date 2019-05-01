@@ -34,6 +34,8 @@ public:
 
     float* First() const;
 
+    void Set(unsigned short x, unsigned short y, float value);
+
     /**
      * Create a projection matrix from given args
      *
