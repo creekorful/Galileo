@@ -63,7 +63,7 @@ public:
 
     /**
      * Transpose current matrix
-     * @return this
+     * @return this, transposed
      */
     Matrix4f& Transpose();
 

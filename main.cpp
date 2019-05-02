@@ -47,7 +47,7 @@ int main()
     fprintf(stdout, "Window initialization successful");
 
     // Initialize mesh to be drawn
-    Mesh mesh = MeshFactory::BuildPlaneMesh();
+    Mesh mesh = MeshFactory::BuildCubeMesh();
 
     // Create gameObject
     GameObject gameObject(&mesh);
@@ -74,7 +74,7 @@ int main()
     while (!window.ShouldClose())
     {
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        gameObject.Rotate(Vector3f(0, 0, .05f));
+        gameObject.Rotate(Vector3f(.05f, .05f, 0));
 
         // Update view matrix
         gameObject.UpdateViewMatrix(viewMatrix);

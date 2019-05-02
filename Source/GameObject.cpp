@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-GameObject::GameObject(Mesh* mesh)
+GameObject::GameObject(Mesh* mesh) : _scale(0)
 {
     _mesh = mesh;
 }
