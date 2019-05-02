@@ -196,7 +196,7 @@ Matrix4f Matrix4f::MakeRotationMatrix(float x, float y, float z)
 {
     // https://en.wikipedia.org/wiki/Rotation_matrix
     // x axis rotation
-    Matrix4f xAxis;
+    /*Matrix4f xAxis;
     float cosx = cos(x);
     float sinx = sin(x);
     xAxis.Set(1, 1, cosx);
@@ -211,7 +211,7 @@ Matrix4f Matrix4f::MakeRotationMatrix(float x, float y, float z)
     yAxis.Set(0, 0, cosy);
     yAxis.Set(0, 2, siny);
     yAxis.Set(2, 0, -siny);
-    yAxis.Set(2, 2, cosy);
+    yAxis.Set(2, 2, cosy);*/
 
     // z axis rotation
     Matrix4f zAxis;
@@ -222,7 +222,8 @@ Matrix4f Matrix4f::MakeRotationMatrix(float x, float y, float z)
     zAxis.Set(1, 0, sinz);
     zAxis.Set(1, 1, cosz);
 
-    return xAxis * yAxis * zAxis;
+    //return xAxis * yAxis * zAxis;
+    return zAxis.Transpose();
 }
 
 Matrix4f Matrix4f::MakeTranslationMatrix(const Vector3f& values)

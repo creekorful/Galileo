@@ -1,43 +1,31 @@
 #include "ShaderFactory.h"
 
-Shader* ShaderFactory::Load(const std::string& name)
+bool ShaderFactory::Load(const std::string& name)
 {
     // Initialize shader
     std::string vertexShader = Files::Read("Shaders/" + name + "/vertex.vs");
     std::string fragmentShader = Files::Read("Shaders/" + name + "/fragment.fs");
 
     // Load shader
-    auto pShader = new Shader();
-    if (!pShader->Initialize(vertexShader, fragmentShader))
+    if (!_shaders[name].Initialize(vertexShader, fragmentShader))
     {
         fprintf(stderr, "Unable to initialise shader");
-        return nullptr;
+        _shaders.erase(name);
+        return false;
     }
 
-    _pShaders[name] = pShader;
-
-    return pShader;
+    return true;
 }
 
-Shader* ShaderFactory::Get(const std::string& name)
+Shader& ShaderFactory::Get(const std::string& name)
 {
-    return _pShaders[name];
+    return _shaders[name];
 }
 
 void ShaderFactory::Deinitialize(const std::string& name)
 {
-    Shader* ptr = _pShaders[name];
-    if (ptr != nullptr)
+    if (_shaders.find(name) != _shaders.end())
     {
-        _pShaders.erase(name);
-        delete ptr;
-    }
-}
-
-ShaderFactory::~ShaderFactory()
-{
-    for (const auto &[key, value]: _pShaders)
-    {
-        delete value;
+        _shaders.erase(name);
     }
 }

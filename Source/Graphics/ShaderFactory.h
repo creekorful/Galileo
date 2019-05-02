@@ -6,31 +6,24 @@
 #include "Shader.h"
 #include "../IO/Files.h"
 
-// todo remove ptr use ref & instead?
-
 class ShaderFactory
 {
 public:
 
     /**
-     * Ensure all shader are deleted when factory goes out of scope
-     */
-    ~ShaderFactory();
-
-    /**
      * Load shader using name and return ptr to built shader if successful
      * @param name shader name
-     * @return ptr to built shader or nullptr
+     * @return true if shader has been loaded successfully
      */
-    Shader* Load(const std::string& name);
+    bool Load(const std::string& name);
 
     /**
      * Retrieve shader using given name
      *
      * @param name shader name
-     * @return found shader or nullptr
+     * @return found shader
      */
-    Shader* Get(const std::string& name);
+    Shader& Get(const std::string& name);
 
     /**
      * Manually delete / cleanup shader
@@ -47,7 +40,7 @@ public:
     }
 
 private:
-    std::map<std::string, Shader*> _pShaders;
+    std::map<std::string, Shader> _shaders;
 };
 
 

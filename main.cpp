@@ -14,11 +14,12 @@
 Shader* LoadShader()
 {
     // Initialize shader
-    Shader* pShader = ShaderFactory::p().Load("simple");
-    if (pShader == nullptr)
+    if (!ShaderFactory::p().Load("simple"))
     {
         return nullptr;
     }
+
+    Shader* pShader = &ShaderFactory::p().Get("simple");
 
     // Set projection matrix uniform
     if (!pShader->CreateUniform(PROJECTION_MATRIX_UNIFORM))
@@ -73,7 +74,7 @@ int main()
     while (!window.ShouldClose())
     {
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        gameObject.Rotate(Vector3f(0, 0, .01f));
+        gameObject.Rotate(Vector3f(0, 0, .05f));
 
         // Update view matrix
         gameObject.UpdateViewMatrix(viewMatrix);
