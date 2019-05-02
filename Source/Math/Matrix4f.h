@@ -33,6 +33,8 @@ public:
 
     Matrix4f* Scale(const Vector3f& vector);
 
+    Matrix4f* Scale(float factor);
+
     Matrix4f* Translate(float x, float y, float z);
 
     Matrix4f* Translate(const Vector3f& vector);

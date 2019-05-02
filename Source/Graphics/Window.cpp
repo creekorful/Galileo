@@ -29,6 +29,7 @@ bool Window::Initialize(int width, int height, const std::string& title)
 
     // Make window context current
     glfwMakeContextCurrent(_pWindow);
+
     return true;
 }
 

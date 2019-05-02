@@ -49,9 +49,13 @@ Matrix4f* Matrix4f::Scale(const Vector3f& vector)
     return Scale(vector.x, vector.y, vector.z);
 }
 
+Matrix4f* Matrix4f::Scale(float factor)
+{
+    return Scale(factor, factor, factor);
+}
+
 Matrix4f* Matrix4f::Translate(float x, float y, float z)
 {
-    // todo
     Set(0, 3, x);
     Set(1, 3, y);
     Set(2, 3, z);
@@ -66,7 +70,10 @@ Matrix4f* Matrix4f::Translate(const Vector3f& vector)
 
 Matrix4f* Matrix4f::Rotate(float x, float y, float z)
 {
-    //todo
+    Set(0, 0, x);
+    Set(1, 1, y);
+    Set(2, 2, z);
+    Set(3, 3, 1.0f); // todo good?
     return this;
 }
 
