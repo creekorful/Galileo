@@ -6,6 +6,8 @@
 #include "Shader.h"
 #include "../IO/Files.h"
 
+// todo remove ptr use ref & instead?
+
 class ShaderFactory
 {
 public:

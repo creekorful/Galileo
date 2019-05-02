@@ -10,15 +10,27 @@ void GameObject::Render()
     _mesh->Render();
 }
 
-void GameObject::UpdateViewMatrix(Matrix4f* matrix)
+void GameObject::UpdateViewMatrix(Matrix4f& matrix)
 {
-    //matrix->Identity()->Translate(_position)->Rotate(_rotation)->Scale(_scale);
-    matrix->Identity()->Translate(_position)->Rotate(_rotation)->Scale(_scale)->Transpose();
+    matrix.Identity()
+            .Scale(_scale)
+            .Translate(_position)
+            .Rotate(Vector3f(BaseMath::toRadians(-_rotation.x),
+                             BaseMath::toRadians(-_rotation.y),
+                             BaseMath::toRadians(-_rotation.z)))
+            .Transpose();
 }
 
 void GameObject::Move(const Vector3f& offset)
 {
     _position += offset;
+}
+
+void GameObject::Move(float x, float y, float z)
+{
+    _position.x += x;
+    _position.y += y;
+    _position.z += z;
 }
 
 void GameObject::Rotate(const Vector3f& offset)
@@ -29,4 +41,9 @@ void GameObject::Rotate(const Vector3f& offset)
 void GameObject::Scale(float factor)
 {
     _scale = factor;
+}
+
+Vector3f GameObject::Position() const
+{
+    return _position;
 }

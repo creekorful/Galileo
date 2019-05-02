@@ -11,7 +11,7 @@
 #define Z_NEAR .01f
 #define Z_FAR 100.f
 
-Shader *LoadShader()
+Shader* LoadShader()
 {
     // Initialize shader
     Shader* pShader = ShaderFactory::p().Load("simple");
@@ -53,6 +53,7 @@ int main()
 
     // Create matrices
     Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);
+
     Matrix4f viewMatrix;
 
     Shader* pShader = LoadShader();
@@ -64,14 +65,20 @@ int main()
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
 
+    //gameObject.Scale(2.f);
+    //gameObject.Rotate(Vector3f(0.f, 0.f, 45.f));
     gameObject.Move(Vector3f(0, 0, -2.f));
-    gameObject.Scale(2.f);
 
     pShader->Bind();
     while (!window.ShouldClose())
     {
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+        gameObject.Rotate(Vector3f(0, 0, .01f));
+
         // Update view matrix
-        gameObject.UpdateViewMatrix(&viewMatrix);
+        gameObject.UpdateViewMatrix(viewMatrix);
+        /*std::cout << "viewMatrix =" << std::endl;
+        viewMatrix.Dump();*/
 
         // Update shader uniforms
         pShader->SetUniform(PROJECTION_MATRIX_UNIFORM, projectionMatrix);
