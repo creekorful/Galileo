@@ -66,8 +66,6 @@ int main()
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
 
-    //gameObject.Scale(2.f);
-    //gameObject.Rotate(Vector3f(0.f, 0.f, 45.f));
     gameObject.Move(Vector3f(0, 0, -2.f));
 
     pShader->Bind();
@@ -78,8 +76,6 @@ int main()
 
         // Update view matrix
         gameObject.UpdateViewMatrix(viewMatrix);
-        /*std::cout << "viewMatrix =" << std::endl;
-        viewMatrix.Dump();*/
 
         // Update shader uniforms
         pShader->SetUniform(PROJECTION_MATRIX_UNIFORM, projectionMatrix);

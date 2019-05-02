@@ -15,9 +15,9 @@ void GameObject::UpdateViewMatrix(Matrix4f& matrix)
     matrix.Identity()
             .Scale(_scale)
             .Translate(_position)
-            .Rotate(Vector3f(BaseMath::toRadians(-_rotation.x),
-                             BaseMath::toRadians(-_rotation.y),
-                             BaseMath::toRadians(-_rotation.z)))
+            .Rotate(BaseMath::toRadians(-_rotation.x),
+                    BaseMath::toRadians(-_rotation.y),
+                    BaseMath::toRadians(-_rotation.z))
             .Transpose();
 }
 
