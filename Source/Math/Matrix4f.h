@@ -35,8 +35,19 @@ public:
 
     Matrix4f* Scale(float factor);
 
+    /**
+     * Translate matrix by given offset
+     *
+     * @param x x offset
+     * @param y y offset
+     * @param z z offset
+     * @return this, modified
+     */
     Matrix4f* Translate(float x, float y, float z);
 
+    /**
+     * @see Matrix4f#Translate(float,float,float)
+     */
     Matrix4f* Translate(const Vector3f& vector);
 
     Matrix4f* Rotate(float x, float y, float z);
@@ -49,6 +60,9 @@ public:
      */
     Matrix4f* Transpose();
 
+    /**
+     * @return pointer to matrix (values are stored continuously in memory)
+     */
     float* First() const;
 
     void Set(unsigned short x, unsigned short y, float value);

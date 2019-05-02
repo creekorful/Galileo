@@ -15,12 +15,16 @@ public:
 
     void Move(const Vector3f& offset);
 
+    void Rotate(const Vector3f& offset);
+
+    void Scale(float factor);
+
 private:
     Mesh* _mesh;
 
     Vector3f _position;
     Vector3f _rotation;
-    Vector3f _scale;
+    float _scale;
 };
 
 

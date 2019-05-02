@@ -40,7 +40,10 @@ Matrix4f* Matrix4f::Identity()
 
 Matrix4f* Matrix4f::Scale(float x, float y, float z)
 {
-    // todo
+    Set(0, 0, x);
+    Set(1, 1, y);
+    Set(2, 2, z);
+    Set(3, 3, 1.0f);
     return this;
 }
 
@@ -70,10 +73,6 @@ Matrix4f* Matrix4f::Translate(const Vector3f& vector)
 
 Matrix4f* Matrix4f::Rotate(float x, float y, float z)
 {
-    Set(0, 0, x);
-    Set(1, 1, y);
-    Set(2, 2, z);
-    Set(3, 3, 1.0f); // todo good?
     return this;
 }
 
