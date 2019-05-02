@@ -96,11 +96,17 @@ public:
     void operator*=(const Matrix4f& other);
 
     static Matrix4f MakeRotationMatrix(const Vector3f& angles);
+
     static Matrix4f MakeRotationMatrix(float x, float y, float z);
+
     static Matrix4f MakeTranslationMatrix(const Vector3f& values);
+
     static Matrix4f MakeTranslationMatrix(float x, float y, float z);
+
     static Matrix4f MakeScaleMatrix(const Vector3f& factor);
+
     static Matrix4f MakeScaleMatrix(float x, float y, float z);
+
     static Matrix4f MakeScaleMatrix(float factor);
 
     /**
@@ -116,14 +122,6 @@ public:
 
 private:
     float* _m;
-
-    /**
-     * Perform dot product of this row by other matrix
-     * this will update row of this by multiplication of each column of other
-     *
-     * @param other other matrix
-     */
-    void DotProduct(int row, const Matrix4f& other);
 };
 
 

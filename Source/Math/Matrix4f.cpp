@@ -157,34 +157,19 @@ Matrix4f Matrix4f::operator*(const Matrix4f& other) const
     return val;
 }
 
-void Matrix4f::DotProduct(int row, const Matrix4f& other)
-{
-    // For each other columns
-    for (int i = 0; i < 4; i++)
-    {
-        Set(row, i,
-            (Get(row, 0) * other.Get(0, i)) +
-            (Get(row, 1) * other.Get(1, i)) +
-            (Get(row, 2) * other.Get(2, i)) +
-            (Get(row, 3) * other.Get(3, i)));
-    }
-}
-
 void Matrix4f::operator*=(const Matrix4f& other)
 {
-    /*for (int i = 0; i < 4; i++)
-{
-    for (int j = 0; j < 4; j++)
+    for (int i = 0; i < 4; i++)
     {
-        Set(i, i, (Get(i, j) * other.Get(0, j)) + (Get(i, j) * other.Get(1, j)) + (Get(i, j) * other.Get(2, j)) + (Get(i, j) * other.Get(3, j)));
+        for (int j = 0; j < 4; j++)
+        {
+            Set(i, j,
+                (Get(i, 0) * other.Get(0, j)) +
+                (Get(i, 1) * other.Get(1, j)) +
+                (Get(i, 2) * other.Get(2, j)) +
+                (Get(i, 3) * other.Get(3, j)));
+        }
     }
-}*/
-
-    // todo better
-    DotProduct(0, other);
-    DotProduct(1, other);
-    DotProduct(2, other);
-    DotProduct(3, other);
 }
 
 Matrix4f Matrix4f::MakeRotationMatrix(const Vector3f& angles)
