@@ -7,7 +7,11 @@
 #define PROJECTION_MATRIX_UNIFORM "projectionMatrix"
 #define VIEW_MATRIX_UNIFORM "viewMatrix"
 
-Shader* LoadShader()
+#define FOV BaseMath::toRadians(60.f)
+#define Z_NEAR .01f
+#define Z_FAR 100.f
+
+Shader *LoadShader()
 {
     // Initialize shader
     Shader* pShader = ShaderFactory::p().Load("simple");
@@ -48,8 +52,7 @@ int main()
     GameObject gameObject(&mesh);
 
     // Create matrices
-    float fov = BaseMath::toRadians(60.f);
-    Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix(fov, window.Size(), .01f, 1000.0f);
+    Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);
     Matrix4f viewMatrix;
 
     Shader* pShader = LoadShader();

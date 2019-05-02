@@ -88,12 +88,12 @@ Matrix4f Matrix4f::CreateProjectionMatrix(float fov, const Vector2i& screenSize,
 
     Matrix4f matrix4f;
 
-    // https://jeux.developpez.com/tutoriels/OpenGL-ogldev/tutoriel-12-projection-perspective/
-    matrix4f.Set(0, 0, 1.0f / (h * (screenSize.x / screenSize.y)));
+    // https://github.com/JOML-CI/JOML/blob/master/src/org/joml/Matrix4f.java
+    matrix4f.Set(0, 0, (1.0f / h * (screenSize.x / screenSize.y)));
     matrix4f.Set(1, 1, 1.0f / h);
-    matrix4f.Set(2, 2, (-zNear - zFar) / (zNear - zFar));
-    matrix4f.Set(2, 3, 2.0f * zFar * zNear / (zNear - zFar));
-    matrix4f.Set(3, 2, 1.0f);
+    matrix4f.Set(2, 2, (zFar + zNear) / (zNear - zFar));
+    matrix4f.Set(3, 2, (zFar * zFar) * (zNear / (zNear - zFar)));
+    matrix4f.Set(2, 3, -1.0f);
 
     return matrix4f;
 }
