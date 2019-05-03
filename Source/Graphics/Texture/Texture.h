@@ -6,6 +6,16 @@
 class Texture
 {
 public:
+    /**
+     * create an invalid texture object
+     */
+    Texture();
+
+    explicit Texture(GLint textureId);
+
+    // Check if texture is valid
+    bool IsValid() const;
+
 private:
     GLint _textureId;
 };

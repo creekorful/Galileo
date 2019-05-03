@@ -31,7 +31,12 @@ set(SOURCES_FILES
         Source/Graphics/Shader/ShaderFactory.cpp
         Source/Graphics/Shader/ShaderFactory.h
         Source/Graphics/Texture/Texture.cpp
-        Source/Graphics/Texture/Texture.h)
+        Source/Graphics/Texture/Texture.h
+        Source/Graphics/Texture/TextureFactory.cpp
+        Source/Graphics/Texture/TextureFactory.h
+        Source/Graphics/Texture/Loader/TextureLoader.h
+        Source/Graphics/Texture/Loader/BmpTextureLoader.cpp
+        Source/Graphics/Texture/Loader/BmpTextureLoader.h)
 
 add_executable(Galileo ${SOURCES_FILES})
 
