@@ -11,8 +11,8 @@ set(SOURCES_FILES
         main.cpp
         Source/Graphics/Window.cpp
         Source/Graphics/Window.h
-        Source/Graphics/Shader.cpp
-        Source/Graphics/Shader.h
+        Source/Graphics/Shader/Shader.cpp
+        Source/Graphics/Shader/Shader.h
         Source/Graphics/Mesh.cpp
         Source/Graphics/Mesh.h
         Source/IO/Files.cpp
@@ -28,8 +28,8 @@ set(SOURCES_FILES
         Source/GameObject.h
         Source/Graphics/MeshFactory.cpp
         Source/Graphics/MeshFactory.h
-        Source/Graphics/ShaderFactory.cpp
-        Source/Graphics/ShaderFactory.h
+        Source/Graphics/Shader/ShaderFactory.cpp
+        Source/Graphics/Shader/ShaderFactory.h
         Source/Graphics/Texture/Texture.cpp
         Source/Graphics/Texture/Texture.h)
 

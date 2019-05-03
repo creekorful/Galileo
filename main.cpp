@@ -1,5 +1,5 @@
 #include "Source/Graphics/Window.h"
-#include "Source/Graphics/ShaderFactory.h"
+#include "Source/Graphics/Shader/ShaderFactory.h"
 #include "Source/Graphics/MeshFactory.h"
 #include "Source/GameObject.h"
 #include "Source/IO/Files.h"
