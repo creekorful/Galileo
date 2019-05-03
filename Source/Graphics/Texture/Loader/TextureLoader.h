@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "../Texture.h"
+#include "../../../IO/Files.h"
 
 /**
  * Base class for texture loader
