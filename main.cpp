@@ -76,8 +76,7 @@ int main()
     while (!window.ShouldClose())
     {
         // Clear + set window to polygon mode
-        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        glClear(GL_COLOR_BUFFER_BIT);
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         // Update global projection matrix
         pShader->SetUniform(PROJECTION_MATRIX_UNIFORM, projectionMatrix);
