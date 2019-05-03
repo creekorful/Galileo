@@ -159,15 +159,16 @@ Matrix4f Matrix4f::operator*(const Matrix4f& other) const
 
 void Matrix4f::operator*=(const Matrix4f& other)
 {
+    Matrix4f tmp(*this);
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
         {
             Set(i, j,
-                (Get(i, 0) * other.Get(0, j)) +
-                (Get(i, 1) * other.Get(1, j)) +
-                (Get(i, 2) * other.Get(2, j)) +
-                (Get(i, 3) * other.Get(3, j)));
+                (tmp.Get(i, 0) * other.Get(0, j)) +
+                (tmp.Get(i, 1) * other.Get(1, j)) +
+                (tmp.Get(i, 2) * other.Get(2, j)) +
+                (tmp.Get(i, 3) * other.Get(3, j)));
         }
     }
 }
