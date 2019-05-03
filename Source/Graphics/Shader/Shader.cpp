@@ -115,3 +115,8 @@ void Shader::SetUniform(const std::string& uniform, const Matrix4f& value)
 {
     glUniformMatrix4fv(_uniforms[uniform], 1, GL_FALSE, value.First());
 }
+
+void Shader::SetUniform(const std::string& uniform, int value)
+{
+    glUniform1i(_uniforms[uniform], value);
+}

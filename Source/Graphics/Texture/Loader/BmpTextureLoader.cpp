@@ -2,5 +2,10 @@
 
 Texture BmpTextureLoader::LoadTexture(const std::string& filePath)
 {
-    return Texture();
+    Texture texture;
+
+    // First of all load content from BMP file
+    std::string content = Files::Read(filePath);
+
+    return texture;
 }

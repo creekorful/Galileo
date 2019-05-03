@@ -3,6 +3,7 @@
 #include "Source/Graphics/Mesh/MeshFactory.h"
 #include "Source/GameObject.h"
 #include "Source/IO/Files.h"
+#include "Source/Graphics/Texture/TextureFactory.h"
 
 #define PROJECTION_MATRIX_UNIFORM "projectionMatrix"
 #define VIEW_MATRIX_UNIFORM "viewMatrix"
@@ -35,6 +36,16 @@ Shader* LoadShader()
     return pShader;
 }
 
+Texture* LoadTexture()
+{
+    if (!TextureFactory::p().Load("Textures/grass.png", "grass"))
+    {
+        return nullptr;
+    }
+
+    return &TextureFactory::p().Get("grass");
+}
+
 int main()
 {
     Window window;
@@ -57,10 +68,19 @@ int main()
 
     Matrix4f viewMatrix;
 
+    // Load shader
     Shader* pShader = LoadShader();
     if (pShader == nullptr)
     {
         fprintf(stderr, "Unable to load shader");
+        return -1;
+    }
+
+    // Load texture
+    Texture* pTexture = LoadTexture();
+    if (pTexture == nullptr)
+    {
+        fprintf(stderr, "Unable to load texture");
         return -1;
     }
 

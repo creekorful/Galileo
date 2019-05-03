@@ -2,6 +2,7 @@
 #define GALILEO_BMPTEXTURELOADER_H
 
 #include "TextureLoader.h"
+#include "../../../IO/Files.h"
 
 /**
  * Texture loaded that load from bmp file

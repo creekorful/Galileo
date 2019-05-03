@@ -50,6 +50,11 @@ public:
      */
     void SetUniform(const std::string& uniform, const Matrix4f& value);
 
+    /**
+     * Set uniform integer value
+     */
+    void SetUniform(const std::string& uniform, int value);
+
 private:
     GLuint _programId;
     std::map<std::string, GLint> _uniforms;
