@@ -49,8 +49,8 @@ int main()
     // Initialize mesh to be drawn
     Mesh mesh = MeshFactory::BuildCubeMesh();
 
-    // Create gameObject
-    GameObject gameObject(&mesh);
+    // Create gameObjects
+    GameObject firstGameObject(&mesh), secondGameObject(&mesh);
 
     // Create matrices
     Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);
@@ -66,24 +66,35 @@ int main()
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
 
-    gameObject.Move(Vector3f(0, 0, -2.f));
+    // Move objects
+    firstGameObject.Move(Vector3f(0, 0, -2.f));
+    firstGameObject.Scale(0.2f);
+
+    secondGameObject.Move(Vector3f(-2.f, 0, -7.f));
 
     pShader->Bind();
     while (!window.ShouldClose())
     {
+        // Clear + set window to polygon mode
         glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-        gameObject.Rotate(Vector3f(.05f, .05f, 0));
-
-        // Update view matrix
-        gameObject.UpdateViewMatrix(viewMatrix);
-
-        // Update shader uniforms
-        pShader->SetUniform(PROJECTION_MATRIX_UNIFORM, projectionMatrix);
-        pShader->SetUniform(VIEW_MATRIX_UNIFORM, viewMatrix);
-
-        // Here draw
         glClear(GL_COLOR_BUFFER_BIT);
-        gameObject.Render();
+
+        // Update global projection matrix
+        pShader->SetUniform(PROJECTION_MATRIX_UNIFORM, projectionMatrix);
+
+        // Draw first object
+        firstGameObject.Rotate(Vector3f(.05f, .05f, 0));
+        firstGameObject.UpdateViewMatrix(viewMatrix);
+        pShader->SetUniform(VIEW_MATRIX_UNIFORM, viewMatrix);
+        firstGameObject.Render();
+
+        // Draw second object
+        secondGameObject.Rotate(Vector3f(0, .06f, 0.4f));
+        secondGameObject.UpdateViewMatrix(viewMatrix);
+        pShader->SetUniform(VIEW_MATRIX_UNIFORM, viewMatrix);
+        secondGameObject.Render();
+
+        // Render whole window to screen
         window.Render();
     }
     pShader->Unbind();
