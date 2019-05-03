@@ -7,6 +7,7 @@
 #include "../../Common.h"
 
 #include "Loader/BmpTextureLoader.h"
+#include "Loader/PngTextureLoader.h"
 
 class TextureFactory
 {

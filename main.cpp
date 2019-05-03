@@ -38,7 +38,7 @@ Shader* LoadShader()
 
 Texture* LoadTexture()
 {
-    if (!TextureFactory::p().Load("Textures/grass.png", "grass"))
+    if (!TextureFactory::p().Load("Textures/grassblock.png", "grass"))
     {
         return nullptr;
     }

@@ -16,6 +16,11 @@ public:
     // Check if texture is valid
     bool IsValid() const;
 
+    /**
+     * Copy texture by coping texture id
+     */
+    Texture& operator=(const Texture& other);
+
 private:
     GLint _textureId;
 };

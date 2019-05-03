@@ -14,3 +14,9 @@ bool Texture::IsValid() const
 {
     return _textureId != 0;
 }
+
+Texture& Texture::operator=(const Texture& other)
+{
+    _textureId = other._textureId;
+    return *this;
+}
