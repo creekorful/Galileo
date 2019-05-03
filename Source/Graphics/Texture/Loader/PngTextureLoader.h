@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <cstring>
+#include <vector>
 
 #include "TextureLoader.h"
 
@@ -17,8 +18,8 @@ struct PngHeader
 
 struct PngChunk
 {
-    unsigned int length;
-    unsigned char type[4]; // IHDR, PLTE, IDAT, IEND, ...
+    int length;
+    char type[4]; // IHDR, PLTE, IDAT, IEND, ...
     unsigned char* data;
     unsigned int crc;
 } typedef PngChunk;
