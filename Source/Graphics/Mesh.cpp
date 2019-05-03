@@ -14,20 +14,17 @@ Mesh::Mesh(std::vector<GLfloat> vertices, std::vector<GLint> indices)
     // Copy data to the buffers + specify coordinate data
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-
-    // Unbind the VBO + register it
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
     _vbosIds.push_back(vboId);
 
     // Generate VBO to store indices
     glGenBuffers(1, &vboId);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboId);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLint), indices.data(), GL_STATIC_DRAW);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
     _vbosIds.push_back(vboId);
 
-    // Unbind the VAO
-    glBindVertexArray(0);
+    // Unbind the VAO + VBO
+    glBindVertexArray(0); // todo keep?
+    //glBindVertexArray(0); // optional but may increase performance (to check)
 }
 
 void Mesh::Render()
@@ -43,7 +40,7 @@ void Mesh::Render()
     // see https://www.khronos.org/opengl/wiki/Vertex_Rendering#Basic_Drawing
     glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0); //??
     glDisableVertexAttribArray(0);
-    glBindVertexArray(0);
+    //glBindVertexArray(0); // optional but may increase performance (to check)
 }
 
 Mesh::~Mesh()
