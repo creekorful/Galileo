@@ -34,7 +34,20 @@ class PngTextureLoader : public TextureLoader
 {
 public:
     Texture LoadTexture(const std::string& filePath) override;
+
+private:
+
+    /**
+     * Perform big-endian to little-endian conversion
+     *
+     * https://stackoverflow.com/questions/2182002/convert-big-endian-to-little-endian-in-c-without-using-provided-func
+     */
+    static void SwapBytes(void* pv, size_t n);
+
+    static void ReadChunk(PngChunk& chunk, char*& ptr);
 };
 
 
 #endif //GALILEO_PNGTEXTURELOADER_H
+
+// d400 0000 0173 5247
