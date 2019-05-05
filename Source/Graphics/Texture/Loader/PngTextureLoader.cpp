@@ -16,7 +16,11 @@ Texture PngTextureLoader::LoadTexture(const std::string& filePath)
     std::cout << "Png tag: " << header.png[0] << header.png[1] << header.png[2] << std::endl;
     std::cout << "Reading chunks" << std::endl;
 
-    // todo check magic number + png tag
+    // make sure magic number is valid
+    if (header.magic != 0x89)
+    {
+        return texture;
+    }
 
     // process with chunk reading
 
@@ -26,10 +30,13 @@ Texture PngTextureLoader::LoadTexture(const std::string& filePath)
 
     // read size + type of current chunk
     PngChunk current;
-    do {
+    do
+    {
         ReadChunk(current, ptr);
         chunks.push_back(current);
     } while (current.type[0] != 'I' || current.type[1] != 'E' || current.type[2] != 'N' || current.type[3] != 'D');
+
+    // todo free memory
 
     return texture;
 }
@@ -50,16 +57,15 @@ void PngTextureLoader::SwapBytes(void* pv, size_t n)
 
 void PngTextureLoader::ReadChunk(PngChunk& chunk, char*& ptr)
 {
-    std::cout << *ptr << std::endl;
     // First of all pre-copy length + type because it's fixed size
-    memcpy((void*) &chunk, ptr, sizeof(unsigned int) * sizeof(char) * 4);
-    ptr += sizeof(unsigned int) * sizeof(char) * 4; // advance pointer to data
+    memcpy((void*) &chunk, ptr, sizeof(unsigned int) + (sizeof(char) * 4));
+    ptr += sizeof(unsigned int) + (sizeof(char) * 4); // advance pointer to data
 
     // convert length to little endian
     SwapBytes((void*) &chunk.length, 4);
 
-    std::cout << "Chunk size: " << (int) chunk.length << std::endl;
     std::cout << "Chunk type: " << chunk.type[0] << chunk.type[1] << chunk.type[2] << chunk.type[3] << std::endl;
+    std::cout << "Chunk size: " << (int) chunk.length << std::endl;
 
     // Now we have size, we can allocate + read data buffer
     chunk.data = new unsigned char[chunk.length]; // todo simple char ?
@@ -67,6 +73,6 @@ void PngTextureLoader::ReadChunk(PngChunk& chunk, char*& ptr)
     ptr += chunk.length; // advance pointer to CRC
 
     // Finally CRC
-    memcpy((void*)&chunk.crc, ptr, sizeof(unsigned int));
-    std::cout << *ptr << std::endl;
+    memcpy((void*) &chunk.crc, ptr, sizeof(unsigned int));
+    ptr += sizeof(unsigned int);
 }
