@@ -2,7 +2,6 @@
 #define GALILEO_PNGTEXTURELOADER_H
 
 #include <iostream>
-#include <cstring>
 #include <vector>
 
 #include "TextureLoader.h"
