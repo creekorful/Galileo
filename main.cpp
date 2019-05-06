@@ -93,13 +93,14 @@ int main()
     glClearColor(0.0, 0.0, 0.0, 1.0);
 
     // Create gameObjects
-    GameObject firstGameObject(&mesh), secondGameObject(&mesh);
+    GameObject firstGameObject(&mesh), secondGameObject(&mesh), thirdGameObject(&mesh);
 
     // Move objects
     firstGameObject.Move(Vector3f(0, 0, -7.f));
     firstGameObject.Scale(2.f);
 
     secondGameObject.Move(Vector3f(-2.f, 0, -7.f));
+    thirdGameObject.Move(Vector3f(-4.f, 0, -10.f));
 
     pShader->Bind();
     while (!window.ShouldClose())
@@ -122,6 +123,11 @@ int main()
         secondGameObject.UpdateViewMatrix(viewMatrix);
         pShader->SetUniform(VIEW_MATRIX_UNIFORM, viewMatrix);
         secondGameObject.Render();
+
+        // Draw third object
+        thirdGameObject.UpdateViewMatrix(viewMatrix);
+        pShader->SetUniform(VIEW_MATRIX_UNIFORM, viewMatrix);
+        thirdGameObject.Render();
 
         // Render whole window to screen
         window.Render();
