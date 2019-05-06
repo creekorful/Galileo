@@ -13,6 +13,10 @@ public:
 
     explicit Texture(GLint textureId);
 
+    void Bind();
+
+    void Unbind();
+
     // Check if texture is valid
     bool IsValid() const;
 

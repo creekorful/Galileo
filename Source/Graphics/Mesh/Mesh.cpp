@@ -1,6 +1,6 @@
 #include "Mesh.h"
 
-Mesh::Mesh(std::vector<GLfloat> vertices, std::vector<GLint> indices)
+Mesh::Mesh(std::vector<GLfloat> vertices, std::vector<GLint> indices) : _pTexture(nullptr)
 {
     // Generate and bind VAO
     glGenVertexArrays(1, &_vaoId);
@@ -27,10 +27,33 @@ Mesh::Mesh(std::vector<GLfloat> vertices, std::vector<GLint> indices)
     //glBindVertexArray(0); // optional but may increase performance (to check)
 }
 
+void Mesh::SetTexture(std::vector<GLfloat> uvs, Texture* pTexture)
+{
+    _pTexture = pTexture;
+
+    glBindVertexArray(_vaoId);
+
+    GLuint vboId;
+    glGenBuffers(1, &vboId);
+    glBindBuffer(GL_ARRAY_BUFFER, vboId);
+
+    glBufferData(GL_ARRAY_BUFFER, uvs.size(), uvs.data(), GL_STATIC_DRAW);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindVertexArray(0);
+}
+
 void Mesh::Render()
 {
     glBindVertexArray(_vaoId);
     glEnableVertexAttribArray(0);
+
+    if (_pTexture != nullptr)
+    {
+        _pTexture->Bind();
+        glEnableVertexAttribArray(1);
+    }
 
     int size;
     glGetBufferParameteriv(GL_ELEMENT_ARRAY_BUFFER, GL_BUFFER_SIZE, &size);
@@ -41,6 +64,11 @@ void Mesh::Render()
     glDrawElements(GL_TRIANGLES, size, GL_UNSIGNED_INT, 0); //??
     glDisableVertexAttribArray(0);
     //glBindVertexArray(0); // optional but may increase performance (to check)
+
+    if (_pTexture != nullptr)
+    {
+        _pTexture->Unbind();
+    }
 }
 
 Mesh::~Mesh()

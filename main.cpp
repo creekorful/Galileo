@@ -5,8 +5,11 @@
 #include "Source/IO/Files.h"
 #include "Source/Graphics/Texture/TextureFactory.h"
 
+#define SHADER_NAME "textured"
+
 #define PROJECTION_MATRIX_UNIFORM "projectionMatrix"
 #define VIEW_MATRIX_UNIFORM "viewMatrix"
+#define TEXTURE_SAMPLER_UNIFORM "textureSampler"
 
 #define FOV BaseMath::toRadians(60.f)
 #define Z_NEAR .01f
@@ -15,12 +18,12 @@
 Shader* LoadShader()
 {
     // Initialize shader
-    if (!ShaderFactory::p().Load("simple"))
+    if (!ShaderFactory::p().Load(SHADER_NAME))
     {
         return nullptr;
     }
 
-    Shader* pShader = &ShaderFactory::p().Get("simple");
+    Shader* pShader = &ShaderFactory::p().Get(SHADER_NAME);
 
     // Set projection matrix uniform
     if (!pShader->CreateUniform(PROJECTION_MATRIX_UNIFORM))
@@ -31,6 +34,11 @@ Shader* LoadShader()
     if (!pShader->CreateUniform(VIEW_MATRIX_UNIFORM))
     {
         fprintf(stderr, "Error while creating uniform");
+        return nullptr;
+    }
+    if (!pShader->CreateUniform(TEXTURE_SAMPLER_UNIFORM))
+    {
+        fprintf(stderr, "Error while creating uniform TEXTURE_SAMPLER_UNIFORM");
         return nullptr;
     }
     return pShader;
@@ -62,9 +70,6 @@ int main()
     // Initialize mesh to be drawn
     Mesh mesh = MeshFactory::BuildCubeMesh();
 
-    // Create gameObjects
-    GameObject firstGameObject(&mesh), secondGameObject(&mesh);
-
     // Create matrices
     Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);
 
@@ -86,7 +91,39 @@ int main()
         return -1;
     }
 
+    // Set textures to object
+    std::vector<GLfloat> uvs = {
+            0.0f, 0.0f,
+            0.0f, 0.5f,
+            0.5f, 0.5f,
+            0.5f, 0.0f,
+            0.0f, 0.0f,
+            0.5f, 0.0f,
+            0.0f, 0.5f,
+            0.5f, 0.5f,
+            // For text coords in top face
+            0.0f, 0.5f,
+            0.5f, 0.5f,
+            0.0f, 1.0f,
+            0.5f, 1.0f,
+            // For text coords in right face
+            0.0f, 0.0f,
+            0.0f, 0.5f,
+            // For text coords in left face
+            0.5f, 0.0f,
+            0.5f, 0.5f,
+            // For text coords in bottom face
+            0.5f, 0.0f,
+            1.0f, 0.0f,
+            0.5f, 0.5f,
+            1.0f, 0.5f
+    };
+    mesh.SetTexture(uvs, pTexture);
+
     glClearColor(0.0, 0.0, 0.0, 1.0);
+
+    // Create gameObjects
+    GameObject firstGameObject(&mesh), secondGameObject(&mesh);
 
     // Move objects
     firstGameObject.Move(Vector3f(0, 0, -2.f));
@@ -100,8 +137,9 @@ int main()
         // Clear + set window to polygon mode
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // Update global projection matrix
+        // Update global uniforms
         pShader->SetUniform(PROJECTION_MATRIX_UNIFORM, projectionMatrix);
+        pShader->SetUniform(TEXTURE_SAMPLER_UNIFORM, 0);
 
         // Draw first object
         firstGameObject.Rotate(Vector3f(.05f, .05f, 0));

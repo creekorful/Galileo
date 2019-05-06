@@ -42,7 +42,8 @@ set(SOURCES_FILES
         Source/Logging/LoggerFactory.cpp
         Source/Logging/LoggerFactory.h
         Source/Logging/Logger.cpp
-        Source/Logging/Logger.h)
+        Source/Logging/Logger.h
+        ThirdParty/stb_image.h)
 
 add_executable(Galileo ${SOURCES_FILES})
 
