@@ -7,11 +7,15 @@ Texture PngTextureLoader::LoadTexture(const std::string& filePath)
     // First of all read file content
     std::string content = Files::Read(filePath);
 
+    std::cout << "Start address: " << (size_t) &content[0] << std::endl;
+    std::cout << "End address: " << (size_t) &content[content.size()-1] << std::endl;
+
     PngHeader header{};
     std::vector<PngChunk> chunks;
 
     std::memcpy((void*) &header, &content[0], sizeof(PngHeader));
     std::cout << "Infos from png file" << std::endl;
+    std::cout << "Size: " << content.size() << " bytes" << std::endl;
     std::cout << "Magic number valid : " << ((int) header.magic == 0x89) << std::endl;
     std::cout << "Png tag: " << header.png[0] << header.png[1] << header.png[2] << std::endl;
     std::cout << "Reading chunks" << std::endl;
@@ -68,6 +72,7 @@ void PngTextureLoader::ReadChunk(PngChunk& chunk, char*& ptr)
     std::cout << "Chunk size: " << (int) chunk.length << std::endl;
 
     // Now we have size, we can allocate + read data buffer
+    std::cout << "Current address: " << (size_t) ptr << std::endl;
     chunk.data = new unsigned char[chunk.length];
     std::memcpy((void*) &chunk.data, ptr, chunk.length);
     ptr += chunk.length; // advance pointer to CRC
