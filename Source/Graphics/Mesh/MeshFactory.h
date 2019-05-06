@@ -9,7 +9,7 @@ class MeshFactory
 public:
     static Mesh BuildPlaneMesh();
 
-    static Mesh BuildCubeMesh();
+    static Mesh BuildCubeMesh(Texture* pTexture);
 };
 
 

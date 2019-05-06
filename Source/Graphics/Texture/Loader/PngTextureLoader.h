@@ -14,7 +14,7 @@ class PngTextureLoader : public TextureLoader
 public:
     PngTextureLoader();
 
-    Texture LoadTexture(const std::string& filePath) override;
+    Texture* LoadTexture(const std::string& filePath) override;
 
 private:
     Logger _logger;

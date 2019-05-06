@@ -9,9 +9,7 @@
 class Mesh
 {
 public:
-    Mesh(std::vector<GLfloat> vertices, std::vector<GLint> indices);
-
-    void SetTexture(std::vector<GLfloat> uvs, Texture* pTexture);
+    Mesh(std::vector<GLfloat> vertices, std::vector<GLfloat> uvs, std::vector<GLint> indices, Texture* pTexture);
 
     virtual ~Mesh();
 

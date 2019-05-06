@@ -35,8 +35,6 @@ set(SOURCES_FILES
         Source/Graphics/Texture/TextureFactory.cpp
         Source/Graphics/Texture/TextureFactory.h
         Source/Graphics/Texture/Loader/TextureLoader.h
-        Source/Graphics/Texture/Loader/BmpTextureLoader.cpp
-        Source/Graphics/Texture/Loader/BmpTextureLoader.h
         Source/Graphics/Texture/Loader/PngTextureLoader.cpp
         Source/Graphics/Texture/Loader/PngTextureLoader.h
         Source/Logging/LoggerFactory.cpp

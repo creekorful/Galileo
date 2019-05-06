@@ -12,7 +12,7 @@
 class TextureLoader
 {
 public:
-    virtual Texture LoadTexture(const std::string& filePath) = 0;
+    virtual Texture* LoadTexture(const std::string& filePath) = 0;
 };
 
 #endif //GALILEO_TEXTURELOADER_H

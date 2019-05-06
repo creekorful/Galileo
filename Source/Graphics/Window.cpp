@@ -28,11 +28,10 @@ bool Window::Initialize(int width, int height, const std::string& title)
         return false;
     }
 
-    // Enable special options
-    glEnable(GL_DEPTH_TEST);
-
     // Make window context current
     glfwMakeContextCurrent(_pWindow);
+
+    glEnable(GL_DEPTH_TEST);
 
     _logger.Info("Window initialized");
 

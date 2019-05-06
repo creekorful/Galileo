@@ -11,7 +11,9 @@ public:
      */
     Texture();
 
-    explicit Texture(GLint textureId);
+    explicit Texture(GLuint textureId);
+
+    ~Texture();
 
     void Bind();
 
@@ -20,13 +22,8 @@ public:
     // Check if texture is valid
     bool IsValid() const;
 
-    /**
-     * Copy texture by coping texture id
-     */
-    Texture& operator=(const Texture& other);
-
 private:
-    GLint _textureId;
+    GLuint _textureId;
 };
 
 

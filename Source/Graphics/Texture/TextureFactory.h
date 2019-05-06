@@ -6,15 +6,17 @@
 
 #include "../../Common.h"
 
-#include "Loader/BmpTextureLoader.h"
 #include "Loader/PngTextureLoader.h"
 
 class TextureFactory
 {
 public:
+
+    ~TextureFactory();
+
     bool Load(const std::string& file, const std::string& name);
 
-    Texture& Get(const std::string& name);
+    Texture* Get(const std::string& name);
 
     static TextureFactory& p()
     {
@@ -23,7 +25,7 @@ public:
     }
 
 private:
-    std::map<std::string, Texture> _textures;
+    std::map<std::string, Texture*> _textures;
     Logger _logger;
 
     TextureFactory();
