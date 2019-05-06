@@ -1,11 +1,15 @@
 #include "Window.h"
 
+Window::Window() : _pWindow(nullptr), _logger(LoggerFactory::CreateLogger("Window"))
+{
+}
+
 bool Window::Initialize(int width, int height, const std::string& title)
 {
     // Initialize GLFW
     if (!glfwInit())
     {
-        fprintf(stderr, "Unable to Initialize GLFW");
+        _logger.Error("Unable to initialize GLFW");
         return false;
     }
 
@@ -19,7 +23,7 @@ bool Window::Initialize(int width, int height, const std::string& title)
     _pWindow = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
     if (!_pWindow)
     {
-        fprintf(stderr, "Unable to create window");
+        _logger.Error("Unable to create window");
         glfwTerminate();
         return false;
     }
@@ -29,6 +33,8 @@ bool Window::Initialize(int width, int height, const std::string& title)
 
     // Make window context current
     glfwMakeContextCurrent(_pWindow);
+
+    _logger.Info("Window initialized");
 
     return true;
 }

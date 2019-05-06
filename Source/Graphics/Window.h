@@ -14,6 +14,8 @@ class Window
 {
 public:
 
+    Window();
+
     virtual ~Window();
 
     /**
@@ -43,6 +45,7 @@ public:
 
 private:
     GLFWwindow* _pWindow;
+    Logger _logger;
 };
 
 

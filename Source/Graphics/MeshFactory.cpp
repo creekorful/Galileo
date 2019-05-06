@@ -2,6 +2,8 @@
 
 Mesh MeshFactory::BuildPlaneMesh()
 {
+    LoggerFactory::CreateLogger("MeshFactory").Debug("Creating plane mesh");
+
     // position of the vertices
     std::vector<GLfloat> vertices = {
             -0.5f, 0.5f, 0.0f, // Top-left
@@ -21,6 +23,8 @@ Mesh MeshFactory::BuildPlaneMesh()
 
 Mesh MeshFactory::BuildCubeMesh()
 {
+    LoggerFactory::CreateLogger("MeshFactory").Debug("Creating cube mesh");
+
     // position of the vertices
     std::vector<GLfloat> vertices = {
             // front
