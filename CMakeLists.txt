@@ -38,7 +38,11 @@ set(SOURCES_FILES
         Source/Graphics/Texture/Loader/BmpTextureLoader.cpp
         Source/Graphics/Texture/Loader/BmpTextureLoader.h
         Source/Graphics/Texture/Loader/PngTextureLoader.cpp
-        Source/Graphics/Texture/Loader/PngTextureLoader.h)
+        Source/Graphics/Texture/Loader/PngTextureLoader.h
+        Source/Logging/LoggerFactory.cpp
+        Source/Logging/LoggerFactory.h
+        Source/Logging/Logger.cpp
+        Source/Logging/Logger.h)
 
 add_executable(Galileo ${SOURCES_FILES})
 

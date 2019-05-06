@@ -2,18 +2,18 @@
 
 bool Shader::Initialize(const std::string& vertexShader, const std::string& fragmentShader)
 {
+    Logger logger = LoggerFactory::CreateLogger("Shader");
+
     GLuint vertexShaderId = LoadShader(vertexShader, GL_VERTEX_SHADER);
     if (vertexShaderId == -1)
     {
-        // todo log
-        fprintf(stderr, "Unable to load vertex shader");
+        logger.Error("Unable to load vertex shader");
         return false;
     }
     GLuint fragmentShaderId = LoadShader(fragmentShader, GL_FRAGMENT_SHADER);
     if (fragmentShaderId == -1)
     {
-        // todo log
-        fprintf(stderr, "Unable to load fragment shader");
+        logger.Error("Unable to load fragment shader");
         return false;
     }
 
@@ -21,8 +21,7 @@ bool Shader::Initialize(const std::string& vertexShader, const std::string& frag
     _programId = glCreateProgram();
     if (_programId == 0)
     {
-        // todo log
-        fprintf(stderr, "Unable to createProgram");
+        logger.Error("Unable to create program");
         return false;
     }
 
@@ -40,7 +39,7 @@ bool Shader::Initialize(const std::string& vertexShader, const std::string& frag
     glGetProgramiv(_programId, GL_LINK_STATUS, &isLinked);
     if (isLinked == GL_FALSE)
     {
-        fprintf(stderr, "Unable to link shader");
+        logger.Error("Unable to link shader");
         return false;
     }
 
@@ -53,6 +52,8 @@ bool Shader::Initialize(const std::string& vertexShader, const std::string& frag
 
 GLuint Shader::LoadShader(const std::string& shader, const GLenum& shaderType)
 {
+    Logger logger = LoggerFactory::CreateLogger("Shader");
+
     GLuint shaderId = glCreateShader(shaderType);
     const char* c_str = shader.c_str();
 
@@ -71,7 +72,7 @@ GLuint Shader::LoadShader(const std::string& shader, const GLenum& shaderType)
         glGetShaderiv(shaderId, GL_INFO_LOG_LENGTH, &maxLength);
         char* log = new char[maxLength];
         glGetShaderInfoLog(shaderId, maxLength, &maxLength, log);
-        fprintf(stderr, log);
+        logger.Error(log);
         free(log);
         return -1;
     }

@@ -2,6 +2,7 @@
 #define GALILEO_MESHFACTORY_H
 
 #include "Mesh.h"
+#include "../../Common.h"
 
 class MeshFactory
 {

@@ -48,14 +48,16 @@ Texture* LoadTexture()
 
 int main()
 {
+    Logger logger = LoggerFactory::CreateLogger("Main");
     Window window;
+
     if (!window.Initialize(640, 480, "Hello world ! :D"))
     {
-        fprintf(stderr, "Unable to Initialize window");
+        logger.Error("Unable to initialize window");
         return -1;
     }
 
-    fprintf(stdout, "Window initialization successful");
+    logger.Info("Window initialization successful");
 
     // Initialize mesh to be drawn
     Mesh mesh = MeshFactory::BuildCubeMesh();
@@ -72,7 +74,7 @@ int main()
     Shader* pShader = LoadShader();
     if (pShader == nullptr)
     {
-        fprintf(stderr, "Unable to load shader");
+        logger.Error("Unable to load shader");
         return -1;
     }
 

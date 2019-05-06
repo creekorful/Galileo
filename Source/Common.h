@@ -7,5 +7,6 @@
 #include <OpenGL/gl3.h>
 
 #include "Math/BaseMath.h"
+#include "Logging/LoggerFactory.h"
 
 #endif //GALILEO_COMMON_H
