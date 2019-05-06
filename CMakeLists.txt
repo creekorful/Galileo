@@ -29,7 +29,11 @@ set(SOURCES_FILES
         Source/Graphics/MeshFactory.cpp
         Source/Graphics/MeshFactory.h
         Source/Graphics/ShaderFactory.cpp
-        Source/Graphics/ShaderFactory.h)
+        Source/Graphics/ShaderFactory.h
+        Source/Logging/LoggerFactory.cpp
+        Source/Logging/LoggerFactory.h
+        Source/Logging/Logger.cpp
+        Source/Logging/Logger.h)
 
 add_executable(Galileo ${SOURCES_FILES})
 
