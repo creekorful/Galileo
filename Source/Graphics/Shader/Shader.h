@@ -4,8 +4,8 @@
 #include <iostream>
 #include <map>
 
-#include "../Common.h"
-#include "../Math/Matrix4f.h"
+#include "../../Common.h"
+#include "../../Math/Matrix4f.h"
 
 class Shader
 {
@@ -49,6 +49,11 @@ public:
      * @param value matrix value
      */
     void SetUniform(const std::string& uniform, const Matrix4f& value);
+
+    /**
+     * Set uniform integer value
+     */
+    void SetUniform(const std::string& uniform, int value);
 
 private:
     GLuint _programId;

@@ -4,8 +4,8 @@
 #include <map>
 
 #include "Shader.h"
-#include "../IO/Files.h"
-#include "../Common.h"
+#include "../../IO/Files.h"
+#include "../../Common.h"
 
 class ShaderFactory
 {
@@ -36,7 +36,7 @@ public:
 
     static ShaderFactory& p()
     {
-        static ShaderFactory p(LoggerFactory::CreateLogger("ShaderFactory"));
+        static ShaderFactory p;
         return p;
     }
 
@@ -44,7 +44,7 @@ private:
     std::map<std::string, Shader> _shaders;
     Logger _logger;
 
-    explicit ShaderFactory(Logger logger);
+    ShaderFactory();
 };
 
 

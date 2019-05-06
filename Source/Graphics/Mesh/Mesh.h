@@ -3,12 +3,13 @@
 
 #include <vector>
 
-#include "../Common.h"
+#include "../../Common.h"
+#include "../Texture/Texture.h"
 
 class Mesh
 {
 public:
-    Mesh(std::vector<GLfloat> vertices, std::vector<GLint> indices);
+    Mesh(std::vector<GLfloat> vertices, std::vector<GLfloat> uvs, std::vector<GLint> indices, Texture* pTexture);
 
     virtual ~Mesh();
 
@@ -17,6 +18,8 @@ public:
 private:
     GLuint _vaoId;
     std::vector<GLuint> _vbosIds;
+
+    Texture* _pTexture;
 };
 
 

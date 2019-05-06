@@ -1,25 +1,29 @@
 #include "Source/Graphics/Window.h"
-#include "Source/Graphics/ShaderFactory.h"
-#include "Source/Graphics/MeshFactory.h"
+#include "Source/Graphics/Shader/ShaderFactory.h"
+#include "Source/Graphics/Mesh/MeshFactory.h"
 #include "Source/GameObject.h"
 #include "Source/IO/Files.h"
+#include "Source/Graphics/Texture/TextureFactory.h"
+
+#define SHADER_NAME "textured"
 
 #define PROJECTION_MATRIX_UNIFORM "projectionMatrix"
 #define VIEW_MATRIX_UNIFORM "viewMatrix"
+#define TEXTURE_SAMPLER_UNIFORM "textureSampler"
 
 #define FOV BaseMath::toRadians(60.f)
-#define Z_NEAR .01f
-#define Z_FAR 100.f
+#define Z_NEAR 5.f
+#define Z_FAR 1000.f
 
 Shader* LoadShader()
 {
     // Initialize shader
-    if (!ShaderFactory::p().Load("simple"))
+    if (!ShaderFactory::p().Load(SHADER_NAME))
     {
         return nullptr;
     }
 
-    Shader* pShader = &ShaderFactory::p().Get("simple");
+    Shader* pShader = &ShaderFactory::p().Get(SHADER_NAME);
 
     // Set projection matrix uniform
     if (!pShader->CreateUniform(PROJECTION_MATRIX_UNIFORM))
@@ -32,7 +36,22 @@ Shader* LoadShader()
         fprintf(stderr, "Error while creating uniform");
         return nullptr;
     }
+    if (!pShader->CreateUniform(TEXTURE_SAMPLER_UNIFORM))
+    {
+        fprintf(stderr, "Error while creating uniform TEXTURE_SAMPLER_UNIFORM");
+        return nullptr;
+    }
     return pShader;
+}
+
+Texture* LoadTexture()
+{
+    if (!TextureFactory::p().Load("Textures/grassblock.png", "grass"))
+    {
+        return nullptr;
+    }
+
+    return TextureFactory::p().Get("grass");
 }
 
 int main()
@@ -48,17 +67,7 @@ int main()
 
     logger.Info("Window initialization successful");
 
-    // Initialize mesh to be drawn
-    Mesh mesh = MeshFactory::BuildCubeMesh();
-
-    // Create gameObjects
-    GameObject firstGameObject(&mesh), secondGameObject(&mesh);
-
-    // Create matrices
-    Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);
-
-    Matrix4f viewMatrix;
-
+    // Load shader
     Shader* pShader = LoadShader();
     if (pShader == nullptr)
     {
@@ -66,25 +75,45 @@ int main()
         return -1;
     }
 
+    // Load texture
+    Texture* pTexture = LoadTexture();
+    if (pTexture == nullptr)
+    {
+        fprintf(stderr, "Unable to load texture");
+        return -1;
+    }
+
+    // Initialize mesh to be drawn
+    Mesh mesh = MeshFactory::BuildCubeMesh(pTexture);
+
+    // Create matrices
+    Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);
+    Matrix4f viewMatrix;
+
     glClearColor(0.0, 0.0, 0.0, 1.0);
 
+    // Create gameObjects
+    GameObject firstGameObject(&mesh), secondGameObject(&mesh), thirdGameObject(&mesh);
+
     // Move objects
-    firstGameObject.Move(Vector3f(0, 0, -2.f));
-    firstGameObject.Scale(0.2f);
+    firstGameObject.Move(Vector3f(0, 0, -7.f));
+    firstGameObject.Scale(2.f);
 
     secondGameObject.Move(Vector3f(-2.f, 0, -7.f));
+    thirdGameObject.Move(Vector3f(-4.f, 0, -10.f));
 
     pShader->Bind();
     while (!window.ShouldClose())
     {
-        // Clear + set window to polygon mode
+        // Clear
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // Update global projection matrix
+        // Update global uniforms
         pShader->SetUniform(PROJECTION_MATRIX_UNIFORM, projectionMatrix);
+        pShader->SetUniform(TEXTURE_SAMPLER_UNIFORM, 0);
 
         // Draw first object
-        firstGameObject.Rotate(Vector3f(.05f, .05f, 0));
+        firstGameObject.Rotate(Vector3f(.05f, 0, 0));
         firstGameObject.UpdateViewMatrix(viewMatrix);
         pShader->SetUniform(VIEW_MATRIX_UNIFORM, viewMatrix);
         firstGameObject.Render();
@@ -94,6 +123,11 @@ int main()
         secondGameObject.UpdateViewMatrix(viewMatrix);
         pShader->SetUniform(VIEW_MATRIX_UNIFORM, viewMatrix);
         secondGameObject.Render();
+
+        // Draw third object
+        thirdGameObject.UpdateViewMatrix(viewMatrix);
+        pShader->SetUniform(VIEW_MATRIX_UNIFORM, viewMatrix);
+        thirdGameObject.Render();
 
         // Render whole window to screen
         window.Render();
