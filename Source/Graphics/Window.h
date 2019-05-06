@@ -43,6 +43,8 @@ public:
      */
     Vector2i Size();
 
+    bool IsKeyPressed(GLenum keyCode);
+
 private:
     GLFWwindow* _pWindow;
     Logger _logger;

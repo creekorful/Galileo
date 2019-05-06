@@ -4,6 +4,7 @@
 #include "Source/GameObject.h"
 #include "Source/IO/Files.h"
 #include "Source/Graphics/Texture/TextureFactory.h"
+#include "Source/Graphics/Camera.h"
 
 #define SHADER_NAME "textured"
 
@@ -12,8 +13,10 @@
 #define TEXTURE_SAMPLER_UNIFORM "textureSampler"
 
 #define FOV BaseMath::toRadians(60.f)
-#define Z_NEAR 5.f
+#define Z_NEAR .01f
 #define Z_FAR 1000.f
+
+#define CAMERA_SPEED 0.005f
 
 Shader* LoadShader()
 {
@@ -88,9 +91,13 @@ int main()
 
     // Create matrices
     Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);
-    Matrix4f viewMatrix;
+    Matrix4f viewMatrix, cameraMatrix;
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
+
+    // Create camera
+    Camera camera;
+    //camera.Move(0.5f, 0, 0);
 
     // Create gameObjects
     GameObject firstGameObject(&mesh), secondGameObject(&mesh), thirdGameObject(&mesh);
@@ -105,6 +112,20 @@ int main()
     pShader->Bind();
     while (!window.ShouldClose())
     {
+        // Update position if needed
+        if (window.IsKeyPressed(GLFW_KEY_Q))
+            camera.Move(-CAMERA_SPEED, 0, 0);
+        else if (window.IsKeyPressed(GLFW_KEY_D))
+            camera.Move(CAMERA_SPEED, 0, 0);
+        else if (window.IsKeyPressed(GLFW_KEY_Z))
+            camera.Move(0, 0, CAMERA_SPEED);
+        else if (window.IsKeyPressed(GLFW_KEY_S))
+            camera.Move(0, 0, -CAMERA_SPEED);
+        else if (window.IsKeyPressed(GLFW_KEY_SPACE))
+            camera.Move(0, CAMERA_SPEED, 0);
+        else if (window.IsKeyPressed(GLFW_KEY_LEFT_SHIFT))
+            camera.Move(0, -CAMERA_SPEED, 0);
+
         // Clear
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -112,21 +133,24 @@ int main()
         pShader->SetUniform(PROJECTION_MATRIX_UNIFORM, projectionMatrix);
         pShader->SetUniform(TEXTURE_SAMPLER_UNIFORM, 0);
 
+        // Get camera view matrix
+        camera.UpdateViewMatrix(cameraMatrix);
+
         // Draw first object
-        firstGameObject.Rotate(Vector3f(.05f, 0, 0));
+        //firstGameObject.Rotate(Vector3f(.05f, 0, 0));
         firstGameObject.UpdateViewMatrix(viewMatrix);
-        pShader->SetUniform(VIEW_MATRIX_UNIFORM, viewMatrix);
+        pShader->SetUniform(VIEW_MATRIX_UNIFORM, cameraMatrix * viewMatrix);
         firstGameObject.Render();
 
         // Draw second object
-        secondGameObject.Rotate(Vector3f(0, .06f, 0.4f));
+        //secondGameObject.Rotate(Vector3f(0, .06f, 0.4f));
         secondGameObject.UpdateViewMatrix(viewMatrix);
-        pShader->SetUniform(VIEW_MATRIX_UNIFORM, viewMatrix);
+        pShader->SetUniform(VIEW_MATRIX_UNIFORM, cameraMatrix * viewMatrix);
         secondGameObject.Render();
 
         // Draw third object
         thirdGameObject.UpdateViewMatrix(viewMatrix);
-        pShader->SetUniform(VIEW_MATRIX_UNIFORM, viewMatrix);
+        pShader->SetUniform(VIEW_MATRIX_UNIFORM, cameraMatrix * viewMatrix);
         thirdGameObject.Render();
 
         // Render whole window to screen

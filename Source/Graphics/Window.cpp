@@ -60,3 +60,8 @@ Vector2i Window::Size()
     glfwGetWindowSize(_pWindow, &size.x, &size.y);
     return size;
 }
+
+bool Window::IsKeyPressed(GLenum keyCode)
+{
+    return glfwGetKey(_pWindow, keyCode) == GLFW_PRESS;
+}

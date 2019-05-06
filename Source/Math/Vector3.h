@@ -29,6 +29,15 @@ public:
         this->y += other.y;
         this->z += other.z;
     }
+
+    Vector3 operator-()
+    {
+        Vector3 result;
+        result.x = -this->x;
+        result.y = -this->y;
+        result.z = -this->z;
+        return result;
+    }
 };
 
 typedef Vector3<float> Vector3f;
