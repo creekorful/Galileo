@@ -6,6 +6,7 @@ set(CMAKE_CXX_STANDARD 17)
 # Here find librairies
 find_package(glfw3 3.3 REQUIRED)
 find_package(OpenGL REQUIRED)
+find_package(ZLIB REQUIRED)
 
 set(SOURCES_FILES
         main.cpp
@@ -47,4 +48,4 @@ set(SOURCES_FILES
 add_executable(Galileo ${SOURCES_FILES})
 
 # link librairies
-target_link_libraries(Galileo glfw ${OPENGL_gl_LIBRARY})
+target_link_libraries(Galileo glfw ${OPENGL_gl_LIBRARY} ${ZLIB_LIBRARIES})

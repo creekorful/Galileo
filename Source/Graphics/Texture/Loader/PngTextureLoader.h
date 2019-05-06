@@ -3,8 +3,19 @@
 
 #include <iostream>
 #include <vector>
+#include <zlib.h>
 
 #include "TextureLoader.h"
+
+#define CHECK_CHUNK(x, i0, i1, i2, i3) x.type[0] == i0 && x.type[1] == i1 && x.type[2] == i2 && x.type[3] == i3
+#define IS_IHDR_CHUNK(x) CHECK_CHUNK(x, 'I', 'H', 'D', 'R')
+#define IS_IDAT_CHUNK(x) CHECK_CHUNK(x, 'I', 'D', 'A', 'T')
+
+#define FILTER_NONE 0
+#define FILTER_SUB 1
+#define FILTER_UP 2
+#define FILTER_AVG 3
+#define FILTER_PAETH 4
 
 struct PngHeader
 {
@@ -23,6 +34,24 @@ struct PngChunk
     unsigned int crc;
 } typedef PngChunk;
 
+struct IHDRData
+{
+    unsigned int width;
+    unsigned int height;
+    unsigned char bitDepth;
+    unsigned char colorType;
+    unsigned char compressionMethod;
+    unsigned char filterMethod;
+    unsigned char interlaceMethod;
+} typedef IHDRData;
+
+// Only manage 3 channel of 8 bit each at the moment
+struct PngPixel
+{
+    unsigned char red;
+    unsigned char green;
+    unsigned char blue;
+} typedef PngPixel;
 
 /**
  * Texture loaded that load from png file

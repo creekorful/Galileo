@@ -1,7 +1,13 @@
 #include "TextureFactory.h"
 
+TextureFactory::TextureFactory() : _logger(LoggerFactory::CreateLogger("TextureFactory"))
+{
+}
+
 bool TextureFactory::Load(const std::string& file, const std::string& name)
 {
+    _logger.Info("Loading texture with path: " + file + " and name: " + name);
+
     // Compute extension
     std::string ext = file.substr(file.find_last_of('.'));
 
@@ -19,6 +25,7 @@ bool TextureFactory::Load(const std::string& file, const std::string& name)
 
     if (texture.IsValid())
     {
+        _logger.Info("Texture is valid. Process with registering");
         _textures[name] = texture;
     }
 
@@ -27,5 +34,6 @@ bool TextureFactory::Load(const std::string& file, const std::string& name)
 
 Texture& TextureFactory::Get(const std::string& name)
 {
+    _logger.Debug("Accessing texture with name: " + name);
     return _textures[name];
 }

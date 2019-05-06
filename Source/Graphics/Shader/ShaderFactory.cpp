@@ -1,6 +1,6 @@
 #include "ShaderFactory.h"
 
-ShaderFactory::ShaderFactory(Logger logger) : _logger(std::move(logger))
+ShaderFactory::ShaderFactory() : _logger(LoggerFactory::CreateLogger("ShaderFactory"))
 {
 }
 

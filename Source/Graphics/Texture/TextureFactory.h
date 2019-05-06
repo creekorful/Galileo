@@ -24,6 +24,9 @@ public:
 
 private:
     std::map<std::string, Texture> _textures;
+    Logger _logger;
+
+    TextureFactory();
 };
 
 
