@@ -50,7 +50,7 @@ Shader* LoadShader()
 
 Texture* LoadTexture()
 {
-    if (!TextureFactory::p().Load("Textures/grassblock.png", "grass"))
+    if (!TextureFactory::p().Load("Resources/Textures/grassblock.png", "grass"))
     {
         return nullptr;
     }
@@ -87,7 +87,7 @@ int main()
         return -1;
     }
 
-    ObjFileLoader loader("Models/cube.obj");
+    ObjFileLoader loader("Resources/Models/cube.obj");
     Mesh mesh = loader.ReadMesh(pTexture);
 
     return 0;

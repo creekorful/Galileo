@@ -9,8 +9,8 @@ bool ShaderFactory::Load(const std::string& name)
     _logger.Info("Loading shader: " + name);
 
     // Initialize shader
-    std::string vertexShader = Files::Read("Shaders/" + name + "/vertex.vs");
-    std::string fragmentShader = Files::Read("Shaders/" + name + "/fragment.fs");
+    std::string vertexShader = Files::Read("Resources/Shaders/" + name + "/vertex.vs");
+    std::string fragmentShader = Files::Read("Resources/Shaders/" + name + "/fragment.fs");
 
     // Load shader
     if (!_shaders[name].Initialize(vertexShader, fragmentShader))
