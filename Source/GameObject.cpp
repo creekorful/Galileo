@@ -10,16 +10,18 @@ void GameObject::Render()
     _mesh->Render();
 }
 
-void GameObject::UpdateViewMatrix(Matrix4f& matrix)
+Matrix4f GameObject::GetModelViewMatrix(const Matrix4f& viewMatrix) const
 {
-    matrix.Identity()
-            .Scale(_scale)
+    Matrix4f modelMatrix;
+    modelMatrix.Scale(_scale)
             .Translate(_position)
             .Rotate(BaseMath::toRadians(-_rotation.x),
                     BaseMath::toRadians(-_rotation.y),
                     BaseMath::toRadians(-_rotation.z))
             .Transpose();
+    return viewMatrix * modelMatrix;
 }
+
 
 void GameObject::Move(const Vector3f& offset)
 {

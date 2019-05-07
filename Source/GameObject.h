@@ -13,11 +13,12 @@ public:
     void Render();
 
     /**
-     * Update given matrix by game object transform
+     * Get the model view matrix
      *
-     * @param matrix matrix (usually view) to be updated
+     * @param viewMatrix camera matrix
+     * @return model view matrix
      */
-    void UpdateViewMatrix(Matrix4f& matrix);
+    Matrix4f GetModelViewMatrix(const Matrix4f& viewMatrix) const;
 
     void Move(const Vector3f& offset);
 

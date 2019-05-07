@@ -91,7 +91,7 @@ int main()
 
     // Create matrices
     Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);
-    Matrix4f viewMatrix, cameraMatrix;
+    Matrix4f modelViewMatrix, viewMatrix;
 
     glClearColor(0.0, 0.0, 0.0, 1.0);
 
@@ -134,23 +134,23 @@ int main()
         pShader->SetUniform(TEXTURE_SAMPLER_UNIFORM, 0);
 
         // Get camera view matrix
-        camera.UpdateViewMatrix(cameraMatrix);
+        camera.UpdateViewMatrix(viewMatrix);
 
         // Draw first object
         //firstGameObject.Rotate(Vector3f(.05f, 0, 0));
-        firstGameObject.UpdateViewMatrix(viewMatrix);
-        pShader->SetUniform(VIEW_MATRIX_UNIFORM, cameraMatrix * viewMatrix);
+        modelViewMatrix = firstGameObject.GetModelViewMatrix(viewMatrix);
+        pShader->SetUniform(VIEW_MATRIX_UNIFORM, modelViewMatrix);
         firstGameObject.Render();
 
         // Draw second object
         //secondGameObject.Rotate(Vector3f(0, .06f, 0.4f));
-        secondGameObject.UpdateViewMatrix(viewMatrix);
-        pShader->SetUniform(VIEW_MATRIX_UNIFORM, cameraMatrix * viewMatrix);
+        modelViewMatrix = secondGameObject.GetModelViewMatrix(viewMatrix);
+        pShader->SetUniform(VIEW_MATRIX_UNIFORM, modelViewMatrix);
         secondGameObject.Render();
 
         // Draw third object
-        thirdGameObject.UpdateViewMatrix(viewMatrix);
-        pShader->SetUniform(VIEW_MATRIX_UNIFORM, cameraMatrix * viewMatrix);
+        modelViewMatrix = thirdGameObject.GetModelViewMatrix(viewMatrix);
+        pShader->SetUniform(VIEW_MATRIX_UNIFORM, modelViewMatrix);
         thirdGameObject.Render();
 
         // Render whole window to screen
