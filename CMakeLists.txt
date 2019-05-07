@@ -9,8 +9,8 @@ find_package(OpenGL REQUIRED)
 
 set(SOURCES_FILES
         main.cpp
-        Source/Graphics/Window.cpp
-        Source/Graphics/Window.h
+        Source/Graphics/Core/Window.cpp
+        Source/Graphics/Core/Window.h
         Source/Graphics/Shader/Shader.cpp
         Source/Graphics/Shader/Shader.h
         Source/Graphics/Mesh/Mesh.cpp
@@ -42,8 +42,8 @@ set(SOURCES_FILES
         Source/Logging/Logger.cpp
         Source/Logging/Logger.h
         ThirdParty/stb_image.h
-        Source/Graphics/Camera.cpp
-        Source/Graphics/Camera.h)
+        Source/Graphics/Core/Camera.cpp
+        Source/Graphics/Core/Camera.h)
 
 add_executable(Galileo ${SOURCES_FILES})
 

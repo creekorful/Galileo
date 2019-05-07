@@ -3,8 +3,8 @@
 
 #include <iostream>
 
-#include "../Common.h"
-#include "../Math/Vector2.h"
+#include "../../Common.h"
+#include "../../Math/Vector2.h"
 
 /**
  * This class represent the active render window
