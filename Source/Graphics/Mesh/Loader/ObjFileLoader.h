@@ -5,6 +5,14 @@
 
 #include "../Mesh.h"
 #include "../../../IO/Files.h"
+#include "../../../Util/Strings.h"
+
+struct IndexGroup
+{
+    int positionIndex;
+    int textureIndex;
+    int normalIndex;
+} typedef IndexGroup;
 
 class ObjFileLoader
 {
