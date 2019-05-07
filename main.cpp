@@ -5,6 +5,7 @@
 #include "Source/IO/Files.h"
 #include "Source/Graphics/Texture/TextureFactory.h"
 #include "Source/Graphics/Core/Camera.h"
+#include "Source/Graphics/Mesh/Loader/ObjFileLoader.h"
 
 #define SHADER_NAME "textured"
 
@@ -86,8 +87,10 @@ int main()
         return -1;
     }
 
-    // Initialize mesh to be drawn
-    Mesh mesh = MeshFactory::BuildCubeMesh(pTexture);
+    ObjFileLoader loader("Models/cube.obj");
+    Mesh mesh = loader.ReadMesh(pTexture);
+
+    return 0;
 
     // Create matrices
     Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);
