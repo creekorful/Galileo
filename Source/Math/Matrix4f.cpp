@@ -173,11 +173,6 @@ void Matrix4f::operator*=(const Matrix4f& other)
     }
 }
 
-Matrix4f Matrix4f::MakeRotationMatrix(const Vector3f& angles)
-{
-    return MakeRotationMatrix(angles.x, angles.y, angles.z);
-}
-
 Matrix4f Matrix4f::MakeRotationMatrix(float x, float y, float z)
 {
     // https://en.wikipedia.org/wiki/Rotation_matrix
@@ -211,11 +206,6 @@ Matrix4f Matrix4f::MakeRotationMatrix(float x, float y, float z)
     return xAxis * yAxis * zAxis;
 }
 
-Matrix4f Matrix4f::MakeTranslationMatrix(const Vector3f& values)
-{
-    return MakeTranslationMatrix(values.x, values.y, values.z);
-}
-
 Matrix4f Matrix4f::MakeTranslationMatrix(float x, float y, float z)
 {
     Matrix4f matrix;
@@ -226,22 +216,13 @@ Matrix4f Matrix4f::MakeTranslationMatrix(float x, float y, float z)
     return matrix;
 }
 
-Matrix4f Matrix4f::MakeScaleMatrix(float factor)
-{
-    return MakeScaleMatrix(factor, factor, factor);
-}
 
 Matrix4f Matrix4f::MakeScaleMatrix(float x, float y, float z)
 {
     Matrix4f matrix;
-    matrix.Set(0, 0, x > 0 ? x : 1);
-    matrix.Set(1, 1, y > 0 ? y : 1);
-    matrix.Set(2, 2, z > 0 ? z : 1);
+    matrix.Set(0, 0, x);
+    matrix.Set(1, 1, y);
+    matrix.Set(2, 2, z);
 
     return matrix;
-}
-
-Matrix4f Matrix4f::MakeScaleMatrix(const Vector3f& factor)
-{
-    return MakeScaleMatrix(factor.x, factor.y, factor.z);
 }

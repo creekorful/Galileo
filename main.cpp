@@ -97,7 +97,6 @@ int main()
 
     // Create camera
     Camera camera;
-    //camera.Move(0.5f, 0, 0);
 
     // Create gameObjects
     GameObject firstGameObject(&mesh), secondGameObject(&mesh), thirdGameObject(&mesh);
@@ -137,13 +136,13 @@ int main()
         camera.UpdateViewMatrix(viewMatrix);
 
         // Draw first object
-        //firstGameObject.Rotate(Vector3f(.05f, 0, 0));
+        firstGameObject.Rotate(Vector3f(.05f, 0, 0));
         modelViewMatrix = firstGameObject.GetModelViewMatrix(viewMatrix);
         pShader->SetUniform(VIEW_MATRIX_UNIFORM, modelViewMatrix);
         firstGameObject.Render();
 
         // Draw second object
-        //secondGameObject.Rotate(Vector3f(0, .06f, 0.4f));
+        secondGameObject.Rotate(Vector3f(0, .06f, 0.4f));
         modelViewMatrix = secondGameObject.GetModelViewMatrix(viewMatrix);
         pShader->SetUniform(VIEW_MATRIX_UNIFORM, modelViewMatrix);
         secondGameObject.Render();

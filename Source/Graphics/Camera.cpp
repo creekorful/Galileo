@@ -7,9 +7,9 @@ Camera::Camera() : _position(Vector3f()), _rotation(Vector3f())
 void Camera::UpdateViewMatrix(Matrix4f& matrix)
 {
     matrix.Identity()
-            .Rotate(BaseMath::toRadians(_rotation.x),
+            /*.Rotate(BaseMath::toRadians(_rotation.x),
                     BaseMath::toRadians(_rotation.y),
-                    BaseMath::toRadians(_rotation.z))
+                    BaseMath::toRadians(_rotation.z))*/
             .Translate(-_position)
             .Transpose();
 }

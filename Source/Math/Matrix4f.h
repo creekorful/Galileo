@@ -95,19 +95,11 @@ public:
      */
     void operator*=(const Matrix4f& other);
 
-    static Matrix4f MakeRotationMatrix(const Vector3f& angles);
-
     static Matrix4f MakeRotationMatrix(float x, float y, float z);
-
-    static Matrix4f MakeTranslationMatrix(const Vector3f& values);
 
     static Matrix4f MakeTranslationMatrix(float x, float y, float z);
 
-    static Matrix4f MakeScaleMatrix(const Vector3f& factor);
-
     static Matrix4f MakeScaleMatrix(float x, float y, float z);
-
-    static Matrix4f MakeScaleMatrix(float factor);
 
     /**
      * Create a projection matrix from given args
