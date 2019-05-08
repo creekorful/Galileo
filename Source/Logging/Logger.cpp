@@ -24,3 +24,8 @@ void Logger::Error(const std::string& message)
 {
     Message("ERROR", message);
 }
+
+void Logger::Warn(const std::string& message)
+{
+    Message("WARN", message);
+}
