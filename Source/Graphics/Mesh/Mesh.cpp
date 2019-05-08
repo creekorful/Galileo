@@ -7,19 +7,16 @@ Mesh::Mesh(std::vector<GLfloat> vertices, std::vector<GLfloat> uvs, std::vector<
     glBindVertexArray(_vaoId);
 
     // Generate VBO to store vertices
-    GLuint vboId = GenerateVbo();
-    glBindBuffer(GL_ARRAY_BUFFER, vboId);
+    glBindBuffer(GL_ARRAY_BUFFER, GenerateVbo());
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     // Generate VBO to store indices
-    vboId = GenerateVbo();
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboId);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, GenerateVbo());
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLint), indices.data(), GL_STATIC_DRAW);
 
     // Generate VBO to store textures coordinates
-    vboId = GenerateVbo();
-    glBindBuffer(GL_ARRAY_BUFFER, vboId);
+    glBindBuffer(GL_ARRAY_BUFFER, GenerateVbo());
     glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(GLfloat), uvs.data(), GL_STATIC_DRAW);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
 
