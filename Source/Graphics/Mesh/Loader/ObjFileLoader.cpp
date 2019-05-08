@@ -9,8 +9,8 @@ ObjFileLoader::ObjFileLoader(const std::string& filePath) : _logger(LoggerFactor
 Mesh ObjFileLoader::ReadMesh(Texture* pTexture)
 {
     std::vector<GLfloat> vertices;
-    std::vector<GLfloat> readUvs;
-    std::vector<GLfloat> readNormals;
+    std::vector<GLfloat> uvs;
+    std::vector<GLfloat> normals;
 
     std::vector<std::vector<IndexGroup>> faces;
 
@@ -30,19 +30,20 @@ Mesh ObjFileLoader::ReadMesh(Texture* pTexture)
         else if (line.rfind("vt ", 0) == 0)
         {
             std::vector<std::string> parts = Strings::Split(line, ' ');
-            readUvs.push_back(std::stof(parts[1]));
-            readUvs.push_back(std::stof(parts[2]));
+            uvs.push_back(std::stof(parts[1]));
+            uvs.push_back(std::stof(parts[2]));
         }
 
         // Normal declaration
         else if (line.rfind("vn ", 0) == 0)
         {
             std::vector<std::string> parts = Strings::Split(line, ' ');
-            readNormals.push_back(std::stof(parts[1]));
-            readNormals.push_back(std::stof(parts[2]));
-            readNormals.push_back(std::stof(parts[3]));
+            normals.push_back(std::stof(parts[1]));
+            normals.push_back(std::stof(parts[2]));
+            normals.push_back(std::stof(parts[3]));
         }
 
+        // Face declaration
         else if (line.rfind("f ", 0) == 0)
         {
             faces.emplace_back();
@@ -55,8 +56,17 @@ Mesh ObjFileLoader::ReadMesh(Texture* pTexture)
                 IndexGroup group;
                 // -1 because in OBJ file array start at index 1
                 group.positionIndex = std::stoi(index[0]) - 1;
-                group.textureIndex = std::stoi(index[1]) - 1;
-                group.normalIndex = std::stoi(index[2]) - 1;
+
+                // texture is optional
+                if (!index[1].empty())
+                {
+                    group.textureIndex = std::stoi(index[1]) - 1;
+                }
+                // normals are optional
+                if (!index[2].empty())
+                {
+                    group.normalIndex = std::stoi(index[2]) - 1;
+                }
 
                 faces[faces.size() - 1].push_back(group);
             }
@@ -64,13 +74,13 @@ Mesh ObjFileLoader::ReadMesh(Texture* pTexture)
 
         else
         {
-            _logger.Warn("Non managed line: " + line); // todo Warn
+            _logger.Warn("Non managed line: " + line);
         }
     }
 
     _logger.Debug("All lines processed. Converting into mesh");
 
-    return BuildMesh(vertices, readUvs, readNormals, faces, pTexture);
+    return BuildMesh(vertices, uvs, normals, faces, pTexture);
 }
 
 Mesh ObjFileLoader::BuildMesh(const std::vector<GLfloat>& vertices,
@@ -80,8 +90,8 @@ Mesh ObjFileLoader::BuildMesh(const std::vector<GLfloat>& vertices,
                               Texture* pTexture)
 {
     // finally reorder everything and create indices
-    std::vector<GLfloat> orderedUvs(vertices.size() * 2);
-    std::vector<GLfloat> orderedNormals(vertices.size() * 3);
+    std::vector<GLfloat> orderedUvs((vertices.size() / 3) * 2);
+    std::vector<GLfloat> orderedNormals(vertices.size());
     std::vector<GLint> indices;
     for (auto& face : faces)
     {
@@ -97,9 +107,9 @@ Mesh ObjFileLoader::BuildMesh(const std::vector<GLfloat>& vertices,
             }
             if (group.normalIndex >= 0)
             {
-                orderedNormals[group.positionIndex * 3] = normals[group.positionIndex];
-                orderedNormals[group.positionIndex * 3 + 1] = normals[group.positionIndex + 1];
-                orderedNormals[group.positionIndex * 3 + 2] = normals[group.positionIndex + 2];
+                orderedNormals[group.positionIndex * 3] = normals[group.normalIndex];
+                orderedNormals[group.positionIndex * 3 + 1] = normals[group.normalIndex + 1];
+                orderedNormals[group.positionIndex * 3 + 2] = normals[group.normalIndex + 2];
             }
         }
     }
