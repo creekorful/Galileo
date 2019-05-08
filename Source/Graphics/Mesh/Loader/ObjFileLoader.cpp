@@ -53,9 +53,10 @@ Mesh ObjFileLoader::ReadMesh(Texture* pTexture)
                 std::vector<std::string> index = Strings::Split(parts[i], '/');
 
                 IndexGroup group;
-                group.positionIndex = std::stoi(index[0]);
-                group.textureIndex = std::stoi(index[1]);
-                group.normalIndex = std::stoi(index[2]);
+                // -1 because in OBJ file array start at index 1
+                group.positionIndex = std::stoi(index[0]) - 1;
+                group.textureIndex = std::stoi(index[1]) - 1;
+                group.normalIndex = std::stoi(index[2]) - 1;
 
                 faces[faces.size() - 1].push_back(group);
             }
@@ -63,13 +64,24 @@ Mesh ObjFileLoader::ReadMesh(Texture* pTexture)
 
         else
         {
-            _logger.Info("Non managed line: " + line); // todo Warn
+            _logger.Warn("Non managed line: " + line); // todo Warn
         }
     }
 
+    _logger.Debug("All lines processed. Converting into mesh");
+
+    return BuildMesh(vertices, readUvs, readNormals, faces, pTexture);
+}
+
+Mesh ObjFileLoader::BuildMesh(const std::vector<GLfloat>& vertices,
+                              const std::vector<GLfloat>& uvs,
+                              const std::vector<GLfloat>& normals,
+                              const std::vector<std::vector<IndexGroup>>& faces,
+                              Texture* pTexture)
+{
     // finally reorder everything and create indices
-    std::vector<GLfloat> uvs(readUvs.size());
-    std::vector<GLfloat> normals(readNormals.size());
+    std::vector<GLfloat> orderedUvs(vertices.size() * 2);
+    std::vector<GLfloat> orderedNormals(vertices.size() * 3);
     std::vector<GLint> indices;
     for (auto& face : faces)
     {
@@ -80,17 +92,17 @@ Mesh ObjFileLoader::ReadMesh(Texture* pTexture)
             // Re order texture coordinates
             if (group.textureIndex >= 0)
             {
-                uvs[group.positionIndex * 2] = readUvs[group.textureIndex];
-                uvs[group.positionIndex * 2 + 1] = 1 - readUvs[group.textureIndex + 1];
+                orderedUvs[group.positionIndex * 2] = uvs[group.textureIndex];
+                orderedUvs[group.positionIndex * 2 + 1] = 1 - uvs[group.textureIndex + 1];
             }
             if (group.normalIndex >= 0)
             {
-                normals[group.positionIndex * 3] = readNormals[group.positionIndex];
-                normals[group.positionIndex * 3 + 1] = readNormals[group.positionIndex + 1];
-                normals[group.positionIndex * 3 + 2] = readNormals[group.positionIndex + 2];
+                orderedNormals[group.positionIndex * 3] = normals[group.positionIndex];
+                orderedNormals[group.positionIndex * 3 + 1] = normals[group.positionIndex + 1];
+                orderedNormals[group.positionIndex * 3 + 2] = normals[group.positionIndex + 2];
             }
         }
     }
 
-    return Mesh(vertices, uvs, indices, pTexture);
+    return Mesh(vertices, orderedUvs, indices, pTexture);
 }

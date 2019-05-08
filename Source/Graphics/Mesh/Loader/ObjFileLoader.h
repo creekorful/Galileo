@@ -24,6 +24,11 @@ public:
 private:
     Logger _logger;
     std::vector<std::string> _lines;
+
+    Mesh BuildMesh(const std::vector<GLfloat>& vertices,
+                   const std::vector<GLfloat>& uvs,
+                   const std::vector<GLfloat>& normals,
+                   const std::vector<std::vector<IndexGroup>>& faces, Texture *pTexture);
 };
 
 
