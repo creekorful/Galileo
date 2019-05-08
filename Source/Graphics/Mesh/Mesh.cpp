@@ -6,29 +6,22 @@ Mesh::Mesh(std::vector<GLfloat> vertices, std::vector<GLfloat> uvs, std::vector<
     glGenVertexArrays(1, &_vaoId);
     glBindVertexArray(_vaoId);
 
-    // Generate and bind VBO
-    GLuint vboId;
-    glGenBuffers(1, &vboId);
+    // Generate VBO to store vertices
+    GLuint vboId = GenerateVbo();
     glBindBuffer(GL_ARRAY_BUFFER, vboId);
-
-    // Copy data to the buffers + specify coordinate data
     glBufferData(GL_ARRAY_BUFFER, vertices.size() * sizeof(GLfloat), vertices.data(), GL_STATIC_DRAW);
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-    _vbosIds.push_back(vboId);
 
     // Generate VBO to store indices
-    glGenBuffers(1, &vboId);
+    vboId = GenerateVbo();
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, vboId);
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLint), indices.data(), GL_STATIC_DRAW);
-    _vbosIds.push_back(vboId);
 
     // Generate VBO to store textures coordinates
-    glGenBuffers(1, &vboId);
+    vboId = GenerateVbo();
     glBindBuffer(GL_ARRAY_BUFFER, vboId);
-
     glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(GLfloat), uvs.data(), GL_STATIC_DRAW);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
-    _vbosIds.push_back(vboId);
 
     _pTexture = pTexture;
     _vertexCount = vertices.size();
@@ -62,4 +55,12 @@ Mesh::~Mesh()
     glDeleteBuffers(_vbosIds.size(), &_vbosIds[0]);
     // Delete VAO
     glDeleteVertexArrays(1, &_vaoId);
+}
+
+GLuint Mesh::GenerateVbo()
+{
+    GLuint vboId;
+    glGenBuffers(1, &vboId);
+    _vbosIds.push_back(vboId);
+    return vboId;
 }
