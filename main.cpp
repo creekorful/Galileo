@@ -1,10 +1,10 @@
-#include "Source/Graphics/Core/Window.h"
+#include "Source/Core/Window.h"
 #include "Source/Graphics/Shader/ShaderFactory.h"
 #include "Source/Graphics/Mesh/MeshFactory.h"
-#include "Source/GameObject.h"
+#include "Source/Core/GameObject.h"
 #include "Source/IO/Files.h"
 #include "Source/Graphics/Texture/TextureFactory.h"
-#include "Source/Graphics/Core/Camera.h"
+#include "Source/Core/Camera.h"
 
 #define SHADER_NAME "textured"
 

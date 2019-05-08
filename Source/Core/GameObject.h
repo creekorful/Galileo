@@ -1,9 +1,9 @@
 #ifndef GALILEO_GAMEOBJECT_H
 #define GALILEO_GAMEOBJECT_H
 
-#include "Graphics/Mesh/Mesh.h"
-#include "Math/BaseMath.h"
-#include "Math/Matrix4f.h"
+#include "../Graphics/Mesh/Mesh.h"
+#include "../Math/BaseMath.h"
+#include "../Math/Matrix4f.h"
 
 class GameObject
 {
