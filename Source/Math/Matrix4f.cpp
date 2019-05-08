@@ -1,11 +1,11 @@
 #include "Matrix4f.h"
 
-Matrix4f::Matrix4f() : _m(nullptr)
+Matrix4f::Matrix4f()
 {
     Identity();
 }
 
-Matrix4f::Matrix4f(const Matrix4f& other) : _m(nullptr)
+Matrix4f::Matrix4f(const Matrix4f& other)
 {
     _m = new float[16];
     for (int i = 0; i < 16; i++)

@@ -59,7 +59,7 @@ void Mesh::Render()
 Mesh::~Mesh()
 {
     // Delete VBOs
-    glDeleteBuffers(_vbosIds.size(), _vbosIds.data());
+    glDeleteBuffers(_vbosIds.size(), &_vbosIds[0]);
     // Delete VAO
     glDeleteVertexArrays(1, &_vaoId);
 }
