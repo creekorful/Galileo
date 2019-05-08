@@ -90,8 +90,6 @@ int main()
     ObjFileLoader loader("Resources/Models/cube.obj");
     Mesh mesh = loader.ReadMesh(pTexture);
 
-    return 0;
-
     // Create matrices
     Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);
     Matrix4f modelViewMatrix, viewMatrix;
