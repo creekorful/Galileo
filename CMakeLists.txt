@@ -9,8 +9,8 @@ find_package(OpenGL REQUIRED)
 
 set(SOURCES_FILES
         main.cpp
-        Source/Graphics/Core/Window.cpp
-        Source/Graphics/Core/Window.h
+        Source/Core/Window.cpp
+        Source/Core/Window.h
         Source/Graphics/Shader/Shader.cpp
         Source/Graphics/Shader/Shader.h
         Source/Graphics/Mesh/Mesh.cpp
@@ -24,8 +24,8 @@ set(SOURCES_FILES
         Source/Math/BaseMath.h
         Source/Math/Vector2.h
         Source/Math/Vector3.h
-        Source/GameObject.cpp
-        Source/GameObject.h
+        Source/Core/GameObject.cpp
+        Source/Core/GameObject.h
         Source/Graphics/Mesh/MeshFactory.cpp
         Source/Graphics/Mesh/MeshFactory.h
         Source/Graphics/Shader/ShaderFactory.cpp
@@ -42,12 +42,12 @@ set(SOURCES_FILES
         Source/Logging/Logger.cpp
         Source/Logging/Logger.h
         ThirdParty/stb_image.h
-        Source/Graphics/Core/Camera.cpp
-        Source/Graphics/Core/Camera.h
         Source/Graphics/Mesh/Loader/ObjFileLoader.cpp
         Source/Graphics/Mesh/Loader/ObjFileLoader.h
         Source/Util/Strings.cpp
-        Source/Util/Strings.h)
+        Source/Util/Strings.h
+        Source/Core/Camera.cpp
+        Source/Core/Camera.h)
 
 add_executable(Galileo ${SOURCES_FILES})
 
