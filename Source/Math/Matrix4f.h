@@ -113,7 +113,7 @@ public:
     static Matrix4f CreateProjectionMatrix(float fov, const Vector2i& screenSize, float zNear, float zFar);
 
 private:
-    float* _m;
+    float* _m = nullptr;
 };
 
 

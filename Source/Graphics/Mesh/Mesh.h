@@ -16,6 +16,7 @@ public:
     void Render();
 
 private:
+    int _vertexCount;
     GLuint _vaoId;
     std::vector<GLuint> _vbosIds;
 
