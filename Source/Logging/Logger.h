@@ -14,6 +14,8 @@ public:
 
     void Debug(const std::string& message);
 
+    void Warn(const std::string& message);
+
     void Error(const std::string& message);
 
 private:
