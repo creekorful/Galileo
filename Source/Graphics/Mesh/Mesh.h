@@ -21,6 +21,12 @@ private:
     std::vector<GLuint> _vbosIds;
 
     Texture* _pTexture;
+
+    /**
+     * Generate & register a vbo
+     * @return generated vbo id
+     */
+    GLuint GenerateVbo();
 };
 
 
