@@ -53,21 +53,13 @@ Mesh ObjFileLoader::ReadMesh(Texture* pTexture)
             {
                 std::vector<std::string> index = Strings::Split(parts[i], '/');
 
-                IndexGroup group;
                 // -1 because in OBJ file array start at index 1
+                IndexGroup group;
                 group.positionIndex = std::stoi(index[0]) - 1;
+                group.textureIndex = !index[1].empty() ? std::stoi(index[1]) -1 : -1;
+                group.normalIndex = !index[2].empty() ? std::stoi(index[2]) -1 : -1;
 
-                // texture is optional
-                if (!index[1].empty())
-                {
-                    group.textureIndex = std::stoi(index[1]) - 1;
-                }
-                // normals are optional
-                if (!index[2].empty())
-                {
-                    group.normalIndex = std::stoi(index[2]) - 1;
-                }
-
+                // Append group to current face
                 faces[faces.size() - 1].push_back(group);
             }
         }
@@ -93,19 +85,21 @@ Mesh ObjFileLoader::BuildMesh(const std::vector<GLfloat>& vertices,
     std::vector<GLfloat> orderedUvs((vertices.size() / 3) * 2);
     std::vector<GLfloat> orderedNormals(vertices.size());
     std::vector<GLint> indices;
-    for (auto& face : faces)
+
+    for (const auto& face : faces)
     {
-        for (auto& group : face)
+        for (const auto& group : face)
         {
             indices.push_back(group.positionIndex);
 
             // Re order texture coordinates
-            if (group.textureIndex >= 0)
+            if (group.textureIndex != -1)
             {
                 orderedUvs[group.positionIndex * 2] = uvs[group.textureIndex];
                 orderedUvs[group.positionIndex * 2 + 1] = 1 - uvs[group.textureIndex + 1];
             }
-            if (group.normalIndex >= 0)
+            // Re order normal coordinates
+            if (group.normalIndex != -1)
             {
                 orderedNormals[group.positionIndex * 3] = normals[group.normalIndex];
                 orderedNormals[group.positionIndex * 3 + 1] = normals[group.normalIndex + 1];

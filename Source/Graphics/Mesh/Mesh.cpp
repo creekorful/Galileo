@@ -20,6 +20,8 @@ Mesh::Mesh(std::vector<GLfloat> vertices, std::vector<GLfloat> uvs, std::vector<
     glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(GLfloat), uvs.data(), GL_STATIC_DRAW);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
 
+    // todo store normals to lightning
+
     _pTexture = pTexture;
     _vertexCount = vertices.size();
 
