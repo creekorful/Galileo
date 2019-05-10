@@ -32,6 +32,7 @@ bool Shader::Initialize(const std::string& vertexShader, const std::string& frag
     // todo bind attrib location dynamically?
     glBindAttribLocation(_programId, 0, "in_Position");
     glBindAttribLocation(_programId, 1, "in_TextureCoordinate");
+    glBindAttribLocation(_programId, 2, "in_Normal");
 
     // finally link the program (build binary code)
     glLinkProgram(_programId);
