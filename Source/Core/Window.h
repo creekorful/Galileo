@@ -43,6 +43,17 @@ public:
      */
     Vector2i Size();
 
+    /**
+     * @return mouse position
+     */
+    Vector2d GetMousePos();
+
+    /**
+     * Check if given key is pressed
+     *
+     * @param keyCode the key code
+     * @return true if key is pressed, false otherwise
+     */
     bool IsKeyPressed(GLenum keyCode);
 
 private:
