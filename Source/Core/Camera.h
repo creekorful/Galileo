@@ -13,6 +13,8 @@ class Camera
 public:
     Camera();
 
+    explicit Camera(const Vector3f& position);
+
     void UpdateViewMatrix(Matrix4f& matrix);
 
     void Move(float x, float y, float z);

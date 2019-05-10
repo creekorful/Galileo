@@ -99,7 +99,7 @@ int main()
     glClearColor(0.0, 0.0, 0.0, 1.0);
 
     // Create camera
-    Camera camera;
+    Camera camera(Vector3f(0.f, 5.f, 10.f));
 
     // Create gameObjects
     std::vector<GameObject> gameObjects;
@@ -129,6 +129,8 @@ int main()
             camera.Move(0, CAMERA_SPEED, 0);
         else if (window.IsKeyPressed(GLFW_KEY_LEFT_SHIFT))
             camera.Move(0, -CAMERA_SPEED, 0);
+
+        // Update window title
 
         // Clear
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);

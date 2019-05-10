@@ -4,6 +4,10 @@ Camera::Camera() : _position(Vector3f()), _rotation(Vector3f())
 {
 }
 
+Camera::Camera(const Vector3f& position) : _position(position), _rotation(Vector3f())
+{
+}
+
 void Camera::UpdateViewMatrix(Matrix4f& matrix)
 {
     matrix.Identity()
