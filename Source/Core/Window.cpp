@@ -65,3 +65,10 @@ bool Window::IsKeyPressed(GLenum keyCode)
 {
     return glfwGetKey(_pWindow, keyCode) == GLFW_PRESS;
 }
+
+Vector2d Window::GetMousePos()
+{
+    Vector2d pos;
+    glfwGetCursorPos(_pWindow, &pos.x, &pos.y);
+    return pos;
+}

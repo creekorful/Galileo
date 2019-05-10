@@ -112,5 +112,5 @@ Mesh ObjFileLoader::BuildMesh(const std::vector<Vector3f>& vertices,
         }
     }
 
-    return Mesh(orderedVertices, orderedUvs, indices, pTexture);
+    return Mesh(orderedVertices, orderedUvs, orderedNormals, indices, pTexture);
 }

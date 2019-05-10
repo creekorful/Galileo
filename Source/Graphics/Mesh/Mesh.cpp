@@ -1,6 +1,9 @@
 #include "Mesh.h"
 
-Mesh::Mesh(std::vector<GLfloat> vertices, std::vector<GLfloat> uvs, std::vector<GLint> indices, Texture* pTexture)
+Mesh::Mesh(std::vector<GLfloat> vertices,
+           std::vector<GLfloat> uvs,
+           std::vector<GLfloat> normals,
+           std::vector<GLint> indices, Texture* pTexture)
 {
     // Generate and bind VAO
     glGenVertexArrays(1, &_vaoId);
@@ -20,7 +23,10 @@ Mesh::Mesh(std::vector<GLfloat> vertices, std::vector<GLfloat> uvs, std::vector<
     glBufferData(GL_ARRAY_BUFFER, uvs.size() * sizeof(GLfloat), uvs.data(), GL_STATIC_DRAW);
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
 
-    // todo store normals to lightning
+    // Generate VBO to store normals
+    glBindBuffer(GL_ARRAY_BUFFER, GenerateVbo());
+    glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(GLfloat), normals.data(), GL_STATIC_DRAW);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
     _pTexture = pTexture;
     _vertexCount = vertices.size();
@@ -37,6 +43,7 @@ void Mesh::Render()
     glBindVertexArray(_vaoId);
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
 
     // last parameter is set to (0) because it represent the offset into the index buffer object
     // OpenGL will use the buffer GL_ELEMENT_ARRAY_BUFFER of the VAO automatically
@@ -45,7 +52,10 @@ void Mesh::Render()
 
     glDisableVertexAttribArray(0);
     glDisableVertexAttribArray(1);
+    glDisableVertexAttribArray(2);
     glBindVertexArray(0);
+
+    _pTexture->Unbind();
 }
 
 Mesh::~Mesh()
