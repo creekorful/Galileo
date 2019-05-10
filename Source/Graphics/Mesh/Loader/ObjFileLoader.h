@@ -4,6 +4,8 @@
 #include <iostream>
 
 #include "../Mesh.h"
+#include "../../../Math/Vector3.h"
+#include "../../../Math/Vector2.h"
 #include "../../../IO/Files.h"
 #include "../../../Util/Strings.h"
 
@@ -25,9 +27,9 @@ private:
     Logger _logger;
     std::vector<std::string> _lines;
 
-    static Mesh BuildMesh(const std::vector<GLfloat>& vertices,
-                   const std::vector<GLfloat>& uvs,
-                   const std::vector<GLfloat>& normals,
+    static Mesh BuildMesh(const std::vector<Vector3f>& vertices,
+                   const std::vector<Vector2f>& uvs,
+                   const std::vector<Vector3f>& normals,
                    const std::vector<std::vector<IndexGroup>>& faces, Texture *pTexture);
 };
 

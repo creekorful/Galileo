@@ -19,6 +19,7 @@ public:
 };
 
 typedef Vector2<int> Vector2i;
+typedef Vector2<float> Vector2f;
 
 
 #endif //GALILEO_VECTOR2_H

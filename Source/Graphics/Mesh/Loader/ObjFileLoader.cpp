@@ -8,9 +8,9 @@ ObjFileLoader::ObjFileLoader(const std::string& filePath) : _logger(LoggerFactor
 
 Mesh ObjFileLoader::ReadMesh(Texture* pTexture)
 {
-    std::vector<GLfloat> vertices;
-    std::vector<GLfloat> uvs;
-    std::vector<GLfloat> normals;
+    std::vector<Vector3f> vertices;
+    std::vector<Vector2f> uvs;
+    std::vector<Vector3f> normals;
 
     std::vector<std::vector<IndexGroup>> faces;
 
@@ -21,26 +21,21 @@ Mesh ObjFileLoader::ReadMesh(Texture* pTexture)
         {
             // Why parts[1] and not 0? well because 'v' is returned by split too.
             std::vector<std::string> parts = Strings::Split(line, ' ');
-            vertices.push_back(std::stof(parts[1]));
-            vertices.push_back(std::stof(parts[2]));
-            vertices.push_back(std::stof(parts[3]));
+            vertices.emplace_back(std::stof(parts[1]), std::stof(parts[2]), std::stof(parts[3]));
         }
 
         // Texture declaration
         else if (line.rfind("vt ", 0) == 0)
         {
             std::vector<std::string> parts = Strings::Split(line, ' ');
-            uvs.push_back(std::stof(parts[1]));
-            uvs.push_back(std::stof(parts[2]));
+            uvs.emplace_back(std::stof(parts[1]), std::stof(parts[2]));
         }
 
         // Normal declaration
         else if (line.rfind("vn ", 0) == 0)
         {
             std::vector<std::string> parts = Strings::Split(line, ' ');
-            normals.push_back(std::stof(parts[1]));
-            normals.push_back(std::stof(parts[2]));
-            normals.push_back(std::stof(parts[3]));
+            normals.emplace_back(std::stof(parts[1]), std::stof(parts[2]), std::stof(parts[3]));
         }
 
         // Face declaration
@@ -75,16 +70,25 @@ Mesh ObjFileLoader::ReadMesh(Texture* pTexture)
     return BuildMesh(vertices, uvs, normals, faces, pTexture);
 }
 
-Mesh ObjFileLoader::BuildMesh(const std::vector<GLfloat>& vertices,
-                              const std::vector<GLfloat>& uvs,
-                              const std::vector<GLfloat>& normals,
+Mesh ObjFileLoader::BuildMesh(const std::vector<Vector3f>& vertices,
+                              const std::vector<Vector2f>& uvs,
+                              const std::vector<Vector3f>& normals,
                               const std::vector<std::vector<IndexGroup>>& faces,
                               Texture* pTexture)
 {
     // finally reorder everything and create indices
-    std::vector<GLfloat> orderedUvs((vertices.size() / 3) * 2);
-    std::vector<GLfloat> orderedNormals(vertices.size());
+    std::vector<GLfloat> orderedVertices;
+    std::vector<GLfloat> orderedUvs(vertices.size() * 2);
+    std::vector<GLfloat> orderedNormals(vertices.size() * 3);
     std::vector<GLint> indices;
+
+    // Re order vertices
+    for (Vector3f vertex : vertices)
+    {
+        orderedVertices.push_back(vertex.x);
+        orderedVertices.push_back(vertex.y);
+        orderedVertices.push_back(vertex.z);
+    }
 
     for (const auto& face : faces)
     {
@@ -95,18 +99,18 @@ Mesh ObjFileLoader::BuildMesh(const std::vector<GLfloat>& vertices,
             // Re order texture coordinates
             if (group.textureIndex != -1)
             {
-                orderedUvs[group.positionIndex * 2] = uvs[group.textureIndex];
-                orderedUvs[group.positionIndex * 2 + 1] = 1 - uvs[group.textureIndex + 1];
+                orderedUvs[group.positionIndex * 2] = uvs[group.textureIndex].x;
+                orderedUvs[group.positionIndex * 2 + 1] = 1 - uvs[group.textureIndex].y;
             }
             // Re order normal coordinates
             if (group.normalIndex != -1)
             {
-                orderedNormals[group.positionIndex * 3] = normals[group.normalIndex];
-                orderedNormals[group.positionIndex * 3 + 1] = normals[group.normalIndex + 1];
-                orderedNormals[group.positionIndex * 3 + 2] = normals[group.normalIndex + 2];
+                orderedNormals[group.positionIndex * 3] = normals[group.normalIndex].x;
+                orderedNormals[group.positionIndex * 3 + 1] = normals[group.normalIndex].y;
+                orderedNormals[group.positionIndex * 3 + 2] = normals[group.normalIndex].z;
             }
         }
     }
 
-    return Mesh(vertices, orderedUvs, indices, pTexture);
+    return Mesh(orderedVertices, orderedUvs, indices, pTexture);
 }
