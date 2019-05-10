@@ -34,6 +34,11 @@ public:
     bool ShouldClose();
 
     /**
+     * Close the window gracefully
+     */
+    void Close();
+
+    /**
      * Render / update the window
      */
     void Render();

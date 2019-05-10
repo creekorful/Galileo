@@ -118,6 +118,9 @@ int main()
     pShader->Bind();
     while (!window.ShouldClose())
     {
+        if (window.IsKeyPressed(GLFW_KEY_ESCAPE))
+            window.Close();
+
         // Update position if needed
         if (window.IsKeyPressed(GLFW_KEY_Q))
             camera.Move(-CAMERA_SPEED, 0, 0);
