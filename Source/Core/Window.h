@@ -56,6 +56,13 @@ public:
      */
     bool IsKeyPressed(GLenum keyCode);
 
+    /**
+     * Set the window title
+     *
+     * @param title window title
+     */
+    void SetTitle(const std::string& title);
+
 private:
     GLFWwindow* _pWindow;
     Logger _logger;

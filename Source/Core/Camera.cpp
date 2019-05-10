@@ -24,3 +24,8 @@ void Camera::Move(float x, float y, float z)
     _position.y += y;
     _position.z += z;
 }
+
+Vector3f Camera::Position()
+{
+    return _position;
+}

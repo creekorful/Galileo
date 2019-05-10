@@ -130,8 +130,6 @@ int main()
         else if (window.IsKeyPressed(GLFW_KEY_LEFT_SHIFT))
             camera.Move(0, -CAMERA_SPEED, 0);
 
-        // Update window title
-
         // Clear
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 

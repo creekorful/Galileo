@@ -72,3 +72,8 @@ Vector2d Window::GetMousePos()
     glfwGetCursorPos(_pWindow, &pos.x, &pos.y);
     return pos;
 }
+
+void Window::SetTitle(const std::string& title)
+{
+    glfwSetWindowTitle(_pWindow, title.c_str());
+}
