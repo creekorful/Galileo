@@ -13,9 +13,15 @@ class Camera
 public:
     Camera();
 
+    explicit Camera(const Vector3f& position);
+
     void UpdateViewMatrix(Matrix4f& matrix);
 
     void Move(float x, float y, float z);
+
+    void Rotate(float x, float y, float z);
+
+    Vector3f Position();
 
 private:
     Vector3f _position;
