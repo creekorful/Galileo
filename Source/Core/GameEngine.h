@@ -2,6 +2,7 @@
 #define GALILEO_GAMEENGINE_H
 
 #include "Window.h"
+#include "GameState.h"
 
 class GameEngine
 {
@@ -12,9 +13,13 @@ public:
 
     void Execute();
 
+    void setActiveScene(GameState* pGameState);
+
 private:
     Window _window;
     bool _initialized;
+
+    GameState* _pGameState;
 };
 
 
