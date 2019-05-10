@@ -118,9 +118,9 @@ int main()
         else if (window.IsKeyPressed(GLFW_KEY_D))
             camera.Move(CAMERA_SPEED, 0, 0);
         else if (window.IsKeyPressed(GLFW_KEY_Z))
-            camera.Move(0, 0, CAMERA_SPEED);
-        else if (window.IsKeyPressed(GLFW_KEY_S))
             camera.Move(0, 0, -CAMERA_SPEED);
+        else if (window.IsKeyPressed(GLFW_KEY_S))
+            camera.Move(0, 0, CAMERA_SPEED);
         else if (window.IsKeyPressed(GLFW_KEY_SPACE))
             camera.Move(0, CAMERA_SPEED, 0);
         else if (window.IsKeyPressed(GLFW_KEY_LEFT_SHIFT))
