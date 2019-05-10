@@ -19,6 +19,8 @@ public:
 
     void Move(float x, float y, float z);
 
+    void Rotate(float x, float y, float z);
+
     Vector3f Position();
 
 private:
