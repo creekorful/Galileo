@@ -54,6 +54,8 @@ void Mesh::Render()
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
     glBindVertexArray(0);
+
+    _pTexture->Unbind();
 }
 
 Mesh::~Mesh()
