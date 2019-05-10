@@ -116,5 +116,5 @@ Mesh MeshFactory::BuildCubeMesh(Texture* pTexture)
             1.0f, 0.5f
     };
 
-    return Mesh(vertices, uvs, indices, pTexture);
+    //return Mesh(vertices, uvs, indices, pTexture);
 }

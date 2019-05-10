@@ -19,7 +19,7 @@
 #define Z_NEAR .01f
 #define Z_FAR 1000.f
 
-#define CAMERA_SPEED 0.005f
+#define CAMERA_SPEED 0.01f
 
 Shader* LoadShader()
 {
