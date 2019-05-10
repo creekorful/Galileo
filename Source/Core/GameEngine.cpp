@@ -11,6 +11,7 @@ void GameEngine::Execute()
     {
         if (_pGameState != nullptr)
         {
+            _pGameState->Update(_window, 0);
             _pGameState->Render();
         }
 

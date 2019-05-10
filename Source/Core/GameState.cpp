@@ -7,15 +7,14 @@ void GameState::Update(Window& window, float dt)
 
 void GameState::Render()
 {
-    for (auto& drawable : _gameObjects)
+    // Get camera view matrix
+    _camera.UpdateViewMatrix(_viewMatrix);
+
+    _shader.Bind();
+    for (auto& gameObject: _gameObjects)
     {
-        drawable.first->Bind();
-
-        for (auto& gameObject : drawable.second)
-        {
-            gameObject.Render();
-        }
-
-        drawable.first->Unbind();
+        _shader.SetUniform(VIEW_MATRIX_UNIFORM, gameObject.GetModelViewMatrix(_viewMatrix));
+        gameObject.Render();
     }
+    _shader.Unbind();
 }
