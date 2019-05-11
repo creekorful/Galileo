@@ -89,8 +89,14 @@ int main()
         return -1;
     }
 
-    ObjFileLoader loader("Resources/Models/cube.obj");
-    Mesh mesh = loader.ReadMesh(pTexture);
+    // Load mesh from file
+    if (!MeshFactory::p().LoadMesh("Resources/Models/cube.obj", "cube", pTexture))
+    {
+        logger.Error("Unable to load mesh");
+        return -1;
+    }
+
+    Mesh mesh = MeshFactory::p().GetMesh("cube");
 
     // Create matrices
     Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);

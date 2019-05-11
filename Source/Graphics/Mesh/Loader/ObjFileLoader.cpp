@@ -6,7 +6,7 @@ ObjFileLoader::ObjFileLoader(const std::string& filePath) : _logger(LoggerFactor
     _logger.Debug(std::to_string(_lines.size()) + " lines loaded");
 }
 
-Mesh ObjFileLoader::ReadMesh(Texture* pTexture)
+Mesh* ObjFileLoader::ReadMesh(Texture* pTexture)
 {
     std::vector<Vector3f> vertices;
     std::vector<Vector2f> uvs;
@@ -70,7 +70,7 @@ Mesh ObjFileLoader::ReadMesh(Texture* pTexture)
     return BuildMesh(vertices, uvs, normals, faces, pTexture);
 }
 
-Mesh ObjFileLoader::BuildMesh(const std::vector<Vector3f>& vertices,
+Mesh* ObjFileLoader::BuildMesh(const std::vector<Vector3f>& vertices,
                               const std::vector<Vector2f>& uvs,
                               const std::vector<Vector3f>& normals,
                               const std::vector<std::vector<IndexGroup>>& faces,
@@ -112,5 +112,5 @@ Mesh ObjFileLoader::BuildMesh(const std::vector<Vector3f>& vertices,
         }
     }
 
-    return Mesh(orderedVertices, orderedUvs, orderedNormals, indices, pTexture);
+    return new Mesh(orderedVertices, orderedUvs, orderedNormals, indices, pTexture);
 }
