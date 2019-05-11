@@ -11,9 +11,9 @@ Camera::Camera(const Vector3f& position) : _position(position), _rotation(Vector
 void Camera::UpdateViewMatrix(Matrix4f& matrix)
 {
     matrix.Identity()
-            .Rotate(BaseMath::toRadians(_rotation.x),
-                    BaseMath::toRadians(_rotation.y),
-                    BaseMath::toRadians(_rotation.z))
+            .Rotate(BaseMath::ToRadians(_rotation.x),
+                    BaseMath::ToRadians(_rotation.y),
+                    BaseMath::ToRadians(_rotation.z))
             .Translate(-_position)
             .Transpose();
 }

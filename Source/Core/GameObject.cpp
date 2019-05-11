@@ -15,9 +15,9 @@ Matrix4f GameObject::GetModelViewMatrix(const Matrix4f& viewMatrix) const
     Matrix4f modelMatrix;
     modelMatrix.Scale(_scale)
             .Translate(_position)
-            .Rotate(BaseMath::toRadians(-_rotation.x),
-                    BaseMath::toRadians(-_rotation.y),
-                    BaseMath::toRadians(-_rotation.z))
+            .Rotate(BaseMath::ToRadians(-_rotation.x),
+                    BaseMath::ToRadians(-_rotation.y),
+                    BaseMath::ToRadians(-_rotation.z))
             .Transpose();
     return modelMatrix * viewMatrix;
 }

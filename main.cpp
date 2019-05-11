@@ -15,9 +15,9 @@
 #define VIEW_MATRIX_UNIFORM "viewMatrix"
 #define TEXTURE_SAMPLER_UNIFORM "textureSampler"
 
-#define FOV BaseMath::toRadians(60.f)
+#define FOV BaseMath::ToRadians(60.f)
 #define Z_NEAR .01f
-#define Z_FAR 1000.f
+#define Z_FAR 300.f
 
 #define CAMERA_SPEED 0.01f
 
