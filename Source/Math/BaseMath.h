@@ -9,6 +9,15 @@ class BaseMath
 {
 public:
     static float ToRadians(float angleDegree);
+
+    /**
+     * Generate noise using Perlin algorithm
+     *
+     * @param x x pos
+     * @param y y position
+     * @return noise at x,y
+     */
+    static float Noise(float x, float y);
 };
 
 

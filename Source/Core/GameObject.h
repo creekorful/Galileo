@@ -10,6 +10,8 @@ class GameObject
 public:
     explicit GameObject(Mesh* mesh);
 
+    GameObject(Mesh* mesh, float x, float y, float z);
+
     void Render();
 
     /**

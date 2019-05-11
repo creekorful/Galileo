@@ -9,7 +9,7 @@
 
 #define SHADER_NAME "textured"
 
-#define GAMEOBJECTS_COUNT 10
+#define GAMEOBJECTS_COUNT 20
 
 #define PROJECTION_MATRIX_UNIFORM "projectionMatrix"
 #define VIEW_MATRIX_UNIFORM "viewMatrix"
@@ -116,8 +116,7 @@ int main()
     {
         for (int y = 0; y < GAMEOBJECTS_COUNT/2; y++)
         {
-            gameObjects.emplace_back(&mesh);
-            gameObjects[gameObjects.size() - 1].Move(x * 2, 0, - y * 2);
+            gameObjects.emplace_back(&mesh, x * 2, BaseMath::Noise((float)x/10, (float)y/10) * 8, y * 2);
         }
     }
 

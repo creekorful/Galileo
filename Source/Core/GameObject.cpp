@@ -5,6 +5,13 @@ GameObject::GameObject(Mesh* mesh) : _scale(1)
     _mesh = mesh;
 }
 
+GameObject::GameObject(Mesh* mesh, float x, float y, float z) : GameObject(mesh)
+{
+    _position.x = x;
+    _position.y = y;
+    _position.z = z;
+}
+
 void GameObject::Render()
 {
     _mesh->Render();
