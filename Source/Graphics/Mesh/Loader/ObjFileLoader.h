@@ -21,13 +21,13 @@ class ObjFileLoader
 public:
     explicit ObjFileLoader(const std::string& filePath);
 
-    Mesh ReadMesh(Texture* pTexture);
+    Mesh* ReadMesh(Texture* pTexture);
 
 private:
     Logger _logger;
     std::vector<std::string> _lines;
 
-    static Mesh BuildMesh(const std::vector<Vector3f>& vertices,
+    static Mesh* BuildMesh(const std::vector<Vector3f>& vertices,
                    const std::vector<Vector2f>& uvs,
                    const std::vector<Vector3f>& normals,
                    const std::vector<std::vector<IndexGroup>>& faces, Texture *pTexture);

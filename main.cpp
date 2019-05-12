@@ -9,17 +9,21 @@
 
 #define SHADER_NAME "textured"
 
-#define GAMEOBJECTS_COUNT 10
+#define MAP_WIDTH 20
+#define MAP_LENGTH 20
+#define MAP_HEIGHT 20
+
+#define BLOCK_SIZE 2
 
 #define PROJECTION_MATRIX_UNIFORM "projectionMatrix"
 #define VIEW_MATRIX_UNIFORM "viewMatrix"
 #define TEXTURE_SAMPLER_UNIFORM "textureSampler"
 
-#define FOV BaseMath::toRadians(60.f)
+#define FOV BaseMath::ToRadians(60.f)
 #define Z_NEAR .01f
-#define Z_FAR 1000.f
+#define Z_FAR 300.f
 
-#define CAMERA_SPEED 0.01f
+#define CAMERA_SPEED 0.05f
 
 Shader* LoadShader()
 {
@@ -89,8 +93,14 @@ int main()
         return -1;
     }
 
-    ObjFileLoader loader("Resources/Models/cube.obj");
-    Mesh mesh = loader.ReadMesh(pTexture);
+    // Load mesh from file
+    if (!MeshFactory::p().LoadMesh("Resources/Models/cube.obj", "cube", pTexture))
+    {
+        logger.Error("Unable to load mesh");
+        return -1;
+    }
+
+    Mesh mesh = MeshFactory::p().GetMesh("cube");
 
     // Create matrices
     Matrix4f projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);
@@ -103,21 +113,31 @@ int main()
 
     Vector2d mousePosition = window.GetMousePos();
 
-    // Create gameObjects
+    // Create map
     std::vector<GameObject> gameObjects;
-    gameObjects.reserve(GAMEOBJECTS_COUNT);
-    for (int x = 0; x < GAMEOBJECTS_COUNT/2; x++)
+    gameObjects.reserve(MAP_LENGTH * MAP_WIDTH * MAP_HEIGHT);
+    for (int x = 0; x < MAP_LENGTH; x++)
     {
-        for (int y = 0; y < GAMEOBJECTS_COUNT/2; y++)
+        for (int y = 0; y < MAP_HEIGHT; y++)
         {
-            gameObjects.emplace_back(&mesh);
-            gameObjects[gameObjects.size() - 1].Move(x * 2, 0, - y * 2);
+            for (int z = 0; z < MAP_WIDTH; z++)
+            {
+                float noise = BaseMath::Noise((float)x/10, (float)y/10, (float)z/10);
+
+                if (noise >= 0)
+                {
+                    gameObjects.emplace_back(&mesh, x*BLOCK_SIZE, y*BLOCK_SIZE, z*BLOCK_SIZE);
+                }
+            }
         }
     }
 
     pShader->Bind();
     while (!window.ShouldClose())
     {
+        if (window.IsKeyPressed(GLFW_KEY_ESCAPE))
+            window.Close();
+
         // Update position if needed
         if (window.IsKeyPressed(GLFW_KEY_Q))
             camera.Move(-CAMERA_SPEED, 0, 0);

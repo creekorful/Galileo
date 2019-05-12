@@ -21,7 +21,7 @@ public:
 
     void Rotate(float x, float y, float z);
 
-    Vector3f Position();
+    Vector3f Position() const;
 
 private:
     Vector3f _position;

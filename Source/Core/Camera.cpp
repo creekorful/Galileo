@@ -11,11 +11,18 @@ Camera::Camera(const Vector3f& position) : _position(position), _rotation(Vector
 void Camera::UpdateViewMatrix(Matrix4f& matrix)
 {
     matrix.Identity()
-            .Rotate(BaseMath::toRadians(_rotation.x),
-                    BaseMath::toRadians(_rotation.y),
-                    BaseMath::toRadians(_rotation.z))
+            .Rotate(BaseMath::ToRadians(_rotation.x),
+                    BaseMath::ToRadians(_rotation.y),
+                    BaseMath::ToRadians(_rotation.z))
             .Translate(-_position)
             .Transpose();
+}
+
+void Camera::Rotate(float x, float y, float z)
+{
+    _rotation.x += x;
+    _rotation.y += y;
+    _rotation.z += z;
 }
 
 void Camera::Move(float x, float y, float z)
@@ -25,14 +32,7 @@ void Camera::Move(float x, float y, float z)
     _position.z += z;
 }
 
-Vector3f Camera::Position()
+Vector3f Camera::Position() const
 {
     return _position;
-}
-
-void Camera::Rotate(float x, float y, float z)
-{
-    _rotation.x += x;
-    _rotation.y += y;
-    _rotation.z += z;
 }

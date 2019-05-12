@@ -42,6 +42,7 @@ set(SOURCES_FILES
         Source/Logging/Logger.cpp
         Source/Logging/Logger.h
         ThirdParty/stb_image.h
+        ThirdParty/stb_perlin.h
         Source/Graphics/Mesh/Loader/ObjFileLoader.cpp
         Source/Graphics/Mesh/Loader/ObjFileLoader.h
         Source/Util/Strings.cpp

@@ -32,15 +32,21 @@ bool Window::Initialize(int width, int height, const std::string& title)
     glfwMakeContextCurrent(_pWindow);
 
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
 
     _logger.Info("Window initialized");
 
     return true;
 }
 
-bool Window::ShouldClose()
+bool Window::ShouldClose() const
 {
     return glfwWindowShouldClose(_pWindow);
+}
+
+void Window::Close()
+{
+    glfwSetWindowShouldClose(_pWindow, GLFW_TRUE);
 }
 
 void Window::Render()
@@ -54,19 +60,19 @@ Window::~Window()
     glfwTerminate();
 }
 
-Vector2i Window::Size()
+Vector2i Window::Size() const
 {
     Vector2i size;
     glfwGetWindowSize(_pWindow, &size.x, &size.y);
     return size;
 }
 
-bool Window::IsKeyPressed(GLenum keyCode)
+bool Window::IsKeyPressed(GLenum keyCode) const
 {
     return glfwGetKey(_pWindow, keyCode) == GLFW_PRESS;
 }
 
-Vector2d Window::GetMousePos()
+Vector2d Window::GetMousePos() const
 {
     Vector2d pos;
     glfwGetCursorPos(_pWindow, &pos.x, &pos.y);

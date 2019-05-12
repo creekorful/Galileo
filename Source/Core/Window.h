@@ -31,7 +31,12 @@ public:
     /**
      * @return true if window should be closed
      */
-    bool ShouldClose();
+    bool ShouldClose() const;
+
+    /**
+     * Close the window gracefully
+     */
+    void Close();
 
     /**
      * Render / update the window
@@ -41,12 +46,12 @@ public:
     /**
      * @return size of current window
      */
-    Vector2i Size();
+    Vector2i Size() const;
 
     /**
      * @return mouse position
      */
-    Vector2d GetMousePos();
+    Vector2d GetMousePos() const;
 
     /**
      * Check if given key is pressed
@@ -54,7 +59,7 @@ public:
      * @param keyCode the key code
      * @return true if key is pressed, false otherwise
      */
-    bool IsKeyPressed(GLenum keyCode);
+    bool IsKeyPressed(GLenum keyCode) const;
 
     /**
      * Set the window title
