@@ -32,6 +32,7 @@ bool Window::Initialize(int width, int height, const std::string& title)
     glfwMakeContextCurrent(_pWindow);
 
     glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
 
     _logger.Info("Window initialized");
 

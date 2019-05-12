@@ -9,7 +9,11 @@
 
 #define SHADER_NAME "textured"
 
-#define GAMEOBJECTS_COUNT 40
+#define MAP_WIDTH 20
+#define MAP_LENGTH 20
+#define MAP_HEIGHT 20
+
+#define BLOCK_SIZE 2
 
 #define PROJECTION_MATRIX_UNIFORM "projectionMatrix"
 #define VIEW_MATRIX_UNIFORM "viewMatrix"
@@ -109,22 +113,21 @@ int main()
 
     Vector2d mousePosition = window.GetMousePos();
 
-    // Create gameObjects
+    // Create map
     std::vector<GameObject> gameObjects;
-    gameObjects.reserve(GAMEOBJECTS_COUNT);
-    for (int x = 0; x < GAMEOBJECTS_COUNT/2; x++)
+    gameObjects.reserve(MAP_LENGTH * MAP_WIDTH * MAP_HEIGHT);
+    for (int x = 0; x < MAP_LENGTH; x++)
     {
-        for (int y = 0; y < GAMEOBJECTS_COUNT/2; y++)
+        for (int y = 0; y < MAP_HEIGHT; y++)
         {
-            float rawHeight = BaseMath::Noise((float) x / 10, (float) y / 10);
-            int height = ((int)(rawHeight * 10) * 2) + 10;
-            gameObjects.emplace_back(&mesh, x * 2, height, y * 2);
-            std::cout << height << std::endl;
-
-            // finally generate under block
-            for (int z = height - 2; z >= 0; z -= 2)
+            for (int z = 0; z < MAP_WIDTH; z++)
             {
-                gameObjects.emplace_back(&mesh, x * 2, z, y * 2);
+                float noise = BaseMath::Noise((float)x/10, (float)y/10, (float)z/10);
+
+                if (noise >= 0)
+                {
+                    gameObjects.emplace_back(&mesh, x*BLOCK_SIZE, y*BLOCK_SIZE, z*BLOCK_SIZE);
+                }
             }
         }
     }

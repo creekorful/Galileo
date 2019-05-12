@@ -13,3 +13,8 @@ float BaseMath::Noise(float x, float y)
 {
     return stb_perlin_noise3(x, y, 0.0, 0, 0, 0);
 }
+
+float BaseMath::Noise(float x, float y, float z)
+{
+    return stb_perlin_noise3(x, y, z, 0, 0, 0);
+}
