@@ -116,7 +116,8 @@ int main()
     {
         for (int y = 0; y < GAMEOBJECTS_COUNT/2; y++)
         {
-            gameObjects.emplace_back(&mesh, x * 2, BaseMath::Noise((float)x/10, (float)y/10) * 8, y * 2);
+            float height = BaseMath::Noise((float)x/10, (float)y/10);
+            gameObjects.emplace_back(&mesh, x * 2, (int)(height*10)*2, y * 2);
         }
     }
 
