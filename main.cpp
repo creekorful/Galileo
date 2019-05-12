@@ -9,7 +9,7 @@
 
 #define SHADER_NAME "textured"
 
-#define GAMEOBJECTS_COUNT 20
+#define GAMEOBJECTS_COUNT 40
 
 #define PROJECTION_MATRIX_UNIFORM "projectionMatrix"
 #define VIEW_MATRIX_UNIFORM "viewMatrix"
@@ -19,7 +19,7 @@
 #define Z_NEAR .01f
 #define Z_FAR 300.f
 
-#define CAMERA_SPEED 0.01f
+#define CAMERA_SPEED 0.05f
 
 Shader* LoadShader()
 {
@@ -116,8 +116,16 @@ int main()
     {
         for (int y = 0; y < GAMEOBJECTS_COUNT/2; y++)
         {
-            float height = BaseMath::Noise((float)x/10, (float)y/10);
-            gameObjects.emplace_back(&mesh, x * 2, (int)(height*10)*2, y * 2);
+            float rawHeight = BaseMath::Noise((float) x / 10, (float) y / 10);
+            int height = ((int)(rawHeight * 10) * 2) + 10;
+            gameObjects.emplace_back(&mesh, x * 2, height, y * 2);
+            std::cout << height << std::endl;
+
+            // finally generate under block
+            for (int z = height - 2; z >= 0; z -= 2)
+            {
+                gameObjects.emplace_back(&mesh, x * 2, z, y * 2);
+            }
         }
     }
 
