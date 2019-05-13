@@ -11,20 +11,22 @@ class ShaderFactory
 {
 public:
 
+    ~ShaderFactory();
+
     /**
      * Load shader using name and return ptr to built shader if successful
      * @param name shader name
-     * @return true if shader has been loaded successfully
+     * @return ptr to built shader if successfully or nullptr
      */
-    bool Load(const std::string& name);
+    Shader* Load(const std::string& name);
 
     /**
      * Retrieve shader using given name
      *
      * @param name shader name
-     * @return found shader
+     * @return ptr to found shader or nullptr if not found
      */
-    Shader& Get(const std::string& name);
+    Shader* Get(const std::string& name);
 
     /**
      * Manually delete / cleanup shader
@@ -41,7 +43,7 @@ public:
     }
 
 private:
-    std::map<std::string, Shader> _shaders;
+    std::map<std::string, Shader*> _shaders;
     Logger _logger;
 
     ShaderFactory();

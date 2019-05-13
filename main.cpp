@@ -28,12 +28,12 @@
 Shader* LoadShader()
 {
     // Initialize shader
-    if (!ShaderFactory::p().Load(SHADER_NAME))
+    Shader* pShader = ShaderFactory::p().Load(SHADER_NAME);
+
+    if (pShader == nullptr)
     {
         return nullptr;
     }
-
-    Shader* pShader = &ShaderFactory::p().Get(SHADER_NAME);
 
     // Set projection matrix uniform
     if (!pShader->CreateUniform(PROJECTION_MATRIX_UNIFORM))

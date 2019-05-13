@@ -4,7 +4,15 @@ ShaderFactory::ShaderFactory() : _logger(LoggerFactory::CreateLogger("ShaderFact
 {
 }
 
-bool ShaderFactory::Load(const std::string& name)
+ShaderFactory::~ShaderFactory()
+{
+    for (auto& shader : _shaders)
+    {
+        delete shader.second;
+    }
+}
+
+Shader* ShaderFactory::Load(const std::string& name)
 {
     _logger.Info("Loading shader: " + name);
 
@@ -13,19 +21,21 @@ bool ShaderFactory::Load(const std::string& name)
     std::string fragmentShader = Files::Read("Resources/Shaders/" + name + "/fragment.fs");
 
     // Load shader
-    if (!_shaders[name].Initialize(vertexShader, fragmentShader))
+    auto pShader = new Shader();
+    if (!pShader->Initialize(vertexShader, fragmentShader))
     {
         _logger.Error("Unable to initialize shader");
-        _shaders.erase(name);
-        return false;
+        delete pShader;
+        return nullptr;
     }
 
     _logger.Info("Shader loaded");
+    _shaders[name] = pShader;
 
-    return true;
+    return pShader;
 }
 
-Shader& ShaderFactory::Get(const std::string& name)
+Shader* ShaderFactory::Get(const std::string& name)
 {
     _logger.Debug("Get shader: " + name);
     return _shaders[name];
