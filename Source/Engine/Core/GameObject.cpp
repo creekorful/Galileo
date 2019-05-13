@@ -23,6 +23,8 @@ GameObject::~GameObject()
 
 void GameObject::AddComponent(Component* pComponent)
 {
+    // link component to game object
+    pComponent->SetGameObject(this);
     _pComponents.push_back(pComponent);
 }
 
@@ -34,11 +36,11 @@ void GameObject::AddComponents(const std::vector<Component*>& pComponents)
     }
 }
 
-void GameObject::Update(float dt)
+void GameObject::Update(Window& window, float dt)
 {
     for (auto pComponent : _pComponents)
     {
-        pComponent->Update(dt);
+        pComponent->Update(window, dt);
     }
 }
 

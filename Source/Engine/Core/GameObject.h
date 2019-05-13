@@ -8,6 +8,8 @@
 #include "../Math/Matrix4f.h"
 #include "Component.h"
 
+class Component;
+
 class GameObject
 {
 public:
@@ -36,9 +38,10 @@ public:
      * Update the game object
      * this will update the components
      *
+     * @param window linked window
      * @param dt elapsed time
      */
-    void Update(float dt);
+    void Update(Window& window, float dt);
 
     /**
      * Render the game object to the screen

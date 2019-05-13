@@ -1,4 +1,5 @@
 #include "MyGameState.h"
+#include "KeyboardController.h"
 
 MyGameState::MyGameState() : _logger(LoggerFactory::CreateLogger("MyGameState")), _pShader(nullptr),
                              _mousePos(Vector2d())
@@ -50,6 +51,7 @@ bool MyGameState::Initialize(Window& window)
 
     // Create camera and get mouse position
     _camera = Camera(Vector3f(0.f, 5.f, 10.f));
+    _camera.AddComponent(new KeyboardController());
     _mousePos = window.GetMousePos();
 
     // Finally generate the map
@@ -63,39 +65,10 @@ void MyGameState::Update(Window& window, float dt)
     if (window.IsKeyPressed(GLFW_KEY_ESCAPE))
         window.Close();
 
-    // Update position if needed
-    if (window.IsKeyPressed(GLFW_KEY_Q))
-        _camera.Move(-CAMERA_SPEED, 0, 0);
-    else if (window.IsKeyPressed(GLFW_KEY_D))
-        _camera.Move(CAMERA_SPEED, 0, 0);
-    else if (window.IsKeyPressed(GLFW_KEY_Z))
-        _camera.Move(0, 0, -CAMERA_SPEED);
-    else if (window.IsKeyPressed(GLFW_KEY_S))
-        _camera.Move(0, 0, CAMERA_SPEED);
-    else if (window.IsKeyPressed(GLFW_KEY_SPACE))
-        _camera.Move(0, CAMERA_SPEED, 0);
-    else if (window.IsKeyPressed(GLFW_KEY_LEFT_SHIFT))
-        _camera.Move(0, -CAMERA_SPEED, 0);
-
-    // Compute mouse movement
-    Vector2d newMousePosition = window.GetMousePos();
-    Vector2d mouseOffset = (newMousePosition - _mousePos).Normalize();
-    _mousePos = newMousePosition;
-
-    // Update camera rotation based on mouse
-    if (mouseOffset.y < 0)
-        _camera.Rotate(-1, 0, 0);
-    else if (mouseOffset.y > 0)
-        _camera.Rotate(1, 0, 0);
-    else if (mouseOffset.x < 0)
-        _camera.Rotate(0, -1, 0);
-    else if (mouseOffset.x > 0)
-        _camera.Rotate(0, 1, 0);
-
     // Update game objects
     for (auto gameObject : _gameObjects)
     {
-        gameObject.Update(dt);
+        gameObject.Update(window, dt);
     }
 
     // Update projection matrix

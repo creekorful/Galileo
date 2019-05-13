@@ -22,8 +22,6 @@
 #define MAP_HEIGHT 20
 #define BLOCK_SIZE 2
 
-#define CAMERA_SPEED 0.05f
-
 class MyGameState : public GameState
 {
 public:
