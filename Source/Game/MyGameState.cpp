@@ -170,5 +170,6 @@ void MyGameState::GenerateChunk(const Vector2i& position)
 
 Vector2i MyGameState::GetCameraChunkPos() const
 {
+    // todo offset to make change at middle of chunk? or offset in calling method
     return Vector2i(_camera.Position().x / CHUNK_LENGTH, _camera.Position().z / CHUNK_WIDTH);
 }
