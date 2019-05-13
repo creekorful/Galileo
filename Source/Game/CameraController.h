@@ -5,6 +5,7 @@
 #include "../Engine/Core/Component.h"
 
 #define CAMERA_SPEED 0.005f
+#define CAMERA_ROTATION_SPEED 0.12f
 
 class CameraController : public Component
 {

@@ -23,13 +23,13 @@ void CameraController::Update(Window& window, float dt)
 
     // Update camera rotation based on mouse
     if (mouseOffset.y < 0)
-        _pGameObject->Rotate(-1, 0, 0);
+        _pGameObject->Rotate(-CAMERA_ROTATION_SPEED * dt, 0, 0);
     else if (mouseOffset.y > 0)
-        _pGameObject->Rotate(1, 0, 0);
+        _pGameObject->Rotate(CAMERA_ROTATION_SPEED * dt, 0, 0);
     else if (mouseOffset.x < 0)
-        _pGameObject->Rotate(0, -1, 0);
+        _pGameObject->Rotate(0, -CAMERA_ROTATION_SPEED * dt, 0);
     else if (mouseOffset.x > 0)
-        _pGameObject->Rotate(0, 1, 0);
+        _pGameObject->Rotate(0, CAMERA_ROTATION_SPEED * dt, 0);
 }
 
 void CameraController::SetGameObject(GameObject* pGameObject)
