@@ -1,6 +1,8 @@
 #ifndef GALILEO_GAMEENGINE_H
 #define GALILEO_GAMEENGINE_H
 
+#include <chrono>
+
 #include "Window.h"
 #include "GameState.h"
 

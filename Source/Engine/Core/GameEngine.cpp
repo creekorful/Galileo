@@ -8,14 +8,22 @@ GameEngine::GameEngine(int width, int height, const std::string& windowTitle) :
 
 void GameEngine::Execute()
 {
+    std::chrono::time_point last = std::chrono::high_resolution_clock::now();
+
     while (!_window.ShouldClose())
     {
+        std::chrono::time_point now = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double, std::milli> time = now - last;
+        last = now;
+
         if (_pGameState != nullptr)
         {
             _pGameState->Update(_window, 0);
             _pGameState->Render(_window);
             _window.Render();
         }
+
+        _window.SetTitle("FPS: " + std::to_string(time.count() * 1000));
     }
 }
 
