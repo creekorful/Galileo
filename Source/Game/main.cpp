@@ -5,7 +5,7 @@
 
 int main()
 {
-    GameEngine engine(1280, 760, "Hello world ! :D", 120.f);
+    GameEngine engine(1280, 760, "Hello world ! :D", true, 120.f);
 
     if (!engine.IsInitialized())
     {

@@ -21,12 +21,12 @@ public:
     /**
      * Initialize the GLFW window and OpenGL context
      *
-     * @param width window width
-     * @param height window height
+     * @param screenSize the screen size
      * @param title window title
+     * @param fullscreen if true run in fullscreen mode
      * @return true if initialization successful false otherwise
      */
-    bool Initialize(int width, int height, const std::string& title);
+    bool Initialize(Vector2i screenSize, const std::string& title, bool fullscreen = false);
 
     /**
      * @return true if window should be closed
@@ -67,6 +67,13 @@ public:
      * @param title window title
      */
     void SetTitle(const std::string& title);
+
+    /**
+     * Helper method to retrieve size of default monitor
+     *
+     * @return size of default monitor
+     */
+    static Vector2i GetDefaultScreenSize();
 
 private:
     GLFWwindow* _pWindow;

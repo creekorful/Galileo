@@ -10,7 +10,7 @@
 class GameEngine
 {
 public:
-    GameEngine(int width, int height, const std::string& windowTitle, float fps = 120.f);
+    GameEngine(int width, int height, const std::string& windowTitle, bool fullscreen = false, float fps = 120.f);
 
     bool IsInitialized();
 

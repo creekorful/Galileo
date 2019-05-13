@@ -2,17 +2,15 @@
 
 Window::Window() : _pWindow(nullptr), _logger(LoggerFactory::CreateLogger("Window"))
 {
-}
-
-bool Window::Initialize(int width, int height, const std::string& title)
-{
     // Initialize GLFW
     if (!glfwInit())
     {
         _logger.Error("Unable to initialize GLFW");
-        return false;
     }
+}
 
+bool Window::Initialize(Vector2i screenSize, const std::string& title, bool fullscreen)
+{
     // Configure OpenGL context
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -20,7 +18,8 @@ bool Window::Initialize(int width, int height, const std::string& title)
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
     // Create the window and his OpenGL context
-    _pWindow = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
+    _pWindow = glfwCreateWindow(screenSize.x, screenSize.y, title.c_str(),
+                                fullscreen ? glfwGetPrimaryMonitor() : nullptr, nullptr);
     if (!_pWindow)
     {
         _logger.Error("Unable to create window");
@@ -82,4 +81,10 @@ Vector2d Window::GetMousePos() const
 void Window::SetTitle(const std::string& title)
 {
     glfwSetWindowTitle(_pWindow, title.c_str());
+}
+
+Vector2i Window::GetDefaultScreenSize()
+{
+    const GLFWvidmode* videoMode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+    return Vector2i(videoMode->width, videoMode->height);
 }

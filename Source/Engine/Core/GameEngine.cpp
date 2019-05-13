@@ -1,10 +1,13 @@
 #include "GameEngine.h"
 
-GameEngine::GameEngine(int width, int height, const std::string& windowTitle, float fps) :
+GameEngine::GameEngine(int width, int height, const std::string& windowTitle, bool fullscreen, float fps) :
         _pGameState(nullptr), _logger(LoggerFactory::CreateLogger("GameEngine")), _baseTitle(windowTitle),
         _frameRate(1000.f / fps)
 {
-    _initialized = _window.Initialize(width, height, windowTitle);
+    // if running in fullscreen mode, bypass provided width/height
+    Vector2i screenSize = fullscreen ? Window::GetDefaultScreenSize() : Vector2i(width, height);
+
+    _initialized = _window.Initialize(screenSize, windowTitle, fullscreen);
 }
 
 void GameEngine::Execute()
