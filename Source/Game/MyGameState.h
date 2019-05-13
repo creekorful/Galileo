@@ -33,7 +33,7 @@ public:
 
     void Update(Window& window, float dt) override;
 
-    void Render(Window& window) override;
+    void Render() override;
 
 private:
     Logger _logger;
@@ -43,7 +43,6 @@ private:
     Matrix4f _viewMatrix;
 
     Camera _camera;
-    Vector2d _mousePos;
 
     std::vector<GameObject> _gameObjects;
 

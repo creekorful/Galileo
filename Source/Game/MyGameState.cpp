@@ -1,8 +1,7 @@
 #include "MyGameState.h"
 #include "KeyboardController.h"
 
-MyGameState::MyGameState() : _logger(LoggerFactory::CreateLogger("MyGameState")), _pShader(nullptr),
-                             _mousePos(Vector2d())
+MyGameState::MyGameState() : _logger(LoggerFactory::CreateLogger("MyGameState")), _pShader(nullptr)
 {
 }
 
@@ -52,10 +51,9 @@ bool MyGameState::Initialize(Window& window)
     // Set clear color
     glClearColor(0.0, 0.0, 0.0, 1.0);
 
-    // Create camera and get mouse position
+    // Create camera
     _camera = Camera(Vector3f(0.f, 5.f, 10.f));
     _camera.AddComponent(new KeyboardController());
-    _mousePos = window.GetMousePos();
 
     // Finally generate the map
     GenerateMap(pMesh);
@@ -81,7 +79,7 @@ void MyGameState::Update(Window& window, float dt)
     _projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);
 }
 
-void MyGameState::Render(Window& window)
+void MyGameState::Render()
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -101,8 +99,6 @@ void MyGameState::Render(Window& window)
         _pShader->SetUniform(VIEW_MATRIX_UNIFORM, gameObject.GetModelViewMatrix(_viewMatrix));
         gameObject.Render();
     }
-
-    //window.Render();
 
     // Unbind the shader
     _pShader->Unbind();

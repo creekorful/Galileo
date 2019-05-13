@@ -30,7 +30,7 @@ void GameEngine::Execute()
         if (_pGameState != nullptr)
         {
             _pGameState->Update(_window, elapsed);
-            _pGameState->Render(_window);
+            _pGameState->Render();
             _window.Render();
         }
 

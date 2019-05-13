@@ -30,7 +30,7 @@ public:
     /**
      * Render the state to the screen
      */
-    virtual void Render(Window& window) = 0;
+    virtual void Render() = 0;
 };
 
 
