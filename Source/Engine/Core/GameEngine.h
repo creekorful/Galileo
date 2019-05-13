@@ -13,11 +13,13 @@ public:
 
     void Execute();
 
-    void setActiveScene(GameState* pGameState);
+    void SetActiveState(GameState* pGameState);
 
 private:
     Window _window;
     bool _initialized;
+
+    Logger _logger;
 
     GameState* _pGameState;
 };
