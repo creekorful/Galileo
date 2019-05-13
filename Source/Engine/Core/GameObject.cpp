@@ -47,7 +47,8 @@ void GameObject::Render()
     if (_pTexture != nullptr)
         _pTexture->Bind();
 
-    _pMesh->Render();
+    if (_pMesh != nullptr)
+        _pMesh->Render();
 
     if (_pTexture != nullptr)
         _pTexture->Unbind();
