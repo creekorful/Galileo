@@ -1,29 +1,37 @@
 #include "GameEngine.h"
 
-GameEngine::GameEngine(int width, int height, const std::string& windowTitle) :
-        _pGameState(nullptr), _logger(LoggerFactory::CreateLogger("GameEngine"))
+GameEngine::GameEngine(int width, int height, const std::string& windowTitle, float fps) :
+        _pGameState(nullptr), _logger(LoggerFactory::CreateLogger("GameEngine")), _baseTitle(windowTitle),
+        _frameRate(1000.f / fps)
 {
     _initialized = _window.Initialize(width, height, windowTitle);
 }
 
 void GameEngine::Execute()
 {
-    std::chrono::time_point last = std::chrono::high_resolution_clock::now();
+    float time = GetTime();
+    float elapsed = 0.f;
 
     while (!_window.ShouldClose())
     {
-        std::chrono::time_point now = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double, std::milli> time = now - last;
-        last = now;
+        // First of all synchronize to wanted frame rate
+        elapsed = GetTime() - time;
+        time = GetTime();
+
+        if (elapsed < _frameRate)
+        {
+            Delay(_frameRate - elapsed);
+            elapsed = _frameRate;
+        }
 
         if (_pGameState != nullptr)
         {
-            _pGameState->Update(_window, 0);
+            _pGameState->Update(_window, elapsed);
             _pGameState->Render(_window);
             _window.Render();
         }
 
-        _window.SetTitle("FPS: " + std::to_string(time.count() * 1000));
+        _window.SetTitle(_baseTitle + " (FPS: " + std::to_string(1000 / elapsed) + ")");
     }
 }
 
@@ -42,4 +50,15 @@ void GameEngine::SetActiveState(GameState* pGameState)
         _logger.Error("Error while initializing state");
         _window.Close();
     }
+}
+
+float GameEngine::GetTime() const
+{
+    auto now = std::chrono::steady_clock::now();
+    return std::chrono::duration_cast<std::chrono::milliseconds>(now.time_since_epoch()).count();
+}
+
+void GameEngine::Delay(float time)
+{
+    std::this_thread::sleep_for(std::chrono::milliseconds((int)time));
 }
