@@ -13,21 +13,9 @@
 class GameState
 {
 public:
+    virtual void Update(Window& window, float dt) = 0;
 
-    void Update(Window& window, float dt);
-
-    void Render();
-
-protected:
-    Camera _camera;
-
-private:
-    std::vector<GameObject> _gameObjects;
-    Shader _shader;
-
-    Matrix4f _projectionMatrix;
-    Matrix4f _modelViewMatrix;
-    Matrix4f _viewMatrix;
+    virtual void Render() = 0;
 };
 
 
