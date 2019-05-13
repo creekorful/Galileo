@@ -124,7 +124,7 @@ void MyGameState::Render(Window& window)
 
 void MyGameState::GenerateMap(Mesh* mesh)
 {
-    /*_gameObjects.reserve(MAP_LENGTH * MAP_WIDTH);
+    _gameObjects.reserve(MAP_LENGTH * MAP_WIDTH);
     for (int x = 0; x < MAP_LENGTH; x++)
     {
         for (int z = 0; z < MAP_WIDTH; z++)
@@ -133,7 +133,5 @@ void MyGameState::GenerateMap(Mesh* mesh)
             int height = ((int) (noise * 10) * BLOCK_SIZE) + 10;
             _gameObjects.emplace_back(mesh, x * BLOCK_SIZE, height, z * BLOCK_SIZE);
         }
-    }*/
-
-    _gameObjects.emplace_back(mesh, 0.f, 0.f, 0.f);
+    }
 }

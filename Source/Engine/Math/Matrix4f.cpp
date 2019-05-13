@@ -82,7 +82,7 @@ Matrix4f& Matrix4f::Rotate(const Vector3f& vector)
 Matrix4f Matrix4f::CreateProjectionMatrix(float fov, const Vector2i& screenSize, float zNear, float zFar)
 {
     float h = tanf(fov * 0.5f);
-    float ratio = screenSize.x / screenSize.y;
+    float ratio = (float) screenSize.x / (float) screenSize.y;
 
     // https://github.com/JOML-CI/JOML/blob/master/src/org/joml/Matrix4f.java
     Matrix4f matrix4f;
