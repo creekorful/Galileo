@@ -14,9 +14,13 @@ int main()
     }
 
     // Set active state
-    engine.SetActiveState(new MyGameState());
+    GameState* pState = new MyGameState();
+    engine.SetActiveState(pState);
 
     engine.Execute();
+
+    // Finally cleanup
+    delete pState;
 
     return 0;
 }

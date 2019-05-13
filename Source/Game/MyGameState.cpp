@@ -5,6 +5,10 @@ MyGameState::MyGameState() : _logger(LoggerFactory::CreateLogger("MyGameState"))
 {
 }
 
+MyGameState::~MyGameState()
+{
+}
+
 bool MyGameState::Initialize(Window& window)
 {
     _logger.Debug("Initializing state");

@@ -29,6 +29,8 @@ class MyGameState : public GameState
 public:
     MyGameState();
 
+    ~MyGameState() override;
+
     bool Initialize(Window& window) override;
 
     void Update(Window& window, float dt) override;

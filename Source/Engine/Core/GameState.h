@@ -9,6 +9,8 @@ class GameState
 {
 public:
 
+    virtual ~GameState() = default;
+
     /**
      * Initialize state resources like matrices, textures, shaders, map, etc...
      *
