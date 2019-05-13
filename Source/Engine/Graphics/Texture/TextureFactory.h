@@ -14,7 +14,7 @@ public:
 
     ~TextureFactory();
 
-    bool Load(const std::string& file, const std::string& name);
+    Texture* Load(const std::string& file, const std::string& name);
 
     Texture* Get(const std::string& name);
 

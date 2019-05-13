@@ -12,7 +12,7 @@ TextureFactory::~TextureFactory()
     }
 }
 
-bool TextureFactory::Load(const std::string& file, const std::string& name)
+Texture* TextureFactory::Load(const std::string& file, const std::string& name)
 {
     _logger.Info("Loading texture with path: " + file + " and name: " + name);
 

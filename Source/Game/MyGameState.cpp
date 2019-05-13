@@ -29,12 +29,12 @@ bool MyGameState::Initialize(Window& window)
     }
 
     // Load texture
-    if (!TextureFactory::p().Load("Resources/Textures/grassblock.png", "grass"))
+    Texture *pTexture = TextureFactory::p().Load("Resources/Textures/grassblock.png", "grass");
+    if (pTexture == nullptr)
     {
         _logger.Error("Unable to load texture");
         return false;
     }
-    Texture* pTexture = TextureFactory::p().Get("grass");
 
     // Load mesh from file
     if (!MeshFactory::p().LoadMesh("Resources/Models/cube.obj", "cube", pTexture))
