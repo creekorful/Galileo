@@ -92,6 +92,12 @@ void MyGameState::Update(Window& window, float dt)
     else if (mouseOffset.x > 0)
         _camera.Rotate(0, 1, 0);
 
+    // Update game objects
+    for (auto gameObject : _gameObjects)
+    {
+        gameObject.Update(dt);
+    }
+
     // Update projection matrix
     _projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);
 }

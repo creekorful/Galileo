@@ -1,6 +1,6 @@
 #include "GameObject.h"
 
-GameObject::GameObject(Mesh* mesh, Texture *pTexture) : _scale(1)
+GameObject::GameObject(Mesh* mesh, Texture* pTexture) : _scale(1)
 {
     _pMesh = mesh;
     _pTexture = pTexture;
@@ -11,6 +11,35 @@ GameObject::GameObject(Mesh* mesh, Texture* pTexture, float x, float y, float z)
     _position.x = x;
     _position.y = y;
     _position.z = z;
+}
+
+GameObject::~GameObject()
+{
+    for (auto pComponent : _pComponents)
+    {
+        delete pComponent;
+    }
+}
+
+void GameObject::AddComponent(Component* pComponent)
+{
+    _pComponents.push_back(pComponent);
+}
+
+void GameObject::AddComponents(const std::vector<Component*>& pComponents)
+{
+    for (auto pComponent : pComponents)
+    {
+        AddComponent(pComponent);
+    }
+}
+
+void GameObject::Update(float dt)
+{
+    for (auto pComponent : _pComponents)
+    {
+        pComponent->Update(dt);
+    }
 }
 
 void GameObject::Render()
