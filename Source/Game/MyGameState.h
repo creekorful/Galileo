@@ -19,6 +19,7 @@
 
 #define CHUNK_WIDTH 16
 #define CHUNK_LENGTH 16
+#define VIEW_DISTANCE 1
 
 #define HEIGHT_SCALE 20
 
@@ -74,6 +75,11 @@ private:
      * @param position chunk coordinate position
      */
     void GenerateChunk(const Vector2i& position);
+
+    /**
+     * @return camera chunk location
+     */
+    Vector2i GetCameraChunkPos() const;
 };
 
 

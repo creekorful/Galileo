@@ -101,20 +101,32 @@ void MyGameState::Render()
     // Get camera view matrix
     _camera.UpdateViewMatrix(_viewMatrix);
 
-    // Draw active chunk
-    for (auto& block : _chunks[Vector2i(0, 0)])
+    // Collect and draw active chunk
+    std::vector<GameObject> activeChunks;
+
+    Vector2i cameraChunkPos = GetCameraChunkPos();
+
+    // Manage forward chunks (todo manage backward too)
+    for (int x = 0; x < VIEW_DISTANCE; x++)
     {
-        _pShader->SetUniform(VIEW_MATRIX_UNIFORM, block.GetModelViewMatrix(_viewMatrix));
-        block.Render();
+        for (int z = 0; z < VIEW_DISTANCE; z++)
+        {
+            Vector2i chunkPos = cameraChunkPos + Vector2i(x, z);
+
+            // Chunk not present : generate new one
+            if (_chunks.find(chunkPos) == _chunks.end())
+            {
+                GenerateChunk(chunkPos);
+            }
+
+            // From now on we know that the chunk is present
+            activeChunks.reserve(CHUNK_LENGTH * CHUNK_WIDTH); // todo better
+            activeChunks.insert(activeChunks.end(), _chunks[chunkPos].begin(), _chunks[chunkPos].end());
+        }
     }
 
-    for (auto& block : _chunks[Vector2i(0, 1)])
-    {
-        _pShader->SetUniform(VIEW_MATRIX_UNIFORM, block.GetModelViewMatrix(_viewMatrix));
-        block.Render();
-    }
-
-    for (auto& block : _chunks[Vector2i(0, 2)])
+    // Finally draw them
+    for (auto& block : activeChunks)
     {
         _pShader->SetUniform(VIEW_MATRIX_UNIFORM, block.GetModelViewMatrix(_viewMatrix));
         block.Render();
@@ -144,4 +156,9 @@ void MyGameState::GenerateChunk(const Vector2i& position)
             chunk.emplace_back(_pCubeMesh, worldPosX, height, worldPosZ);
         }
     }
+}
+
+Vector2i MyGameState::GetCameraChunkPos() const
+{
+    return Vector2i(_camera.Position().x / CHUNK_LENGTH, _camera.Position().z / CHUNK_WIDTH);
 }
