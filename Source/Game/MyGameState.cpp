@@ -71,6 +71,9 @@ void MyGameState::Update(Window& window, float dt)
         gameObject.Update(window, dt);
     }
 
+    // Update camera
+    _camera.Update(window, dt);
+
     // Update projection matrix
     _projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);
 }
