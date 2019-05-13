@@ -10,13 +10,12 @@ bool MyGameState::Initialize(Window& window)
     _logger.Debug("Initializing state");
 
     // Load shader
-    if (!ShaderFactory::p().Load(SHADER_NAME))
+    _pShader = ShaderFactory::p().Load(SHADER_NAME);
+    if (_pShader == nullptr)
     {
         _logger.Error("Unable to load shader");
         return false;
     }
-
-    _pShader = &ShaderFactory::p().Get(SHADER_NAME);
 
     // Set uniforms
     if (!_pShader->CreateUniform(PROJECTION_MATRIX_UNIFORM))
