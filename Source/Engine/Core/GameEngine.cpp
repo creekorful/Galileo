@@ -13,10 +13,10 @@ void GameEngine::Execute()
         if (_pGameState != nullptr)
         {
             _pGameState->Update(_window, 0);
-            _pGameState->Render();
+            _pGameState->Render(_window);
         }
 
-        _window.Render();
+        //_window.Render();
     }
 }
 

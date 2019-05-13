@@ -35,13 +35,12 @@ bool MyGameState::Initialize(Window& window)
     }
 
     // Load mesh from file
-    if (!MeshFactory::p().LoadMesh("Resources/Models/cube.obj", "cube", pTexture))
+    Mesh* mesh = MeshFactory::p().Load("Resources/Models/cube.obj", "cube", pTexture);
+    if (mesh == nullptr)
     {
         _logger.Error("Unable to load mesh");
         return false;
     }
-
-    Mesh mesh = MeshFactory::p().GetMesh("cube");
 
     // Create projection matrix
     _projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);
@@ -94,7 +93,7 @@ void MyGameState::Update(Window& window, float dt)
         _camera.Rotate(0, 1, 0);
 }
 
-void MyGameState::Render()
+void MyGameState::Render(Window& window)
 {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -115,11 +114,13 @@ void MyGameState::Render()
         gameObject.Render();
     }
 
+    window.Render();
+
     // Unbind the shader
     _pShader->Unbind();
 }
 
-void MyGameState::GenerateMap(Mesh& mesh)
+void MyGameState::GenerateMap(Mesh* mesh)
 {
     /*_gameObjects.reserve(MAP_LENGTH * MAP_WIDTH * MAP_HEIGHT);
     for (int x = 0; x < MAP_LENGTH; x++)
@@ -138,13 +139,14 @@ void MyGameState::GenerateMap(Mesh& mesh)
         }
     }*/
 
+    _gameObjects.reserve(MAP_LENGTH * MAP_WIDTH);
     for (int x = 0; x < MAP_LENGTH; x++)
     {
         for (int z = 0; z < MAP_WIDTH; z++)
         {
             float noise = BaseMath::Noise((float) x / 10, (float) z / 10);
-            int height = (int) (noise * 10);
-            _gameObjects.emplace_back(&mesh, x * BLOCK_SIZE, height * BLOCK_SIZE, z * BLOCK_SIZE);
+            int height = ((int)(noise * 10) * BLOCK_SIZE) + 10;
+            _gameObjects.emplace_back(mesh, x * BLOCK_SIZE, height, z * BLOCK_SIZE);
         }
     }
 }

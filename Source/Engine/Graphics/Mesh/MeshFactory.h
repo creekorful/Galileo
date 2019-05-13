@@ -16,10 +16,10 @@ public:
 
     ~MeshFactory();
 
-    Mesh& GetMesh(const std::string& name);
+    Mesh* Get(const std::string& name);
 
     // TODO: uncouple texture from mesh
-    bool LoadMesh(const std::string& file, const std::string& name, Texture* pTexture);
+    Mesh* Load(const std::string& file, const std::string& name, Texture* pTexture);
 
     static MeshFactory& p()
     {

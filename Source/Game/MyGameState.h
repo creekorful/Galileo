@@ -35,7 +35,7 @@ public:
 
     void Update(Window& window, float dt) override;
 
-    void Render() override;
+    void Render(Window& window) override;
 
 private:
     Logger _logger;
@@ -49,7 +49,7 @@ private:
 
     std::vector<GameObject> _gameObjects;
 
-    void GenerateMap(Mesh& mesh);
+    void GenerateMap(Mesh* mesh);
 };
 
 
