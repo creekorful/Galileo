@@ -35,15 +35,15 @@ bool MyGameState::Initialize(Window& window)
     }
 
     // Load mesh from file
-    Mesh* pMesh = MeshFactory::p().Load("Resources/Models/cube.obj", "cube");
-    if (pMesh == nullptr)
+    _pCubeMesh = MeshFactory::p().Load("Resources/Models/cube.obj", "cube");
+    if (_pCubeMesh == nullptr)
     {
         _logger.Error("Unable to load mesh");
         return false;
     }
 
     // Setup linked texture
-    pMesh->SetTexture(pTexture);
+    _pCubeMesh->SetTexture(pTexture);
 
     // Create projection matrix
     _projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);
@@ -55,8 +55,14 @@ bool MyGameState::Initialize(Window& window)
     _camera = Camera(Vector3f(0.f, 5.f, 10.f));
     _camera.AddComponent(new KeyboardController());
 
-    // Finally generate the map
-    GenerateMap(pMesh);
+    // Finally generate initial chunks
+    for (int x = 0; x < 3; x++)
+    {
+        for (int z = 0; z < 3; z++)
+        {
+            GenerateChunk(Vector2i(x, z));
+        }
+    }
 
     return true;
 }
@@ -64,13 +70,15 @@ bool MyGameState::Initialize(Window& window)
 void MyGameState::Update(Window& window, float dt)
 {
     if (window.IsKeyPressed(GLFW_KEY_ESCAPE))
+    {
         window.Close();
+    }
 
-    // Update game objects
+/*    // Update game objects
     for (auto gameObject : _gameObjects)
     {
         gameObject.Update(window, dt);
-    }
+    }*/
 
     // Update camera
     _camera.Update(window, dt);
@@ -93,27 +101,47 @@ void MyGameState::Render()
     // Get camera view matrix
     _camera.UpdateViewMatrix(_viewMatrix);
 
-    // Draw objects
-    for (auto& gameObject : _gameObjects)
+    // Draw active chunk
+    for (auto& block : _chunks[Vector2i(0, 0)])
     {
-        _pShader->SetUniform(VIEW_MATRIX_UNIFORM, gameObject.GetModelViewMatrix(_viewMatrix));
-        gameObject.Render();
+        _pShader->SetUniform(VIEW_MATRIX_UNIFORM, block.GetModelViewMatrix(_viewMatrix));
+        block.Render();
+    }
+
+    for (auto& block : _chunks[Vector2i(0, 1)])
+    {
+        _pShader->SetUniform(VIEW_MATRIX_UNIFORM, block.GetModelViewMatrix(_viewMatrix));
+        block.Render();
+    }
+
+    for (auto& block : _chunks[Vector2i(0, 2)])
+    {
+        _pShader->SetUniform(VIEW_MATRIX_UNIFORM, block.GetModelViewMatrix(_viewMatrix));
+        block.Render();
     }
 
     // Unbind the shader
     _pShader->Unbind();
 }
 
-void MyGameState::GenerateMap(Mesh* mesh)
+void MyGameState::GenerateChunk(const Vector2i& position)
 {
-    _gameObjects.reserve(MAP_LENGTH * MAP_WIDTH);
-    for (int x = 0; x < MAP_LENGTH; x++)
+    _logger.Debug("Generate chunk at x:" + std::to_string(position.x) + " y:" + std::to_string(position.y));
+
+    std::vector<GameObject>& chunk = _chunks[position];
+
+    chunk.reserve(CHUNK_LENGTH * CHUNK_WIDTH);
+    for (int x = 0; x < CHUNK_LENGTH; x++)
     {
-        for (int z = 0; z < MAP_WIDTH; z++)
+        for (int z = 0; z < CHUNK_WIDTH; z++)
         {
-            float noise = BaseMath::Noise((float) x / 10, (float) z / 10);
-            int height = ((int) (noise * 10) * BLOCK_SIZE) + 10;
-            _gameObjects.emplace_back(mesh, x * BLOCK_SIZE, height, z * BLOCK_SIZE);
+            int worldPosX = (position.x * CHUNK_LENGTH) + (x * BLOCK_SIZE);
+            int worldPosZ = (position.y * CHUNK_WIDTH) + (z * BLOCK_SIZE);
+
+            float noise = BaseMath::Noise((float) worldPosX / HEIGHT_SCALE, (float) worldPosZ / HEIGHT_SCALE);
+            int height = ((int) (noise * 10) * BLOCK_SIZE);
+
+            chunk.emplace_back(_pCubeMesh, worldPosX, height, worldPosZ);
         }
     }
 }

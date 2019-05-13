@@ -17,10 +17,30 @@
 #define Z_NEAR .01f
 #define Z_FAR 600.f
 
-#define MAP_WIDTH 20
-#define MAP_LENGTH 20
-#define MAP_HEIGHT 20
+#define CHUNK_WIDTH 16
+#define CHUNK_LENGTH 16
+
+#define HEIGHT_SCALE 20
+
 #define BLOCK_SIZE 2
+
+struct VectorCompare
+{
+    bool operator() (const Vector2i& lhs, const Vector2i& rhs) const
+    {
+        if (lhs.x < rhs.x)
+            return true;
+        if (lhs.x > rhs.x)
+            return false;
+
+        if (lhs.y < rhs.y)
+            return true;
+        if (lhs.y > rhs.y)
+            return false;
+
+        return false;
+    }
+};
 
 class MyGameState : public GameState
 {
@@ -39,14 +59,21 @@ private:
     Logger _logger;
     Shader* _pShader;
 
+    Mesh* _pCubeMesh;
+
     Matrix4f _projectionMatrix;
     Matrix4f _viewMatrix;
 
     Camera _camera;
 
-    std::vector<GameObject> _gameObjects;
+    std::map<Vector2i, std::vector<GameObject>, VectorCompare> _chunks;
 
-    void GenerateMap(Mesh* mesh);
+    /**
+     * Generate and store chunk at given position
+     *
+     * @param position chunk coordinate position
+     */
+    void GenerateChunk(const Vector2i& position);
 };
 
 
