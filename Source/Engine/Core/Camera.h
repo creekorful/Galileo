@@ -4,11 +4,12 @@
 #include "../Common.h"
 #include "../Math/Vector3.h"
 #include "../Math/Matrix4f.h"
+#include "GameObject.h"
 
 /**
  * Represent the camera in the 3d scene
  */
-class Camera
+class Camera : public GameObject
 {
 public:
     Camera();
@@ -16,16 +17,6 @@ public:
     explicit Camera(const Vector3f& position);
 
     void UpdateViewMatrix(Matrix4f& matrix);
-
-    void Move(float x, float y, float z);
-
-    void Rotate(float x, float y, float z);
-
-    Vector3f Position() const;
-
-private:
-    Vector3f _position;
-    Vector3f _rotation;
 };
 
 

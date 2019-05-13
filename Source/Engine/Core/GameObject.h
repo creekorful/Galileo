@@ -59,19 +59,22 @@ public:
 
     void Rotate(const Vector3f& offset);
 
+    void Rotate(float x, float y, float z);
+
     void Scale(float factor);
 
     Vector3f Position() const;
+
+protected:
+    Vector3f _position;
+    Vector3f _rotation;
+    float _scale;
 
 private:
     Mesh* _pMesh;
     Texture* _pTexture;
 
     std::vector<Component*> _pComponents;
-
-    Vector3f _position;
-    Vector3f _rotation;
-    float _scale;
 };
 
 

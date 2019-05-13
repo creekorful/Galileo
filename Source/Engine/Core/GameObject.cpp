@@ -84,6 +84,13 @@ void GameObject::Rotate(const Vector3f& offset)
     _rotation += offset;
 }
 
+void GameObject::Rotate(float x, float y, float z)
+{
+    _rotation.x += x;
+    _rotation.y += y;
+    _rotation.z += z;
+}
+
 void GameObject::Scale(float factor)
 {
     _scale = factor;
