@@ -1,12 +1,12 @@
-#ifndef GALILEO_KEYBOARDCONTROLLER_H
-#define GALILEO_KEYBOARDCONTROLLER_H
+#ifndef GALILEO_CAMERACONTROLLER_H
+#define GALILEO_CAMERACONTROLLER_H
 
 
 #include "../Engine/Core/Component.h"
 
 #define CAMERA_SPEED 0.005f
 
-class KeyboardController : public Component
+class CameraController : public Component
 {
 public:
     void Update(Window& window, float dt) override;
@@ -19,4 +19,4 @@ private:
 };
 
 
-#endif //GALILEO_KEYBOARDCONTROLLER_H
+#endif //GALILEO_CAMERACONTROLLER_H

@@ -1,6 +1,6 @@
-#include "KeyboardController.h"
+#include "CameraController.h"
 
-void KeyboardController::Update(Window& window, float dt)
+void CameraController::Update(Window& window, float dt)
 {
     // Update position if needed
     if (window.IsKeyPressed(GLFW_KEY_Q))
@@ -32,7 +32,7 @@ void KeyboardController::Update(Window& window, float dt)
         _pGameObject->Rotate(0, 1, 0);
 }
 
-void KeyboardController::SetGameObject(GameObject* pGameObject)
+void CameraController::SetGameObject(GameObject* pGameObject)
 {
     _pGameObject = pGameObject;
 }

@@ -1,5 +1,5 @@
 #include "MyGameState.h"
-#include "KeyboardController.h"
+#include "CameraController.h"
 
 MyGameState::MyGameState() : _logger(LoggerFactory::CreateLogger("MyGameState")), _pShader(nullptr)
 {
@@ -53,7 +53,7 @@ bool MyGameState::Initialize(Window& window)
 
     // Create camera
     _camera = Camera(Vector3f(0.f, 5.f, 10.f));
-    _camera.AddComponent(new KeyboardController());
+    _camera.AddComponent(new CameraController());
 
     // Finally generate initial chunks
     for (int x = 0; x < 3; x++)
