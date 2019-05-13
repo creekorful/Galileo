@@ -14,9 +14,8 @@ void GameEngine::Execute()
         {
             _pGameState->Update(_window, 0);
             _pGameState->Render(_window);
+            _window.Render();
         }
-
-        //_window.Render();
     }
 }
 

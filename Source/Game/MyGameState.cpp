@@ -91,6 +91,8 @@ void MyGameState::Update(Window& window, float dt)
         _camera.Rotate(0, -1, 0);
     else if (mouseOffset.x > 0)
         _camera.Rotate(0, 1, 0);
+
+    _projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);
 }
 
 void MyGameState::Render(Window& window)
@@ -114,7 +116,7 @@ void MyGameState::Render(Window& window)
         gameObject.Render();
     }
 
-    window.Render();
+    //window.Render();
 
     // Unbind the shader
     _pShader->Unbind();
@@ -122,31 +124,16 @@ void MyGameState::Render(Window& window)
 
 void MyGameState::GenerateMap(Mesh* mesh)
 {
-    /*_gameObjects.reserve(MAP_LENGTH * MAP_WIDTH * MAP_HEIGHT);
-    for (int x = 0; x < MAP_LENGTH; x++)
-    {
-        for (int y = 0; y < MAP_HEIGHT; y++)
-        {
-            for (int z = 0; z < MAP_WIDTH; z++)
-            {
-                float noise = BaseMath::Noise((float) x / 10, (float) y / 10, (float) z / 10);
-
-                if (noise >= 0)
-                {
-                    _gameObjects.emplace_back(&mesh, x * BLOCK_SIZE, y * BLOCK_SIZE, z * BLOCK_SIZE);
-                }
-            }
-        }
-    }*/
-
-    _gameObjects.reserve(MAP_LENGTH * MAP_WIDTH);
+    /*_gameObjects.reserve(MAP_LENGTH * MAP_WIDTH);
     for (int x = 0; x < MAP_LENGTH; x++)
     {
         for (int z = 0; z < MAP_WIDTH; z++)
         {
             float noise = BaseMath::Noise((float) x / 10, (float) z / 10);
-            int height = ((int)(noise * 10) * BLOCK_SIZE) + 10;
+            int height = ((int) (noise * 10) * BLOCK_SIZE) + 10;
             _gameObjects.emplace_back(mesh, x * BLOCK_SIZE, height, z * BLOCK_SIZE);
         }
-    }
+    }*/
+
+    _gameObjects.emplace_back(mesh, 0.f, 0.f, 0.f);
 }

@@ -15,7 +15,7 @@
 
 #define FOV BaseMath::ToRadians(60.f)
 #define Z_NEAR .01f
-#define Z_FAR 300.f
+#define Z_FAR 600.f
 
 #define MAP_WIDTH 20
 #define MAP_LENGTH 20
