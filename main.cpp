@@ -9,9 +9,9 @@
 
 #define SHADER_NAME "textured"
 
-#define MAP_WIDTH 20
-#define MAP_LENGTH 20
-#define MAP_HEIGHT 20
+#define MAP_WIDTH 30
+#define MAP_LENGTH 30
+#define MAP_HEIGHT 30
 
 #define BLOCK_SIZE 2
 
@@ -118,17 +118,11 @@ int main()
     gameObjects.reserve(MAP_LENGTH * MAP_WIDTH * MAP_HEIGHT);
     for (int x = 0; x < MAP_LENGTH; x++)
     {
-        for (int y = 0; y < MAP_HEIGHT; y++)
+        for (int z = 0; z < MAP_WIDTH; z++)
         {
-            for (int z = 0; z < MAP_WIDTH; z++)
-            {
-                float noise = BaseMath::Noise((float)x/10, (float)y/10, (float)z/10);
-
-                if (noise >= 0)
-                {
-                    gameObjects.emplace_back(&mesh, x*BLOCK_SIZE, y*BLOCK_SIZE, z*BLOCK_SIZE);
-                }
-            }
+            float noise = BaseMath::Noise((float) x / 10, (float) z / 10);
+            int height = ((int) (noise * 10) * 2) + 10;
+            gameObjects.emplace_back(&mesh, x * BLOCK_SIZE, height, z * BLOCK_SIZE);
         }
     }
 
