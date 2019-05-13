@@ -21,20 +21,10 @@ bool MyGameState::Initialize(Window& window)
         return false;
     }
 
-    // Set uniforms
-    if (!_pShader->CreateUniform(PROJECTION_MATRIX_UNIFORM))
+    // Create uniforms
+    if (!_pShader->CreateUniforms({PROJECTION_MATRIX_UNIFORM, VIEW_MATRIX_UNIFORM, TEXTURE_SAMPLER_UNIFORM}))
     {
-        _logger.Error("Error while creating PROJECTION_MATRIX_UNIFORM");
-        return false;
-    }
-    if (!_pShader->CreateUniform(VIEW_MATRIX_UNIFORM))
-    {
-        _logger.Error("Error while creating uniform");
-        return false;
-    }
-    if (!_pShader->CreateUniform(TEXTURE_SAMPLER_UNIFORM))
-    {
-        _logger.Error("Error while creating uniform TEXTURE_SAMPLER_UNIFORM");
+        _logger.Error("Error while creating one of the required uniform");
         return false;
     }
 

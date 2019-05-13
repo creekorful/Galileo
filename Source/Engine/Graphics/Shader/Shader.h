@@ -2,6 +2,7 @@
 #define GALILEO_SHADER_H
 
 #include <iostream>
+#include <vector>
 #include <map>
 
 #include "../../Common.h"
@@ -41,6 +42,14 @@ public:
      * @return true if uniform has been created, false otherwise
      */
     bool CreateUniform(const std::string& uniformName);
+
+    /**
+     * Construct several uniforms
+     *
+     * @param uniformNames list of uniforms to create
+     * @return true if all creation are successful, false otherwise
+     */
+    bool CreateUniforms(const std::vector<std::string>& uniformNames);
 
     /**
      * Set uniform matrix value

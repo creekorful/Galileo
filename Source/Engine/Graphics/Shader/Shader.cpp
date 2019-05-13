@@ -113,6 +113,19 @@ bool Shader::CreateUniform(const std::string& uniformName)
     return false;
 }
 
+bool Shader::CreateUniforms(const std::vector<std::string>& uniformNames)
+{
+    for (const auto& uniformName : uniformNames)
+    {
+        if (!CreateUniform(uniformName))
+        {
+            return false;
+        }
+    }
+
+    return true;
+}
+
 void Shader::SetUniform(const std::string& uniform, const Matrix4f& value)
 {
     glUniformMatrix4fv(_uniforms[uniform], 1, GL_FALSE, value.First());
