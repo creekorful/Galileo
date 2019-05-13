@@ -6,10 +6,12 @@ MeshFactory::MeshFactory() : _logger(LoggerFactory::CreateLogger("MeshFactory"))
 
 MeshFactory::~MeshFactory()
 {
-    for (auto& mesh : _meshs)
+    _logger.Debug("Cleaning up " + std::to_string(_pMeshs.size()) + " meshs");
+    for (auto& mesh : _pMeshs)
     {
         delete mesh.second;
     }
+    _logger.Debug("Cleanup done");
 }
 
 bool MeshFactory::LoadMesh(const std::string& file, const std::string& name, Texture* pTexture)
@@ -22,8 +24,8 @@ bool MeshFactory::LoadMesh(const std::string& file, const std::string& name, Tex
     if (ext == ".obj")
     {
         ObjFileLoader loader(file);
-        _meshs[name] = loader.ReadMesh(pTexture);
-        return _meshs[name] != nullptr;
+        _pMeshs[name] = loader.ReadMesh(pTexture);
+        return _pMeshs[name] != nullptr;
     }
 
     return false;
@@ -31,5 +33,5 @@ bool MeshFactory::LoadMesh(const std::string& file, const std::string& name, Tex
 
 Mesh& MeshFactory::GetMesh(const std::string& name)
 {
-    return *_meshs[name];
+    return *_pMeshs[name];
 }

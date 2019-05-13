@@ -6,10 +6,12 @@ TextureFactory::TextureFactory() : _logger(LoggerFactory::CreateLogger("TextureF
 
 TextureFactory::~TextureFactory()
 {
-    for (const auto&[name, value] : _textures)
+    _logger.Debug("Cleaning up " + std::to_string(_pTextures.size()) + " textures");
+    for (auto& texture : _pTextures)
     {
-        delete value;
+        delete texture.second;
     }
+    _logger.Debug("Cleanup done");
 }
 
 Texture* TextureFactory::Load(const std::string& file, const std::string& name)
@@ -32,7 +34,7 @@ Texture* TextureFactory::Load(const std::string& file, const std::string& name)
         delete pTexture;
     }
 
-    _textures[name] = pTexture;
+    _pTextures[name] = pTexture;
     _logger.Info("Texture loaded");
     return pTexture;
 }
@@ -40,5 +42,5 @@ Texture* TextureFactory::Load(const std::string& file, const std::string& name)
 Texture* TextureFactory::Get(const std::string& name)
 {
     _logger.Debug("Accessing texture with name: " + name);
-    return _textures[name];
+    return _pTextures[name];
 }

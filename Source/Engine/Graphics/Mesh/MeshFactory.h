@@ -18,6 +18,7 @@ public:
 
     Mesh& GetMesh(const std::string& name);
 
+    // TODO: uncouple texture from mesh
     bool LoadMesh(const std::string& file, const std::string& name, Texture* pTexture);
 
     static MeshFactory& p()
@@ -27,7 +28,7 @@ public:
     }
 
 private:
-    std::map<std::string, Mesh*> _meshs;
+    std::map<std::string, Mesh*> _pMeshs;
     Logger _logger;
 };
 

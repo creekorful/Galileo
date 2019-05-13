@@ -43,7 +43,7 @@ public:
     }
 
 private:
-    std::map<std::string, Shader*> _shaders;
+    std::map<std::string, Shader*> _pShaders;
     Logger _logger;
 
     ShaderFactory();

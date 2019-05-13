@@ -5,9 +5,7 @@ MyGameState::MyGameState() : _logger(LoggerFactory::CreateLogger("MyGameState"))
 {
 }
 
-MyGameState::~MyGameState()
-{
-}
+MyGameState::~MyGameState() = default;
 
 bool MyGameState::Initialize(Window& window)
 {
@@ -29,7 +27,7 @@ bool MyGameState::Initialize(Window& window)
     }
 
     // Load texture
-    Texture *pTexture = TextureFactory::p().Load("Resources/Textures/grassblock.png", "grass");
+    Texture* pTexture = TextureFactory::p().Load("Resources/Textures/grassblock.png", "grass");
     if (pTexture == nullptr)
     {
         _logger.Error("Unable to load texture");
@@ -123,7 +121,7 @@ void MyGameState::Render()
 
 void MyGameState::GenerateMap(Mesh& mesh)
 {
-    _gameObjects.reserve(MAP_LENGTH * MAP_WIDTH * MAP_HEIGHT);
+    /*_gameObjects.reserve(MAP_LENGTH * MAP_WIDTH * MAP_HEIGHT);
     for (int x = 0; x < MAP_LENGTH; x++)
     {
         for (int y = 0; y < MAP_HEIGHT; y++)
@@ -137,6 +135,16 @@ void MyGameState::GenerateMap(Mesh& mesh)
                     _gameObjects.emplace_back(&mesh, x * BLOCK_SIZE, y * BLOCK_SIZE, z * BLOCK_SIZE);
                 }
             }
+        }
+    }*/
+
+    for (int x = 0; x < MAP_LENGTH; x++)
+    {
+        for (int z = 0; z < MAP_WIDTH; z++)
+        {
+            float noise = BaseMath::Noise((float) x / 10, (float) z / 10);
+            int height = (int) (noise * 10);
+            _gameObjects.emplace_back(&mesh, x * BLOCK_SIZE, height * BLOCK_SIZE, z * BLOCK_SIZE);
         }
     }
 }

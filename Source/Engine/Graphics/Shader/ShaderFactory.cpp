@@ -6,10 +6,12 @@ ShaderFactory::ShaderFactory() : _logger(LoggerFactory::CreateLogger("ShaderFact
 
 ShaderFactory::~ShaderFactory()
 {
-    for (auto& shader : _shaders)
+    _logger.Debug("Cleaning up " + std::to_string(_pShaders.size()) + " shaders");
+    for (auto& shader : _pShaders)
     {
         delete shader.second;
     }
+    _logger.Debug("Cleanup done");
 }
 
 Shader* ShaderFactory::Load(const std::string& name)
@@ -30,7 +32,7 @@ Shader* ShaderFactory::Load(const std::string& name)
     }
 
     _logger.Info("Shader loaded");
-    _shaders[name] = pShader;
+    _pShaders[name] = pShader;
 
     return pShader;
 }
@@ -38,14 +40,14 @@ Shader* ShaderFactory::Load(const std::string& name)
 Shader* ShaderFactory::Get(const std::string& name)
 {
     _logger.Debug("Get shader: " + name);
-    return _shaders[name];
+    return _pShaders[name];
 }
 
 void ShaderFactory::Deinitialize(const std::string& name)
 {
     _logger.Info("Deinitializing shader: " + name);
-    if (_shaders.find(name) != _shaders.end())
+    if (_pShaders.find(name) != _pShaders.end())
     {
-        _shaders.erase(name);
+        _pShaders.erase(name);
     }
 }
