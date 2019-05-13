@@ -18,10 +18,14 @@ public:
 
     void Render();
 
+    void SetTexture(Texture *pTexture);
+
 private:
     int _vertexCount;
     GLuint _vaoId;
     std::vector<GLuint> _vbosIds;
+
+    Texture* _pTexture;
 
     /**
      * Generate & register a vbo

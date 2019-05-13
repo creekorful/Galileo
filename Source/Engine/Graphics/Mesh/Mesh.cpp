@@ -37,6 +37,9 @@ Mesh::Mesh(std::vector<GLfloat> vertices,
 
 void Mesh::Render()
 {
+    if (_pTexture != nullptr)
+        _pTexture->Bind();
+
     glBindVertexArray(_vaoId);
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
@@ -51,6 +54,9 @@ void Mesh::Render()
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
     glBindVertexArray(0);
+
+    if (_pTexture != nullptr)
+        _pTexture->Unbind();
 }
 
 Mesh::~Mesh()
@@ -67,4 +73,9 @@ GLuint Mesh::GenerateVbo()
     glGenBuffers(1, &vboId);
     _vbosIds.push_back(vboId);
     return vboId;
+}
+
+void Mesh::SetTexture(Texture* pTexture)
+{
+    _pTexture = pTexture;
 }

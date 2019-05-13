@@ -47,7 +47,7 @@ private:
 
     std::vector<GameObject> _gameObjects;
 
-    void GenerateMap(Mesh* mesh, Texture* pTexture);
+    void GenerateMap(Mesh* mesh);
 };
 
 

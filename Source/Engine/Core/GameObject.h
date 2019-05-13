@@ -13,9 +13,9 @@ class Component;
 class GameObject
 {
 public:
-    explicit GameObject(Mesh* mesh, Texture* pTexture = nullptr);
+    explicit GameObject(Mesh* mesh);
 
-    GameObject(Mesh* mesh, Texture* pTexture, float x, float y, float z);
+    GameObject(Mesh* mesh, float x, float y, float z);
 
     ~GameObject();
 
@@ -75,7 +75,6 @@ protected:
 
 private:
     Mesh* _pMesh;
-    Texture* _pTexture;
 
     std::vector<Component*> _pComponents;
 };

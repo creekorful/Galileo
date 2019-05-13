@@ -1,10 +1,10 @@
 #include "Camera.h"
 
-Camera::Camera() : GameObject(nullptr, nullptr)
+Camera::Camera() : GameObject(nullptr)
 {
 }
 
-Camera::Camera(const Vector3f& position) : GameObject(nullptr, nullptr, position.x, position.y, position.z)
+Camera::Camera(const Vector3f& position) : GameObject(nullptr, position.x, position.y, position.z)
 {
 }
 

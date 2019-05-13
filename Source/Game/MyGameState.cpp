@@ -43,6 +43,9 @@ bool MyGameState::Initialize(Window& window)
         return false;
     }
 
+    // Setup linked texture
+    pMesh->SetTexture(pTexture);
+
     // Create projection matrix
     _projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);
 
@@ -55,7 +58,7 @@ bool MyGameState::Initialize(Window& window)
     _mousePos = window.GetMousePos();
 
     // Finally generate the map
-    GenerateMap(pMesh, pTexture);
+    GenerateMap(pMesh);
 
     return true;
 }
@@ -105,7 +108,7 @@ void MyGameState::Render(Window& window)
     _pShader->Unbind();
 }
 
-void MyGameState::GenerateMap(Mesh* mesh, Texture* pTexture)
+void MyGameState::GenerateMap(Mesh* mesh)
 {
     _gameObjects.reserve(MAP_LENGTH * MAP_WIDTH);
     for (int x = 0; x < MAP_LENGTH; x++)
@@ -114,7 +117,7 @@ void MyGameState::GenerateMap(Mesh* mesh, Texture* pTexture)
         {
             float noise = BaseMath::Noise((float) x / 10, (float) z / 10);
             int height = ((int) (noise * 10) * BLOCK_SIZE) + 10;
-            _gameObjects.emplace_back(mesh, pTexture, x * BLOCK_SIZE, height, z * BLOCK_SIZE);
+            _gameObjects.emplace_back(mesh, x * BLOCK_SIZE, height, z * BLOCK_SIZE);
         }
     }
 }
