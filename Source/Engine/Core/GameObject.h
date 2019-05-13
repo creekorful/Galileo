@@ -33,7 +33,7 @@ public:
     Vector3f Position() const;
 
 private:
-    Mesh* _mesh;
+    Mesh* _pMesh;
 
     Vector3f _position;
     Vector3f _rotation;

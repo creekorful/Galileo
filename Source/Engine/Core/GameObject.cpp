@@ -2,7 +2,7 @@
 
 GameObject::GameObject(Mesh* mesh) : _scale(1)
 {
-    _mesh = mesh;
+    _pMesh = mesh;
 }
 
 GameObject::GameObject(Mesh* mesh, float x, float y, float z) : GameObject(mesh)
@@ -14,7 +14,7 @@ GameObject::GameObject(Mesh* mesh, float x, float y, float z) : GameObject(mesh)
 
 void GameObject::Render()
 {
-    _mesh->Render();
+    _pMesh->Render();
 }
 
 Matrix4f GameObject::GetModelViewMatrix(const Matrix4f& viewMatrix) const
