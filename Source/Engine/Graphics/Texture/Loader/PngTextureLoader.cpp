@@ -1,8 +1,8 @@
 #include "PngTextureLoader.h"
 
 #define STB_IMAGE_IMPLEMENTATION
+#include "../../../ThirdParty/stb_image.h"
 
-#include "../../../../ThirdParty/stb_image.h"
 
 PngTextureLoader::PngTextureLoader() : _logger(LoggerFactory::CreateLogger("PngTextureLoader"))
 {

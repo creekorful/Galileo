@@ -2,7 +2,7 @@
 
 #define STB_PERLIN_IMPLEMENTATION
 
-#include "../../ThirdParty/stb_perlin.h"
+#include "../ThirdParty/stb_perlin.h"
 
 float BaseMath::ToRadians(float angleDegree)
 {
