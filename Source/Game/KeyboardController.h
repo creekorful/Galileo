@@ -4,7 +4,7 @@
 
 #include "../Engine/Core/Component.h"
 
-#define CAMERA_SPEED 0.05f
+#define CAMERA_SPEED 0.005f
 
 class KeyboardController : public Component
 {

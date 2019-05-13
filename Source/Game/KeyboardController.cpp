@@ -4,17 +4,17 @@ void KeyboardController::Update(Window& window, float dt)
 {
     // Update position if needed
     if (window.IsKeyPressed(GLFW_KEY_Q))
-        _pGameObject->Move(-CAMERA_SPEED, 0, 0);
+        _pGameObject->Move(-CAMERA_SPEED * dt, 0, 0);
     else if (window.IsKeyPressed(GLFW_KEY_D))
-        _pGameObject->Move(CAMERA_SPEED, 0, 0);
+        _pGameObject->Move(CAMERA_SPEED * dt, 0, 0);
     else if (window.IsKeyPressed(GLFW_KEY_Z))
-        _pGameObject->Move(0, 0, -CAMERA_SPEED);
+        _pGameObject->Move(0, 0, -CAMERA_SPEED * dt);
     else if (window.IsKeyPressed(GLFW_KEY_S))
-        _pGameObject->Move(0, 0, CAMERA_SPEED);
+        _pGameObject->Move(0, 0, CAMERA_SPEED * dt);
     else if (window.IsKeyPressed(GLFW_KEY_SPACE))
-        _pGameObject->Move(0, CAMERA_SPEED, 0);
+        _pGameObject->Move(0, CAMERA_SPEED * dt, 0);
     else if (window.IsKeyPressed(GLFW_KEY_LEFT_SHIFT))
-        _pGameObject->Move(0, -CAMERA_SPEED, 0);
+        _pGameObject->Move(0, -CAMERA_SPEED * dt, 0);
 
     // Compute mouse movement
     Vector2d newMousePosition = window.GetMousePos();
