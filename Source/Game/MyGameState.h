@@ -19,7 +19,7 @@
 
 #define CHUNK_WIDTH 16
 #define CHUNK_LENGTH 16
-#define VIEW_DISTANCE 3
+#define VIEW_DISTANCE 2
 
 #define HEIGHT_SCALE 20
 

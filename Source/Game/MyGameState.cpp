@@ -1,7 +1,7 @@
 #include "MyGameState.h"
 #include "CameraController.h"
 
-MyGameState::MyGameState() : _logger(LoggerFactory::CreateLogger("MyGameState")), _pShader(nullptr)
+MyGameState::MyGameState() : _logger(LoggerFactory::CreateLogger("MyGameState")), _pShader(nullptr), _pCubeMesh(nullptr)
 {
 }
 
@@ -111,17 +111,27 @@ void MyGameState::Render()
     {
         for (int z = 0; z < VIEW_DISTANCE; z++)
         {
-            Vector2i chunkPos = cameraChunkPos + Vector2i(x, z);
+            Vector2i topLeftChunkPos = cameraChunkPos + Vector2i(-x, z);
+            Vector2i topRightChunkPos = cameraChunkPos + Vector2i(x, z);
+            Vector2i bottomLeftChunkPos = cameraChunkPos - Vector2i(-x, z);
+            Vector2i bottomRightChunkPos = cameraChunkPos - Vector2i(x, z);
 
-            // Chunk not present : generate new one
-            if (_chunks.find(chunkPos) == _chunks.end())
-            {
-                GenerateChunk(chunkPos);
-            }
+            // Chunk not present : generate new ones
+            if (_chunks.find(topLeftChunkPos) == _chunks.end())
+                GenerateChunk(topLeftChunkPos);
+            if (_chunks.find(topRightChunkPos) == _chunks.end())
+                GenerateChunk(topRightChunkPos);
+            if (_chunks.find(bottomLeftChunkPos) == _chunks.end())
+                GenerateChunk(bottomLeftChunkPos);
+            if (_chunks.find(bottomRightChunkPos) == _chunks.end())
+                GenerateChunk(bottomRightChunkPos);
 
             // From now on we know that the chunk is present
-            activeChunks.reserve(CHUNK_LENGTH * CHUNK_WIDTH); // todo better
-            activeChunks.insert(activeChunks.end(), _chunks[chunkPos].begin(), _chunks[chunkPos].end());
+            activeChunks.reserve((CHUNK_LENGTH * CHUNK_WIDTH) * 4); // todo better
+            activeChunks.insert(activeChunks.end(), _chunks[topLeftChunkPos].begin(), _chunks[topLeftChunkPos].end());
+            activeChunks.insert(activeChunks.end(), _chunks[topRightChunkPos].begin(), _chunks[topRightChunkPos].end());
+            activeChunks.insert(activeChunks.end(), _chunks[bottomLeftChunkPos].begin(), _chunks[bottomLeftChunkPos].end());
+            activeChunks.insert(activeChunks.end(), _chunks[bottomRightChunkPos].begin(), _chunks[bottomRightChunkPos].end());
         }
     }
 
