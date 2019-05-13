@@ -14,7 +14,7 @@ MeshFactory::~MeshFactory()
     _logger.Debug("Cleanup done");
 }
 
-Mesh* MeshFactory::Load(const std::string& file, const std::string& name, Texture* pTexture)
+Mesh* MeshFactory::Load(const std::string& file, const std::string& name)
 {
     _logger.Info("Loading mesh from: " + file + " with name: " + name);
 
@@ -25,7 +25,7 @@ Mesh* MeshFactory::Load(const std::string& file, const std::string& name, Textur
     if (ext == ".obj")
     {
         ObjFileLoader loader(file);
-        pMesh = loader.ReadMesh(pTexture);
+        pMesh = loader.ReadMesh();
     }
 
     if (pMesh != nullptr)

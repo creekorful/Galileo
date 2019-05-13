@@ -6,7 +6,7 @@ ObjFileLoader::ObjFileLoader(const std::string& filePath) : _logger(LoggerFactor
     _logger.Debug(std::to_string(_lines.size()) + " lines loaded");
 }
 
-Mesh* ObjFileLoader::ReadMesh(Texture* pTexture)
+Mesh* ObjFileLoader::ReadMesh()
 {
     std::vector<Vector3f> vertices;
     std::vector<Vector2f> uvs;
@@ -67,14 +67,13 @@ Mesh* ObjFileLoader::ReadMesh(Texture* pTexture)
 
     _logger.Debug("All lines processed. Converting into mesh");
 
-    return BuildMesh(vertices, uvs, normals, faces, pTexture);
+    return BuildMesh(vertices, uvs, normals, faces);
 }
 
 Mesh* ObjFileLoader::BuildMesh(const std::vector<Vector3f>& vertices,
                               const std::vector<Vector2f>& uvs,
                               const std::vector<Vector3f>& normals,
-                              const std::vector<std::vector<IndexGroup>>& faces,
-                              Texture* pTexture)
+                              const std::vector<std::vector<IndexGroup>>& faces)
 {
     // finally reorder everything and create indices
     std::vector<GLfloat> orderedVertices;
@@ -112,5 +111,5 @@ Mesh* ObjFileLoader::BuildMesh(const std::vector<Vector3f>& vertices,
         }
     }
 
-    return new Mesh(orderedVertices, orderedUvs, orderedNormals, indices, pTexture);
+    return new Mesh(orderedVertices, orderedUvs, orderedNormals, indices);
 }

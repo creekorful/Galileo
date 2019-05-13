@@ -18,8 +18,7 @@ public:
 
     Mesh* Get(const std::string& name);
 
-    // TODO: uncouple texture from mesh
-    Mesh* Load(const std::string& file, const std::string& name, Texture* pTexture);
+    Mesh* Load(const std::string& file, const std::string& name);
 
     static MeshFactory& p()
     {

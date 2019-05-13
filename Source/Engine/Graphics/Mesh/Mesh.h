@@ -12,7 +12,7 @@ public:
     Mesh(std::vector<GLfloat> vertices,
          std::vector<GLfloat> uvs,
          std::vector<GLfloat> normals,
-         std::vector<GLint> indices, Texture* pTexture);
+         std::vector<GLint> indices);
 
     virtual ~Mesh();
 
@@ -22,8 +22,6 @@ private:
     int _vertexCount;
     GLuint _vaoId;
     std::vector<GLuint> _vbosIds;
-
-    Texture* _pTexture;
 
     /**
      * Generate & register a vbo

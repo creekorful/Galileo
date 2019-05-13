@@ -3,7 +3,7 @@
 Mesh::Mesh(std::vector<GLfloat> vertices,
            std::vector<GLfloat> uvs,
            std::vector<GLfloat> normals,
-           std::vector<GLint> indices, Texture* pTexture)
+           std::vector<GLint> indices)
 {
     // Generate and bind VAO
     glGenVertexArrays(1, &_vaoId);
@@ -28,7 +28,6 @@ Mesh::Mesh(std::vector<GLfloat> vertices,
     glBufferData(GL_ARRAY_BUFFER, normals.size() * sizeof(GLfloat), normals.data(), GL_STATIC_DRAW);
     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
-    _pTexture = pTexture;
     _vertexCount = vertices.size();
 
     // Unbind the VAO + VBO
@@ -38,8 +37,6 @@ Mesh::Mesh(std::vector<GLfloat> vertices,
 
 void Mesh::Render()
 {
-    _pTexture->Bind();
-
     glBindVertexArray(_vaoId);
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
@@ -54,8 +51,6 @@ void Mesh::Render()
     glDisableVertexAttribArray(1);
     glDisableVertexAttribArray(2);
     glBindVertexArray(0);
-
-    _pTexture->Unbind();
 }
 
 Mesh::~Mesh()

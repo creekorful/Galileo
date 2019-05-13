@@ -8,9 +8,9 @@
 class GameObject
 {
 public:
-    explicit GameObject(Mesh* mesh);
+    GameObject(Mesh* mesh, Texture* pTexture = nullptr);
 
-    GameObject(Mesh* mesh, float x, float y, float z);
+    GameObject(Mesh* mesh, Texture* pTexture, float x, float y, float z);
 
     void Render();
 
@@ -34,6 +34,7 @@ public:
 
 private:
     Mesh* _pMesh;
+    Texture* _pTexture;
 
     Vector3f _position;
     Vector3f _rotation;

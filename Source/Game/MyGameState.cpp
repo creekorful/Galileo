@@ -35,8 +35,8 @@ bool MyGameState::Initialize(Window& window)
     }
 
     // Load mesh from file
-    Mesh* mesh = MeshFactory::p().Load("Resources/Models/cube.obj", "cube", pTexture);
-    if (mesh == nullptr)
+    Mesh* pMesh = MeshFactory::p().Load("Resources/Models/cube.obj", "cube");
+    if (pMesh == nullptr)
     {
         _logger.Error("Unable to load mesh");
         return false;
@@ -53,7 +53,7 @@ bool MyGameState::Initialize(Window& window)
     _mousePos = window.GetMousePos();
 
     // Finally generate the map
-    GenerateMap(mesh);
+    GenerateMap(pMesh, pTexture);
 
     return true;
 }
@@ -122,7 +122,7 @@ void MyGameState::Render(Window& window)
     _pShader->Unbind();
 }
 
-void MyGameState::GenerateMap(Mesh* mesh)
+void MyGameState::GenerateMap(Mesh* mesh, Texture* pTexture)
 {
     _gameObjects.reserve(MAP_LENGTH * MAP_WIDTH);
     for (int x = 0; x < MAP_LENGTH; x++)
@@ -131,7 +131,7 @@ void MyGameState::GenerateMap(Mesh* mesh)
         {
             float noise = BaseMath::Noise((float) x / 10, (float) z / 10);
             int height = ((int) (noise * 10) * BLOCK_SIZE) + 10;
-            _gameObjects.emplace_back(mesh, x * BLOCK_SIZE, height, z * BLOCK_SIZE);
+            _gameObjects.emplace_back(mesh, pTexture, x * BLOCK_SIZE, height, z * BLOCK_SIZE);
         }
     }
 }

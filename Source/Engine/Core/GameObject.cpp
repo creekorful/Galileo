@@ -1,11 +1,12 @@
 #include "GameObject.h"
 
-GameObject::GameObject(Mesh* mesh) : _scale(1)
+GameObject::GameObject(Mesh* mesh, Texture *pTexture) : _scale(1)
 {
     _pMesh = mesh;
+    _pTexture = pTexture;
 }
 
-GameObject::GameObject(Mesh* mesh, float x, float y, float z) : GameObject(mesh)
+GameObject::GameObject(Mesh* mesh, Texture* pTexture, float x, float y, float z) : GameObject(mesh, pTexture)
 {
     _position.x = x;
     _position.y = y;
@@ -14,7 +15,13 @@ GameObject::GameObject(Mesh* mesh, float x, float y, float z) : GameObject(mesh)
 
 void GameObject::Render()
 {
+    if (_pTexture != nullptr)
+        _pTexture->Bind();
+
     _pMesh->Render();
+
+    if (_pTexture != nullptr)
+        _pTexture->Unbind();
 }
 
 Matrix4f GameObject::GetModelViewMatrix(const Matrix4f& viewMatrix) const
