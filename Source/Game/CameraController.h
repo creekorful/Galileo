@@ -2,7 +2,7 @@
 #define GALILEO_CAMERACONTROLLER_H
 
 
-#include "../Engine/Core/Component.h"
+#include "../Engine/Core/Object/Component.h"
 
 #define CAMERA_SPEED 0.005f
 #define CAMERA_ROTATION_SPEED 0.12f

@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "Window.h"
+#include "../Window.h"
 
 class GameState
 {

@@ -1,6 +1,6 @@
 
 
-#include "../Engine/Core/GameEngine.h"
+#include "../Engine/Core/Engine/GameEngine.h"
 #include "MyGameState.h"
 
 int main()

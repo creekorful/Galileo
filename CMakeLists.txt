@@ -24,8 +24,8 @@ set(SOURCES_FILES
         Source/Engine/Math/BaseMath.h
         Source/Engine/Math/Vector2.h
         Source/Engine/Math/Vector3.h
-        Source/Engine/Core/GameObject.cpp
-        Source/Engine/Core/GameObject.h
+        Source/Engine/Core/Object/GameObject.cpp
+        Source/Engine/Core/Object/GameObject.h
         Source/Engine/Graphics/Mesh/MeshFactory.cpp
         Source/Engine/Graphics/Mesh/MeshFactory.h
         Source/Engine/Graphics/Shader/ShaderFactory.cpp
@@ -47,14 +47,16 @@ set(SOURCES_FILES
         Source/Engine/Graphics/Mesh/Loader/ObjFileLoader.h
         Source/Engine/Util/Strings.cpp
         Source/Engine/Util/Strings.h
-        Source/Engine/Core/Camera.cpp
-        Source/Engine/Core/Camera.h
-        Source/Engine/Core/GameEngine.cpp
-        Source/Engine/Core/GameEngine.h
-        Source/Engine/Core/GameState.h
+        Source/Engine/Core/Object/Camera.cpp
+        Source/Engine/Core/Object/Camera.h
+        Source/Engine/Core/Engine/GameEngine.cpp
+        Source/Engine/Core/Engine/GameEngine.h
+        Source/Engine/Core/Engine/GameState.h
         Source/Game/MyGameState.cpp
         Source/Game/MyGameState.h
-        Source/Engine/Core/Component.h Source/Game/CameraController.cpp Source/Game/CameraController.h)
+        Source/Engine/Core/Object/Component.h
+        Source/Game/CameraController.cpp
+        Source/Game/CameraController.h)
 
 add_executable(Galileo ${SOURCES_FILES})
 

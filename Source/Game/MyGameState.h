@@ -1,12 +1,12 @@
 #ifndef GALILEO_MYGAMESTATE_H
 #define GALILEO_MYGAMESTATE_H
 
-#include "../Engine/Core/GameState.h"
+#include "../Engine/Core/Engine/GameState.h"
 #include "../Engine/Graphics/Shader/ShaderFactory.h"
 #include "../Engine/Graphics/Texture/TextureFactory.h"
 #include "../Engine/Graphics/Mesh/MeshFactory.h"
-#include "../Engine/Core/Camera.h"
-#include "../Engine/Core/GameObject.h"
+#include "../Engine/Core/Object/Camera.h"
+#include "../Engine/Core/Object/GameObject.h"
 
 #define SHADER_NAME "textured"
 #define PROJECTION_MATRIX_UNIFORM "projectionMatrix"

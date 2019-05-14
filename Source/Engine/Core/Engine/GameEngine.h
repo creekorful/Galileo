@@ -4,7 +4,7 @@
 #include <chrono>
 #include <thread>
 
-#include "Window.h"
+#include "../Window.h"
 #include "GameState.h"
 
 class GameEngine

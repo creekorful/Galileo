@@ -1,7 +1,7 @@
 #ifndef GALILEO_COMPONENT_H
 #define GALILEO_COMPONENT_H
 
-#include "Window.h"
+#include "../Window.h"
 #include "GameObject.h"
 
 class GameObject;
