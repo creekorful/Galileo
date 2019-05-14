@@ -21,12 +21,12 @@ void Chunk::GenerateMesh()
 
     int indiceOffset = 0;
 
-    for (int x = 0; x < CHUNK_LENGTH; x++)
+    for (int x = 0; x < CHUNK_SIZE; x++)
     {
-        for (int z = 0; z < CHUNK_WIDTH; z++)
+        for (int z = 0; z < CHUNK_SIZE; z++)
         {
             // compute height at given pos
-            float height = _rawBlocks[x * CHUNK_LENGTH + z];
+            float height = _rawBlocks[x * CHUNK_SIZE + z];
 
             // Insert vertices
             std::vector<GLfloat> srcVertices = _pCubeMesh->Vertices();

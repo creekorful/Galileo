@@ -1,8 +1,7 @@
 #ifndef GALILEO_CHUNK_H
 #define GALILEO_CHUNK_H
 
-#define CHUNK_WIDTH 16
-#define CHUNK_LENGTH 16
+#define CHUNK_SIZE 16
 
 #include <vector>
 #include "../Engine/Graphics/Mesh/Mesh.h"

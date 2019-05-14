@@ -144,28 +144,33 @@ void MyGameState::GenerateChunk(const Vector2i& position)
 
     std::vector<float> blocks;
 
-    blocks.reserve(CHUNK_LENGTH * CHUNK_WIDTH);
-    for (int x = 0; x < CHUNK_LENGTH; x++)
+    blocks.reserve(CHUNK_SIZE * CHUNK_SIZE);
+    for (int x = 0; x < CHUNK_SIZE; x++)
     {
-        for (int z = 0; z < CHUNK_WIDTH; z++)
+        for (int z = 0; z < CHUNK_SIZE; z++)
         {
-            int worldPosX = (position.x * CHUNK_LENGTH) + (x * BLOCK_SIZE);
-            int worldPosZ = (position.y * CHUNK_WIDTH) + (z * BLOCK_SIZE);
+            int worldPosX = (position.x * CHUNK_SIZE) + (x * BLOCK_SIZE);
+            int worldPosZ = (position.y * CHUNK_SIZE) + (z * BLOCK_SIZE);
 
             float noise = BaseMath::Noise((float) worldPosX / HEIGHT_SCALE, (float) worldPosZ / HEIGHT_SCALE);
             int height = ((int) (noise * 10) * BLOCK_SIZE);
 
             blocks.emplace_back(height); // todo 3D
+
+            /*for (int y = 0; y < 5; y++)
+            {
+                blocks.emplace_back(height-y);
+            }*/
         }
     }
 
     _chunks.insert(std::make_pair(position,
-                                  Chunk(blocks, Vector3f(position.x * CHUNK_LENGTH, 0, position.y * CHUNK_WIDTH),
+                                  Chunk(blocks, Vector3f(position.x * CHUNK_SIZE, 0, position.y * CHUNK_SIZE),
                                         _pCubeMesh, _pTexture)));
 }
 
 Vector2i MyGameState::GetCameraChunkPos() const
 {
     // todo offset to make change at middle of chunk? or offset in calling method
-    return Vector2i(_camera.Position().x / CHUNK_LENGTH, _camera.Position().z / CHUNK_WIDTH);
+    return Vector2i(_camera.Position().x / CHUNK_SIZE, _camera.Position().z / CHUNK_SIZE);
 }
