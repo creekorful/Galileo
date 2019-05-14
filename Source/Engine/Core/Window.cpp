@@ -32,6 +32,7 @@ bool Window::Initialize(Vector2i screenSize, const std::string& title, bool full
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
 
     _logger.Info("Window initialized");
 

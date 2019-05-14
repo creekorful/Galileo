@@ -19,7 +19,7 @@
 
 #define CHUNK_WIDTH 16
 #define CHUNK_LENGTH 16
-#define VIEW_DISTANCE 2
+#define VIEW_DISTANCE 5
 
 #define HEIGHT_SCALE 20
 
@@ -69,6 +69,8 @@ private:
 
     std::map<Vector2i, std::vector<GameObject>, VectorCompare> _chunks;
 
+    std::vector<Vector2i> _activeChunkPos;
+
     /**
      * Generate and store chunk at given position
      *
@@ -80,6 +82,9 @@ private:
      * @return camera chunk location
      */
     Vector2i GetCameraChunkPos() const;
+
+    // todo : force inline?
+    bool ShouldRender(GameObject& gameObject, float size) const;
 };
 
 

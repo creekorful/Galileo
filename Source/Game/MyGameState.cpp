@@ -55,15 +55,6 @@ bool MyGameState::Initialize(Window& window)
     _camera = Camera(Vector3f(0.f, 5.f, 10.f));
     _camera.AddComponent(new CameraController());
 
-    // Finally generate initial chunks
-    for (int x = 0; x < 3; x++)
-    {
-        for (int z = 0; z < 3; z++)
-        {
-            GenerateChunk(Vector2i(x, z));
-        }
-    }
-
     return true;
 }
 
@@ -74,39 +65,16 @@ void MyGameState::Update(Window& window, float dt)
         window.Close();
     }
 
-/*    // Update game objects
-    for (auto gameObject : _gameObjects)
-    {
-        gameObject.Update(window, dt);
-    }*/
-
     // Update camera
     _camera.Update(window, dt);
 
     // Update projection matrix
     _projectionMatrix = Matrix4f::CreateProjectionMatrix(FOV, window.Size(), Z_NEAR, Z_FAR);
-}
-
-void MyGameState::Render()
-{
-    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-
-    // Bind shader for drawing
-    _pShader->Bind();
-
-    // Update global uniform
-    _pShader->SetUniform(PROJECTION_MATRIX_UNIFORM, _projectionMatrix);
-    _pShader->SetUniform(TEXTURE_SAMPLER_UNIFORM, 0);
-
-    // Get camera view matrix
-    _camera.UpdateViewMatrix(_viewMatrix);
-
-    // Collect and draw active chunk
-    std::vector<GameObject> activeChunks;
 
     Vector2i cameraChunkPos = GetCameraChunkPos();
 
-    // Manage forward chunks (todo manage backward too)
+    // Manage chunks to be drawn
+    _activeChunkPos.clear();
     for (int x = 0; x < VIEW_DISTANCE; x++)
     {
         for (int z = 0; z < VIEW_DISTANCE; z++)
@@ -127,19 +95,48 @@ void MyGameState::Render()
                 GenerateChunk(bottomRightChunkPos);
 
             // From now on we know that the chunk is present
-            activeChunks.reserve((CHUNK_LENGTH * CHUNK_WIDTH) * 4); // todo better
-            activeChunks.insert(activeChunks.end(), _chunks[topLeftChunkPos].begin(), _chunks[topLeftChunkPos].end());
-            activeChunks.insert(activeChunks.end(), _chunks[topRightChunkPos].begin(), _chunks[topRightChunkPos].end());
-            activeChunks.insert(activeChunks.end(), _chunks[bottomLeftChunkPos].begin(), _chunks[bottomLeftChunkPos].end());
-            activeChunks.insert(activeChunks.end(), _chunks[bottomRightChunkPos].begin(), _chunks[bottomRightChunkPos].end());
+            _activeChunkPos.push_back(topLeftChunkPos);
+            _activeChunkPos.push_back(topRightChunkPos);
+            _activeChunkPos.push_back(bottomLeftChunkPos);
+            _activeChunkPos.push_back(bottomRightChunkPos);
         }
     }
 
-    // Finally draw them
-    for (auto& block : activeChunks)
+    // Update them
+    for (auto& chunkPos : _activeChunkPos)
     {
-        _pShader->SetUniform(VIEW_MATRIX_UNIFORM, block.GetModelViewMatrix(_viewMatrix));
-        block.Render();
+        for (auto& block : _chunks[chunkPos])
+        {
+            block.Update(window, dt);
+        }
+    }
+}
+
+void MyGameState::Render()
+{
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+    // Bind shader for drawing
+    _pShader->Bind();
+
+    // Update global uniform
+    _pShader->SetUniform(PROJECTION_MATRIX_UNIFORM, _projectionMatrix);
+    _pShader->SetUniform(TEXTURE_SAMPLER_UNIFORM, 0);
+
+    // Get camera view matrix
+    _camera.UpdateViewMatrix(_viewMatrix);
+
+    // Finally draw them
+    for (auto& chunkPos : _activeChunkPos)
+    {
+        for (auto& block : _chunks[chunkPos])
+        {
+           if (ShouldRender(block, BLOCK_SIZE))
+           {
+               _pShader->SetUniform(VIEW_MATRIX_UNIFORM, block.GetModelViewMatrix(_viewMatrix));
+               block.Render();
+           }
+        }
     }
 
     // Unbind the shader
@@ -172,4 +169,9 @@ Vector2i MyGameState::GetCameraChunkPos() const
 {
     // todo offset to make change at middle of chunk? or offset in calling method
     return Vector2i(_camera.Position().x / CHUNK_LENGTH, _camera.Position().z / CHUNK_WIDTH);
+}
+
+bool MyGameState::ShouldRender(GameObject& gameObject, float size) const
+{
+    return true;
 }
