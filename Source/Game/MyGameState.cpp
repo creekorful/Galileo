@@ -155,12 +155,7 @@ void MyGameState::GenerateChunk(const Vector2i& position)
             float noise = BaseMath::Noise((float) worldPosX / HEIGHT_SCALE, (float) worldPosZ / HEIGHT_SCALE);
             int height = ((int) (noise * 10) * BLOCK_SIZE);
 
-            blocks.emplace_back(height); // todo 3D
-
-            /*for (int y = 0; y < 5; y++)
-            {
-                blocks.emplace_back(height-y);
-            }*/
+            blocks.emplace_back(height);
         }
     }
 
