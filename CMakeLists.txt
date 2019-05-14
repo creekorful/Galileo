@@ -56,7 +56,9 @@ set(SOURCES_FILES
         Source/Game/MyGameState.h
         Source/Engine/Core/Object/Component.h
         Source/Game/CameraController.cpp
-        Source/Game/CameraController.h)
+        Source/Game/CameraController.h
+        Source/Game/Chunk.cpp
+        Source/Game/Chunk.h)
 
 add_executable(Galileo ${SOURCES_FILES})
 

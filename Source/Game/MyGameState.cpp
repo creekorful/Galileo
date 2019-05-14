@@ -1,7 +1,8 @@
 #include "MyGameState.h"
 #include "CameraController.h"
 
-MyGameState::MyGameState() : _logger(LoggerFactory::CreateLogger("MyGameState")), _pShader(nullptr), _pCubeMesh(nullptr)
+MyGameState::MyGameState() :
+        _logger(LoggerFactory::CreateLogger("MyGameState")), _pShader(nullptr), _pCubeMesh(nullptr), _pTexture(nullptr)
 {
 }
 
@@ -33,6 +34,7 @@ bool MyGameState::Initialize(Window& window)
         _logger.Error("Unable to load texture");
         return false;
     }
+    _pTexture = pTexture;
 
     // Load mesh from file
     _pCubeMesh = MeshFactory::p().Load("Resources/Models/cube.obj", "cube");
@@ -105,10 +107,7 @@ void MyGameState::Update(Window& window, float dt)
     // Update them
     for (auto& chunkPos : _activeChunkPos)
     {
-        for (auto& block : _chunks[chunkPos])
-        {
-            block.Update(window, dt);
-        }
+        _chunks.at(chunkPos).Update(window, dt);
     }
 }
 
@@ -118,6 +117,8 @@ void MyGameState::Render()
 
     // Bind shader for drawing
     _pShader->Bind();
+
+    //glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
     // Update global uniform
     _pShader->SetUniform(PROJECTION_MATRIX_UNIFORM, _projectionMatrix);
@@ -129,14 +130,8 @@ void MyGameState::Render()
     // Finally draw them
     for (auto& chunkPos : _activeChunkPos)
     {
-        for (auto& block : _chunks[chunkPos])
-        {
-           if (ShouldRender(block, BLOCK_SIZE))
-           {
-               _pShader->SetUniform(VIEW_MATRIX_UNIFORM, block.GetModelViewMatrix(_viewMatrix));
-               block.Render();
-           }
-        }
+        _pShader->SetUniform(VIEW_MATRIX_UNIFORM, _chunks.at(chunkPos).GetModelViewMatrix(_viewMatrix));
+        _chunks.at(chunkPos).Render();
     }
 
     // Unbind the shader
@@ -147,9 +142,9 @@ void MyGameState::GenerateChunk(const Vector2i& position)
 {
     _logger.Debug("Generate chunk at x:" + std::to_string(position.x) + " y:" + std::to_string(position.y));
 
-    std::vector<GameObject>& chunk = _chunks[position];
+    std::vector<float> blocks;
 
-    chunk.reserve(CHUNK_LENGTH * CHUNK_WIDTH);
+    blocks.reserve(CHUNK_LENGTH * CHUNK_WIDTH);
     for (int x = 0; x < CHUNK_LENGTH; x++)
     {
         for (int z = 0; z < CHUNK_WIDTH; z++)
@@ -160,18 +155,17 @@ void MyGameState::GenerateChunk(const Vector2i& position)
             float noise = BaseMath::Noise((float) worldPosX / HEIGHT_SCALE, (float) worldPosZ / HEIGHT_SCALE);
             int height = ((int) (noise * 10) * BLOCK_SIZE);
 
-            chunk.emplace_back(_pCubeMesh, worldPosX, height, worldPosZ);
+            blocks.emplace_back(height); // todo 3D
         }
     }
+
+    _chunks.insert(std::make_pair(position,
+                                  Chunk(blocks, Vector3f(position.x * CHUNK_LENGTH, 0, position.y * CHUNK_WIDTH),
+                                        _pCubeMesh, _pTexture)));
 }
 
 Vector2i MyGameState::GetCameraChunkPos() const
 {
     // todo offset to make change at middle of chunk? or offset in calling method
     return Vector2i(_camera.Position().x / CHUNK_LENGTH, _camera.Position().z / CHUNK_WIDTH);
-}
-
-bool MyGameState::ShouldRender(GameObject& gameObject, float size) const
-{
-    return true;
 }

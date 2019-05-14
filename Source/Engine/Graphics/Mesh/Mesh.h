@@ -20,8 +20,17 @@ public:
 
     void SetTexture(Texture *pTexture);
 
+    std::vector<GLfloat> Vertices() const;
+    std::vector<GLfloat> Uvs() const;
+    std::vector<GLfloat> Normals() const;
+    std::vector<GLint> Indices() const;
+
 private:
-    int _vertexCount;
+    std::vector<GLfloat> _vertices;
+    std::vector<GLfloat> _uvs;
+    std::vector<GLfloat> _normals;
+    std::vector<GLint> _indices;
+
     GLuint _vaoId;
     std::vector<GLuint> _vbosIds;
 

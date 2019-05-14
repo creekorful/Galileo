@@ -73,9 +73,9 @@ protected:
     Vector3f _rotation;
     float _scale;
 
-private:
     Mesh* _pMesh;
 
+private:
     std::vector<Component*> _pComponents;
 };
 

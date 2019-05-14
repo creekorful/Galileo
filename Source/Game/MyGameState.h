@@ -7,6 +7,7 @@
 #include "../Engine/Graphics/Mesh/MeshFactory.h"
 #include "../Engine/Core/Object/Camera.h"
 #include "../Engine/Core/Object/GameObject.h"
+#include "Chunk.h"
 
 #define SHADER_NAME "textured"
 #define PROJECTION_MATRIX_UNIFORM "projectionMatrix"
@@ -17,8 +18,6 @@
 #define Z_NEAR .01f
 #define Z_FAR 600.f
 
-#define CHUNK_WIDTH 16
-#define CHUNK_LENGTH 16
 #define VIEW_DISTANCE 5
 
 #define HEIGHT_SCALE 20
@@ -61,13 +60,14 @@ private:
     Shader* _pShader;
 
     Mesh* _pCubeMesh;
+    Texture* _pTexture;
 
     Matrix4f _projectionMatrix;
     Matrix4f _viewMatrix;
 
     Camera _camera;
 
-    std::map<Vector2i, std::vector<GameObject>, VectorCompare> _chunks;
+    std::map<Vector2i, Chunk, VectorCompare> _chunks;
 
     std::vector<Vector2i> _activeChunkPos;
 
@@ -82,9 +82,6 @@ private:
      * @return camera chunk location
      */
     Vector2i GetCameraChunkPos() const;
-
-    // todo : force inline?
-    bool ShouldRender(GameObject& gameObject, float size) const;
 };
 
 
