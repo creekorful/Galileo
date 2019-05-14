@@ -18,3 +18,8 @@ float BaseMath::Noise(float x, float y, float z)
 {
     return stb_perlin_noise3(x, y, z, 0, 0, 0);
 }
+
+float BaseMath::Noise(float x, float y, float lacunarity, float gain, float offset, int octaves)
+{
+    return stb_perlin_ridge_noise3(x, y, 0.0, lacunarity, gain, offset, octaves);
+}

@@ -19,6 +19,8 @@ public:
      */
     static float Noise(float x, float y);
 
+    static float Noise(float x, float y, float lacunarity, float gain, float offset, int octaves);
+
     /**
      * Generate 3D noise using Perlin algorithm
      *

@@ -20,7 +20,7 @@
 
 #define VIEW_DISTANCE 5
 
-#define HEIGHT_SCALE 20
+#define HEIGHT_SCALE 25
 
 struct VectorCompare
 {
