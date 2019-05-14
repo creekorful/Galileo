@@ -18,11 +18,9 @@
 #define Z_NEAR .01f
 #define Z_FAR 600.f
 
-#define VIEW_DISTANCE 10
+#define VIEW_DISTANCE 5
 
 #define HEIGHT_SCALE 20
-
-#define BLOCK_SIZE 2
 
 struct VectorCompare
 {

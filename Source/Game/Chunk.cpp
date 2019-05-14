@@ -28,33 +28,36 @@ void Chunk::GenerateMesh()
             // compute height at given pos
             float height = _rawBlocks[x * CHUNK_SIZE + z];
 
-            // Insert vertices
-            std::vector<GLfloat> srcVertices = _pCubeMesh->Vertices();
-            for (int t = 0; t < srcVertices.size(); t += 3)
+            for (int y = 0; y < 1; y++) // todo CHUNK_SIZE INSTEAD
             {
-                vertices.push_back(srcVertices[t] + x * 2); // x
-                vertices.push_back(srcVertices[t + 1] + height); // y
-                vertices.push_back(srcVertices[t + 2] + z * 2); // z
+                // Insert vertices
+                std::vector<GLfloat> srcVertices = _pCubeMesh->Vertices();
+                for (int t = 0; t < srcVertices.size(); t += 3)
+                {
+                    vertices.push_back(srcVertices[t] + x * BLOCK_SIZE); // x
+                    vertices.push_back(srcVertices[t + 1] + height - y * BLOCK_SIZE); // y
+                    vertices.push_back(srcVertices[t + 2] + z * BLOCK_SIZE); // z
+                }
+                // Insert uvs
+                for (float srcUv : _pCubeMesh->Uvs())
+                {
+                    uvs.push_back(srcUv);
+                }
+                // Insert normals
+                std::vector<GLfloat> srcNormals = _pCubeMesh->Normals();
+                for (int t = 0; t < srcNormals.size(); t += 3)
+                {
+                    normals.push_back(srcNormals[t] + x); // x
+                    normals.push_back(srcNormals[t + 1] + height - y * BLOCK_SIZE); // y
+                    normals.push_back(srcNormals[t + 2] + z); // z
+                }
+                // Insert indices
+                for (int srcIndice : _pCubeMesh->Indices())
+                {
+                    indices.push_back(srcIndice + indiceOffset);
+                }
+                indiceOffset += srcVertices.size() / 3;
             }
-            // Insert uvs
-            for (float srcUv : _pCubeMesh->Uvs())
-            {
-                uvs.push_back(srcUv);
-            }
-            // Insert normals
-            std::vector<GLfloat> srcNormals = _pCubeMesh->Normals();
-            for (int t = 0; t < srcNormals.size(); t += 3)
-            {
-                normals.push_back(srcNormals[t] + x); // x
-                normals.push_back(srcNormals[t + 1] + height); // y
-                normals.push_back(srcNormals[t + 2] + z); // z
-            }
-            // Insert indices
-            for (int srcIndice : _pCubeMesh->Indices())
-            {
-                indices.push_back(srcIndice + indiceOffset);
-            }
-            indiceOffset += srcVertices.size() / 3;
         }
     }
 

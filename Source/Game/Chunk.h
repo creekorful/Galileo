@@ -2,6 +2,7 @@
 #define GALILEO_CHUNK_H
 
 #define CHUNK_SIZE 16
+#define BLOCK_SIZE 2
 
 #include <vector>
 #include "../Engine/Graphics/Mesh/Mesh.h"
