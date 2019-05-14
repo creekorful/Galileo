@@ -28,7 +28,7 @@ void Chunk::GenerateMesh()
             // compute height at given pos
             float height = _rawBlocks[x * CHUNK_SIZE + z];
 
-            for (int y = 0; y < 1; y++) // todo CHUNK_SIZE INSTEAD
+            for (int y = 0; y < 2; y++) // todo CHUNK_SIZE INSTEAD
             {
                 // Insert vertices
                 std::vector<GLfloat> srcVertices = _pCubeMesh->Vertices();
