@@ -1,6 +1,8 @@
 #ifndef GALILEO_MYGAMESTATE_H
 #define GALILEO_MYGAMESTATE_H
 
+#include <thread>
+
 #include "../Engine/Core/Engine/GameState.h"
 #include "../Engine/Graphics/Shader/ShaderFactory.h"
 #include "../Engine/Graphics/Texture/TextureFactory.h"
@@ -19,6 +21,7 @@
 #define Z_FAR 600.f
 
 #define VIEW_DISTANCE 5
+#define PRELOAD_DISTANCE 10
 
 #define HEIGHT_SCALE 25
 
@@ -66,8 +69,9 @@ private:
     Camera _camera;
 
     std::map<Vector2i, Chunk, VectorCompare> _chunks;
-
     std::vector<Vector2i> _activeChunkPos;
+    std::thread _generateChunkThread;
+    std::atomic<bool> _continueGeneration;
 
     /**
      * Generate and store chunk at given position
@@ -80,6 +84,11 @@ private:
      * @return camera chunk location
      */
     Vector2i GetCameraChunkPos() const;
+
+    /**
+     * Method called in thread responsible of background chunk generation
+     */
+    void GenerateChunkThread();
 };
 
 

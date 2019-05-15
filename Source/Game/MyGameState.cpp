@@ -2,11 +2,15 @@
 #include "CameraController.h"
 
 MyGameState::MyGameState() :
-        _logger(LoggerFactory::CreateLogger("MyGameState")), _pShader(nullptr), _pCubeMesh(nullptr), _pTexture(nullptr)
+        _logger(LoggerFactory::CreateLogger("MyGameState")), _pShader(nullptr), _pCubeMesh(nullptr), _pTexture(nullptr),
+        _continueGeneration(false)
 {
 }
 
-MyGameState::~MyGameState() = default;
+MyGameState::~MyGameState()
+{
+    _continueGeneration = false;
+}
 
 bool MyGameState::Initialize(Window& window)
 {
@@ -56,6 +60,10 @@ bool MyGameState::Initialize(Window& window)
     // Create camera
     _camera = Camera(Vector3f(0.f, 5.f, 10.f));
     _camera.AddComponent(new CameraController());
+
+    // Setup background thread generation
+    _continueGeneration = true;
+    _generateChunkThread = std::thread(&MyGameState::GenerateChunkThread, this);
 
     return true;
 }
@@ -130,8 +138,13 @@ void MyGameState::Render()
     // Finally draw them
     for (auto& chunkPos : _activeChunkPos)
     {
-        _pShader->SetUniform(VIEW_MATRIX_UNIFORM, _chunks.at(chunkPos).GetModelViewMatrix(_viewMatrix));
-        _chunks.at(chunkPos).Render();
+        Chunk& chunk = _chunks.at(chunkPos);
+
+        if (!chunk.IsBuilt())
+            chunk.BuildMesh();
+
+        _pShader->SetUniform(VIEW_MATRIX_UNIFORM, chunk.GetModelViewMatrix(_viewMatrix));
+        chunk.Render();
     }
 
     // Unbind the shader
@@ -168,4 +181,36 @@ Vector2i MyGameState::GetCameraChunkPos() const
 {
     // todo offset to make change at middle of chunk? or offset in calling method
     return Vector2i(_camera.Position().x / CHUNK_SIZE, _camera.Position().z / CHUNK_SIZE);
+}
+
+void MyGameState::GenerateChunkThread()
+{
+    _logger.Debug("Starting background chunk generation thread");
+    while (_continueGeneration)
+    {
+        Vector2i cameraChunkPos = GetCameraChunkPos();
+        for (int x = 0; x < PRELOAD_DISTANCE; x++)
+        {
+            for (int z = 0; z < PRELOAD_DISTANCE; z++)
+            {
+                Vector2i topLeftChunkPos = cameraChunkPos + Vector2i(-x, z);
+                Vector2i topRightChunkPos = cameraChunkPos + Vector2i(x, z);
+                Vector2i bottomLeftChunkPos = cameraChunkPos - Vector2i(-x, z);
+                Vector2i bottomRightChunkPos = cameraChunkPos - Vector2i(x, z);
+
+                // Chunk not present : generate new ones
+                if (_chunks.find(topLeftChunkPos) == _chunks.end())
+                    GenerateChunk(topLeftChunkPos);
+                if (_chunks.find(topRightChunkPos) == _chunks.end())
+                    GenerateChunk(topRightChunkPos);
+                if (_chunks.find(bottomLeftChunkPos) == _chunks.end())
+                    GenerateChunk(bottomLeftChunkPos);
+                if (_chunks.find(bottomRightChunkPos) == _chunks.end())
+                    GenerateChunk(bottomRightChunkPos);
+            }
+        }
+
+        // 500 ms delay
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    }
 }

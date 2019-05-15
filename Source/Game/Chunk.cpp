@@ -13,11 +13,12 @@ void Chunk::GenerateMesh()
 {
     // First of all delete previous mesh
     delete _pMesh;
+    _pMesh = nullptr; // todo needed?
 
-    std::vector<GLfloat> vertices;
-    std::vector<GLfloat> uvs;
-    std::vector<GLfloat> normals;
-    std::vector<GLint> indices;
+    _vertices.clear();
+    _uvs.clear();
+    _normals.clear();
+    _indices.clear();
 
     int indiceOffset = 0;
 
@@ -34,34 +35,41 @@ void Chunk::GenerateMesh()
                 std::vector<GLfloat> srcVertices = _pCubeMesh->Vertices();
                 for (int t = 0; t < srcVertices.size(); t += 3)
                 {
-                    vertices.push_back(srcVertices[t] + x * BLOCK_SIZE); // x
-                    vertices.push_back(srcVertices[t + 1] + height - y * BLOCK_SIZE); // y
-                    vertices.push_back(srcVertices[t + 2] + z * BLOCK_SIZE); // z
+                    _vertices.push_back(srcVertices[t] + x * BLOCK_SIZE); // x
+                    _vertices.push_back(srcVertices[t + 1] + height - y * BLOCK_SIZE); // y
+                    _vertices.push_back(srcVertices[t + 2] + z * BLOCK_SIZE); // z
                 }
                 // Insert uvs
                 for (float srcUv : _pCubeMesh->Uvs())
                 {
-                    uvs.push_back(srcUv);
+                    _uvs.push_back(srcUv);
                 }
                 // Insert normals
                 std::vector<GLfloat> srcNormals = _pCubeMesh->Normals();
                 for (int t = 0; t < srcNormals.size(); t += 3)
                 {
-                    normals.push_back(srcNormals[t] + x); // x
-                    normals.push_back(srcNormals[t + 1] + height - y * BLOCK_SIZE); // y
-                    normals.push_back(srcNormals[t + 2] + z); // z
+                    _normals.push_back(srcNormals[t] + x); // x
+                    _normals.push_back(srcNormals[t + 1] + height - y * BLOCK_SIZE); // y
+                    _normals.push_back(srcNormals[t + 2] + z); // z
                 }
                 // Insert indices
                 for (int srcIndice : _pCubeMesh->Indices())
                 {
-                    indices.push_back(srcIndice + indiceOffset);
+                    _indices.push_back(srcIndice + indiceOffset);
                 }
                 indiceOffset += srcVertices.size() / 3;
             }
         }
     }
+}
 
-    // then assign mesh
-    _pMesh = new Mesh(vertices, uvs, normals, indices);
+void Chunk::BuildMesh()
+{
+    _pMesh = new Mesh(_vertices, _uvs, _normals, _indices);
     _pMesh->SetTexture(_pTexture);
+}
+
+bool Chunk::IsBuilt() const
+{
+    return _pMesh != nullptr;
 }
