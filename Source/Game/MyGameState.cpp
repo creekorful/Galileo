@@ -10,6 +10,7 @@ MyGameState::MyGameState() :
 MyGameState::~MyGameState()
 {
     _continueGeneration = false;
+    _generateChunkThread.join();
 }
 
 bool MyGameState::Initialize(Window& window)
@@ -136,10 +137,12 @@ void MyGameState::Render()
     _camera.UpdateViewMatrix(_viewMatrix);
 
     // Finally draw them
+    // todo draw only visible chunk
     for (auto& chunkPos : _activeChunkPos)
     {
         Chunk& chunk = _chunks.at(chunkPos);
 
+        // Build mesh if needed
         if (!chunk.IsBuilt())
             chunk.BuildMesh();
 

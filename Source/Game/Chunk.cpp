@@ -13,7 +13,7 @@ void Chunk::GenerateMesh()
 {
     // First of all delete previous mesh
     delete _pMesh;
-    _pMesh = nullptr; // todo needed?
+    _pMesh = nullptr;
 
     _vertices.clear();
     _uvs.clear();
@@ -21,6 +21,9 @@ void Chunk::GenerateMesh()
     _indices.clear();
 
     int indiceOffset = 0;
+
+    // todo discard blocks that are hidden( not visible at all)
+    // todo discard block common face
 
     for (int x = 0; x < CHUNK_SIZE; x++)
     {

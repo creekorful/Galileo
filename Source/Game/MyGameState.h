@@ -20,8 +20,8 @@
 #define Z_NEAR .01f
 #define Z_FAR 600.f
 
-#define VIEW_DISTANCE 5
-#define PRELOAD_DISTANCE 10
+#define VIEW_DISTANCE 10
+#define PRELOAD_DISTANCE 20
 
 #define HEIGHT_SCALE 25
 
